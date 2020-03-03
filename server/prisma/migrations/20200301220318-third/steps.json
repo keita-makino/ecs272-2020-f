@@ -1,0 +1,49 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteModel",
+      "model": "Post"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "posts"
+    },
+    {
+      "tag": "CreateField",
+      "model": "DataType",
+      "field": "initialData",
+      "type": "InitialData",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "DataType",
+      "field": "mainData",
+      "type": "MainData",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "DataType",
+      "field": "initialDatas"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "DataType",
+      "field": "mainDatas"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "DataType",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    }
+  ]
+}

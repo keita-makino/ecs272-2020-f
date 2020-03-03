@@ -1,0 +1,660 @@
+[
+  {
+    "Latitude": 38.5469272,
+    "Longitude": -121.7614358,
+    "Name": "Trader Joe's",
+    "Address": "885 Russell Boulevard, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5527011,
+    "Longitude": -121.7296655,
+    "Name": "Grocery Outlet Bargain Market",
+    "Address": "1800 East 8th Street suite b, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.554382,
+    "Longitude": -121.699461,
+    "Name": "Target",
+    "Address": "4601 2nd Street, Davis, CA 95618, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5598898,
+    "Longitude": -121.7575869,
+    "Name": "Save Mart Supermarkets",
+    "Address": "1900 Anderson Road, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5611198,
+    "Longitude": -121.7327741,
+    "Name": "Nugget Markets",
+    "Address": "1414 East Covell Boulevard, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5621327,
+    "Longitude": -121.766313,
+    "Name": "Safeway",
+    "Address": "1451 West Covell Boulevard, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5493054,
+    "Longitude": -121.7399081,
+    "Name": "Davis Food Co-op",
+    "Address": "620 G Street, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5527378,
+    "Longitude": -121.7307332,
+    "Name": "International Food Market and Catering",
+    "Address": "1760 East 8th Street, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5499752,
+    "Longitude": -121.6958026,
+    "Name": "Nugget Markets",
+    "Address": "409 Mace Boulevard, Davis, CA 95618, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5544744,
+    "Longitude": -121.7870471,
+    "Name": "Westlake Market",
+    "Address": "1260 Lake Boulevard, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5413165,
+    "Longitude": -121.7248913,
+    "Name": "Safeway",
+    "Address": "2121 Cowell Boulevard, Davis, CA 95618, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5427637,
+    "Longitude": -121.7406948,
+    "Name": "Ho Ho Market",
+    "Address": "132 E Street #140, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5450139,
+    "Longitude": -121.7373692,
+    "Name": "Tarad Thai Market",
+    "Address": "920 3rd Street #C, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.5471687,
+    "Longitude": -121.7608327,
+    "Name": "Cost Plus World Market",
+    "Address": "871 Russell Boulevard, Davis, CA 95616, United States",
+    "Type": "Food market"
+  },
+  {
+    "Latitude": 38.553345,
+    "Longitude": -121.752569,
+    "Name": "Oak Ave & Antioch Drive (NB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5620141,
+    "Longitude": -121.7592795,
+    "Name": "Alvarado & Anderson",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.558559,
+    "Longitude": -121.758707,
+    "Name": "Anderson Rd & Hanover Drive (SB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.555563,
+    "Longitude": -121.752423,
+    "Name": "Oak Ave & 14th St (SB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.555965,
+    "Longitude": -121.750585,
+    "Name": "14th St & Davis HS (WB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.546489,
+    "Longitude": -121.763497,
+    "Name": "Russell Blvd & Sycamore Ln (WB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5390759,
+    "Longitude": -121.7554088,
+    "Name": "Hutchison Drive & Bioletti Way (EB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.539239,
+    "Longitude": -121.7533698,
+    "Name": "Silo Terminal & Center Island (EB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.54386,
+    "Longitude": -121.750044,
+    "Name": "UC Davis Memorial Union",
+    "Address": "Howard Way, Davis, CA 95616, United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5391053,
+    "Longitude": -121.7536498,
+    "Name": "Hutchison at UC Davis Silo WB",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.540158,
+    "Longitude": -121.746139,
+    "Name": "Hutchison Drive & Old Davis Road (WB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.542661,
+    "Longitude": -121.743914,
+    "Name": "2nd St & B St (EB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5434205,
+    "Longitude": -121.7377834,
+    "Name": "Davis",
+    "Address": "840 2nd Street, Davis, CA 95616, United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.548896,
+    "Longitude": -121.730801,
+    "Name": "5th St & Davis PW Corp Yard (WB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5400548,
+    "Longitude": -121.7275584,
+    "Name": "Cowell at Drew WB",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.548092,
+    "Longitude": -121.7026679,
+    "Name": "Cowell & La Vida",
+    "Address": "Davis, CA 95618, United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.556407,
+    "Longitude": -121.756564,
+    "Name": "Villanova Drive & Reed Drive (WB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.552723,
+    "Longitude": -121.752779,
+    "Name": "Oak Ave & Antioch Drive (SB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.555945,
+    "Longitude": -121.752524,
+    "Name": "14th St & Oak St (WB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.55609,
+    "Longitude": -121.752208,
+    "Name": "Oak & 14th Street (NB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.555718,
+    "Longitude": -121.751814,
+    "Name": "14th St & Oak St (EB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5558449,
+    "Longitude": -121.7510789,
+    "Name": "W. 14th St. at B Street EB",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5558555,
+    "Longitude": -121.7503809,
+    "Name": "W. 14th St. at Beech WB",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.545015,
+    "Longitude": -121.7451316,
+    "Name": "B St & 4th St (SB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.547003,
+    "Longitude": -121.745445,
+    "Name": "B St & 5th St (NB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.546382,
+    "Longitude": -121.746873,
+    "Name": "Russell Blvd & A St (WB)",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5461662,
+    "Longitude": -121.7471347,
+    "Name": "Russell at A St. EB",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5449914,
+    "Longitude": -121.7450064,
+    "Name": "B at 4th NB",
+    "Address": "United States",
+    "Type": "Bus stop"
+  },
+  {
+    "Latitude": 38.5468512,
+    "Longitude": -121.7401068,
+    "Name": "Taco Bell",
+    "Address": "425 G Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.547271,
+    "Longitude": -121.7603641,
+    "Name": "Old Tea House",
+    "Address": "825 Russell Boulevard # 22, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.538487,
+    "Longitude": -121.7524956,
+    "Name": "Shah's Halal Food",
+    "Address": "146, Hutchison Drive, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5437749,
+    "Longitude": -121.7466819,
+    "Name": "Raja's Tandoor",
+    "Address": "207 3rd Street #230, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.543596,
+    "Longitude": -121.746092,
+    "Name": "Pho King 4 Restaurant",
+    "Address": "226 3rd Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5440467,
+    "Longitude": -121.7449991,
+    "Name": "Sam's Restaurant",
+    "Address": "301 B Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5427967,
+    "Longitude": -121.744601,
+    "Name": "Black Bear Diner",
+    "Address": "255 2nd Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5442611,
+    "Longitude": -121.7421764,
+    "Name": "Cafe Bernardo",
+    "Address": "234 D Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5469126,
+    "Longitude": -121.7396512,
+    "Name": "Thai Nakorn",
+    "Address": "424 G Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5458562,
+    "Longitude": -121.7398036,
+    "Name": "Jack in the Box",
+    "Address": "337 G Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5457495,
+    "Longitude": -121.7413194,
+    "Name": "Farmer's Kitchen Cafe at Natural Food Works",
+    "Address": "624 4th Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5448198,
+    "Longitude": -121.7390042,
+    "Name": "Ketmoree Thai Restaurant and Bar",
+    "Address": "238 G Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5448089,
+    "Longitude": -121.7408087,
+    "Name": "Panera Bread",
+    "Address": "609 3rd Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5441856,
+    "Longitude": -121.739357,
+    "Name": "Woodstock's Pizza Davis",
+    "Address": "219 G Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5442211,
+    "Longitude": -121.7410244,
+    "Name": "Yeti Restaurant",
+    "Address": "234 E Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.543758,
+    "Longitude": -121.7415364,
+    "Name": "de Vere's Irish Pub",
+    "Address": "217 E Street, Davis, CA 9616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5444,
+    "Longitude": -121.7434679,
+    "Name": "Burgers and Brew",
+    "Address": "403 3rd Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5427497,
+    "Longitude": -121.7413423,
+    "Name": "Sophia's | Thai Bar & Kitchen",
+    "Address": "129 E Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.542498,
+    "Longitude": -121.7410692,
+    "Name": "Thai Canteen Davis",
+    "Address": "117 E Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5423987,
+    "Longitude": -121.741019,
+    "Name": "YAKITORI YUCHAN",
+    "Address": "109 E Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5410871,
+    "Longitude": -121.7405353,
+    "Name": "Mikuni",
+    "Address": "500 1st Street #11, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5433203,
+    "Longitude": -121.7390342,
+    "Name": "Paesanos",
+    "Address": "139 G Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5409729,
+    "Longitude": -121.7372239,
+    "Name": "In-N-Out Burger",
+    "Address": "1020 Olive Drive, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.547577,
+    "Longitude": -121.7590916,
+    "Name": "Chengdu Style Restaurant",
+    "Address": "737 Russell Boulevard, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5403141,
+    "Longitude": -121.7302672,
+    "Name": "IHOP",
+    "Address": "1745 Cowell Boulevard, Davis, CA 95618, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5487671,
+    "Longitude": -121.7349319,
+    "Name": "Taqueria Davis",
+    "Address": "505 L Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5417494,
+    "Longitude": -121.7437441,
+    "Name": "Davis's Pinata Mexican Grill",
+    "Address": "305 1st Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5438626,
+    "Longitude": -121.7384365,
+    "Name": "Tres Hermanas Davis",
+    "Address": "805 2nd Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5463138,
+    "Longitude": -121.7400093,
+    "Name": "Village Pizza & Grill",
+    "Address": "403 G Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5453498,
+    "Longitude": -121.7402206,
+    "Name": "Steve's Pizza",
+    "Address": "314 F Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5440461,
+    "Longitude": -121.7415946,
+    "Name": "Chipotle Mexican Grill",
+    "Address": "227 E Street #1, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5419616,
+    "Longitude": -121.7500653,
+    "Name": "The Coffee House",
+    "Address": "250 West Quad, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5421712,
+    "Longitude": -121.7438659,
+    "Name": "Delta of Venus",
+    "Address": "122 B Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5527029,
+    "Longitude": -121.7142496,
+    "Name": "Nami Sushi",
+    "Address": "2880 5th Street #105, Davis, CA 95618, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5496689,
+    "Longitude": -121.6959325,
+    "Name": "Huku Japanese Bistro",
+    "Address": "417 Mace Boulevard D, Davis, CA 95618, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5435505,
+    "Longitude": -121.7463584,
+    "Name": "Ali Baba",
+    "Address": "220 3rd Street, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5484599,
+    "Longitude": -121.7822644,
+    "Name": "Osteria Fasulo",
+    "Address": "2657 Portage Bay East #8, Davis, CA 95616, United States",
+    "Type": "Restaurant"
+  },
+  {
+    "Latitude": 38.5607633,
+    "Longitude": -121.7804869,
+    "Name": "Dignity Health Medical Foundation - Davis",
+    "Address": "2330 West Covell Boulevard, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5638706,
+    "Longitude": -121.7696976,
+    "Name": "Davis Community Clinic",
+    "Address": "2051 John Jones Road, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5629157,
+    "Longitude": -121.7715885,
+    "Name": "Neurology: Sutter Place (Davis): Sutter Medical Foundation",
+    "Address": "2030 Sutter Place #1000, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5625312,
+    "Longitude": -121.7715468,
+    "Name": "Sutter Medical Group",
+    "Address": "2020 Sutter Place #201, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5626044,
+    "Longitude": -121.7708959,
+    "Name": "Charitable Giving: Sutter Davis Hospital",
+    "Address": "2000 Sutter Place, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5620188,
+    "Longitude": -121.7713549,
+    "Name": "Sutter Davis Hospital Family Birthing Center",
+    "Address": "2000 Sutter Place, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5605524,
+    "Longitude": -121.7823853,
+    "Name": "UC Davis Medical Group",
+    "Address": "2440 W Covell Blvd Suites A, B & C, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.561898,
+    "Longitude": -121.759125,
+    "Name": "Omnibus Mental Health Associates",
+    "Address": "2055 Anderson Road, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5594132,
+    "Longitude": -121.7568279,
+    "Name": "Sutter West Medical Group",
+    "Address": "1801 Hanover Drive F, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5486518,
+    "Longitude": -121.7599313,
+    "Name": "Sutter Medical Group",
+    "Address": "635 Anderson Road, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5485771,
+    "Longitude": -121.759661,
+    "Name": "Nightingale Medical Centers",
+    "Address": "635 Anderson Road #19, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5427157,
+    "Longitude": -121.7616072,
+    "Name": "UC Davis Student Health and Counseling Services",
+    "Address": "930 Orchard Road, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5496542,
+    "Longitude": -121.7191587,
+    "Name": "Onsite Medical Service, Inc.",
+    "Address": "638 Cantrill Drive, Davis, CA 95618, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.5427245,
+    "Longitude": -121.7615152,
+    "Name": "Cowell Student Health Center",
+    "Address": "930 Orchard Road, Davis, CA 95616, United States",
+    "Type": "Medical clinic"
+  },
+  {
+    "Latitude": 38.540578,
+    "Longitude": -121.7284034,
+    "Name": "Davis Medical Offices",
+    "Address": "1955 Cowell Boulevard, Davis, CA 95618, United States",
+    "Type": "Medical clinic"
+  }
+]

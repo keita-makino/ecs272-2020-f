@@ -1,0 +1,49 @@
+generator photon {
+  provider = "photonjs"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+model DataType {
+  id           Int           @default(autoincrement()) @id
+  name         String        @default("")
+  initialDatas InitialData[] @relation(references: [type])
+  mainDatas    MainData[]    @relation(references: [type])
+}
+
+model InitialData {
+  address String   @default("")
+  id      Int      @default(autoincrement()) @id
+  lat     Float    @default(0)
+  lng     Float    @default(0)
+  name    String   @default("")
+  type    DataType
+}
+
+model MainData {
+  address String   @default("")
+  id      Int      @default(autoincrement()) @id
+  lat     Float    @default(0)
+  lng     Float    @default(0)
+  name    String   @default("")
+  type    DataType
+}
+
+model Post {
+  content   String?
+  id        Int     @default(autoincrement()) @id
+  published Boolean @default(false)
+  title     String  @default("")
+  author    User?
+}
+
+model User {
+  email    String  @default("") @unique
+  id       Int     @default(autoincrement()) @id
+  name     String?
+  password String  @default("")
+  posts    Post[]
+}
