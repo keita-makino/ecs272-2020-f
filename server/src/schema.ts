@@ -19,9 +19,15 @@ type Record {
 type DataType {
   id: ID!
   name: String!
+  mainData: [Record!]!
+}
+type Set {
+  type: String!
+  data: [Record!]!
 }
 type Query {
   records: [Record!]!
+  sets: [Set!]!
 }
 type Mutation {
   createRecord(lat: Float!, lng: Float!, name: String!, address: String!, type: Int!): Record!
@@ -38,7 +44,18 @@ input UserCreateInput {
 const resolvers = {
   Query: {
     records: (_parent: any, _args: any, ctx: Context) => {
-      return ctx.prisma.mainData.findMany();
+      return ctx.prisma.mainData.findMany({
+        include: { type: true }
+      });
+    },
+    sets: (_parent: any, args: any, ctx: Context) => {
+      return ctx.prisma.dataType
+        .findMany({
+          include: { mainData: true }
+        })
+        .then(data => {
+          return data.map(item => ({ type: item.name, data: item.mainData }));
+        });
     }
   },
   Mutation: {

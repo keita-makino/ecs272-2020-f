@@ -1,6 +1,6 @@
 import { Node } from './Node';
 
-export type Set = {
+export type LocationSet = {
   nodes: Node[];
   type: string;
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Set } from '../types/Set';
+import { LocationSet } from '../types/LocationSet';
 
 import mock from '../data/mock.json';
 
@@ -14,7 +14,7 @@ const usePowers = () => {
   console.log(mock);
 
   const cellSize = 10; // you may change this
-  const sets: Set[] = mock; // ... change this to get the "sets"
+  const sets: LocationSet[] = mock; // ... change this to get the "sets"
 
   console.log(sets);
 

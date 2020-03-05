@@ -6,18 +6,21 @@ import initialState from '../../data/initialState';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { ContourLayer } from 'deck.gl';
-import usePowers from '../../uses/usePowers';
+import useEnergy from '../../uses/useEnergy';
+import { LocationSet } from '../../types/LocationSet';
 
 type Props = {};
 
 const query = gql`
   query {
-    records {
-      id
-      lat
-      lng
-      name
-      address
+    sets {
+      type
+      data {
+        lat
+        lng
+        name
+        address
+      }
     }
   }
 `;
@@ -26,17 +29,12 @@ const MAPBOX_TOKEN =
   'pk.eyJ1Ijoia2VtYWtpbm8iLCJhIjoiY2s1aHJkeWVpMDZzbDNubzltem80MGdnZSJ9.Mn_8DItICHFJyiPJ2rP_0Q';
 
 const Map: React.FC<Props> = (props: Props) => {
-  const { data } = useQuery(query);
-  usePowers();
-  const coordinates = data?.records.map(
-    (item: { address: any; lng: any; lat: any }) => ({
-      ADDRESS: item.address,
-      RACKS: 10,
-      SPACES: 20,
-      COORDINATES: [item.lng, item.lat]
-    })
-  );
-  console.log(coordinates);
+  const { data } = useQuery<{ sets: LocationSet[] }>(query);
+
+  console.log(data);
+  const energy = useEnergy(data?.sets);
+  console.log(energy);
+
   const [view, setView] = React.useState(initialState.viewState);
 
   const CONTOURS = [
@@ -48,7 +46,7 @@ const Map: React.FC<Props> = (props: Props) => {
   const layer = [
     new ContourLayer({
       id: 'layer',
-      data: coordinates,
+      data: undefined,
       contours: CONTOURS,
       cellSize: 200,
       getPosition: (node: any) => node.COORDINATES
