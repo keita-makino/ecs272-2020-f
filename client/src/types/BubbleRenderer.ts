@@ -1,6 +1,6 @@
-import { ShapeSet } from './ShapeSet';
+import { ShapeSetBase } from './ShapeSet';
 
 export type BubbleRenderer = {
-  sets: ShapeSet[];
+  sets: ShapeSetBase[];
   getBoundaries: () => void;
 };

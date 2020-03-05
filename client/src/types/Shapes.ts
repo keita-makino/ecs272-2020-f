@@ -6,6 +6,10 @@ export type Line = {
   getAbc: () => { a: number; b: number; c: number };
 };
 
+export type PathConstructor = (a: Line[]) => Path;
+
+export type Path = Line[];
+
 export type CircleConstructor = (c: Point, r: number) => Circle;
 
 export type Circle = {

@@ -1,6 +1,6 @@
-import { Node } from './Node';
+import { Location } from './Location';
 
 export type LocationSet = {
-  nodes: Node[];
+  locations: Location[];
   type: string;
 };

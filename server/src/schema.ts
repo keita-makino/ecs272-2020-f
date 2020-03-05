@@ -23,7 +23,7 @@ type DataType {
 }
 type Set {
   type: String!
-  data: [Record!]!
+  locations: [Record!]!
 }
 type Query {
   records: [Record!]!
@@ -54,7 +54,10 @@ const resolvers = {
           include: { mainData: true }
         })
         .then(data => {
-          return data.map(item => ({ type: item.name, data: item.mainData }));
+          return data.map(item => ({
+            type: item.name,
+            locations: item.mainData
+          }));
         });
     }
   },

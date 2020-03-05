@@ -6,7 +6,9 @@ import {
   AreaConstructor,
   Circle,
   Area,
-  PointConstructor
+  PointConstructor,
+  PathConstructor,
+  Path
 } from '../types/Shapes';
 
 const createLine: LineConstructor = (s: Point, e: Point): Line => ({
@@ -18,6 +20,8 @@ const createLine: LineConstructor = (s: Point, e: Point): Line => ({
     c: s.longitude * e.latitude - e.longitude * s.latitude
   })
 });
+
+const createPath: PathConstructor = (a: Line[]): Path => a;
 
 const createCircle: CircleConstructor = (c: Point, r: number): Circle => ({
   center: c,
@@ -54,3 +58,5 @@ const createPoint: PointConstructor = (x: number, y: number): Point => ({
   getDistance: (p: Point) =>
     Math.sqrt(Math.pow(p.longitude - x, 2) + Math.pow(p.longitude - x, 2))
 });
+
+export { createLine, createPath, createPoint, createCircle, createArea };

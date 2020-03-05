@@ -1,4 +1,4 @@
-export type Node = {
+export type Location = {
   lat: number;
   lng: number;
   name: string;
