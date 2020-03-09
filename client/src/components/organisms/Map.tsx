@@ -5,7 +5,7 @@ import ReactMapGL, { Layer } from 'react-map-gl';
 import initialState from '../../data/initialState';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { ContourLayer } from 'deck.gl';
+import { ContourLayer, ScatterplotLayer } from 'deck.gl';
 import useEnergy from '../../uses/useEnergy';
 import { LocationSet } from '../../types/LocationSet';
 
@@ -15,7 +15,7 @@ const query = gql`
   query {
     sets {
       type
-      data {
+      locations {
         lat
         lng
         name
@@ -37,19 +37,25 @@ const Map: React.FC<Props> = (props: Props) => {
 
   const [view, setView] = React.useState(initialState.viewState);
 
-  const CONTOURS = [
-    { threshold: 1, color: [255, 0, 0, 255], strokeWidth: 1 }, // => Isoline for threshold 1
-    { threshold: 5, color: [0, 255, 0], strokeWidth: 2 }, // => Isoline for threshold 5
-    { threshold: [6, 10], color: [0, 0, 255, 128] } // => Isoband for threshold range [6, 10)
-  ];
+  const plotData = energy
+    .flat()
+    .map(item => ({ start: item.start, end: item.end }));
 
   const layer = [
-    new ContourLayer({
+    new ScatterplotLayer({
       id: 'layer',
       data: undefined,
-      contours: CONTOURS,
-      cellSize: 200,
-      getPosition: (node: any) => node.COORDINATES
+      pickable: true,
+      stroked: true,
+      filled: true,
+      radiusScale: 6,
+      radiusMinPixels: 1,
+      radiusMaxPixels: 100,
+      lineWidthMinPixels: 1,
+      // getPosition: d => d.coordinates,
+      // getRadius: d => Math.sqrt(d.exits),
+      getFillColor: d => [255, 140, 0],
+      getLineColor: d => [0, 0, 0]
     })
   ];
 
@@ -66,7 +72,7 @@ const Map: React.FC<Props> = (props: Props) => {
         mapboxApiAccessToken={MAPBOX_TOKEN}
         width={960}
         height={600}
-        mapStyle={'mapbox://styles/mapbox/dark-v9'}
+        mapStyle={'mapbox://styles/mapbox/light-v10'}
       >
         <Layer
           id={'height'}

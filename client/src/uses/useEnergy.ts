@@ -1,39 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { LocationSet } from '../types/LocationSet';
 import { Location } from '../types/Location';
 import getVirtualEdges from '../utils/getVirtualEdges';
 import { createShapeSet } from '../utils/shapeSetConstructor';
-import { ShapeSetActive, ShapeSetBase } from '../types/ShapeSet';
+import { createNode, createPoint } from '../utils/shapeConstructors';
+import { Node, Edge } from '../types/Shapes';
 
 const useEnergy = (sets?: LocationSet[]) => {
-  const [energy, setEnergy] = useState<LocationSet[]>([]);
+  const [energy, setEnergy] = useState<Edge[][]>([]);
 
   useEffect(() => {
     const f = async (sets: LocationSet[]) => {
-      sets.map(async (item, index, array) => {
-        const activeLocations = createShapeSet<ShapeSetActive>(
-          item.locations,
-          () => true
-        );
-        const inactiveLocations = createShapeSet<ShapeSetBase>(
-          array
-            .filter(item2 => item2.type !== item.type)
-            .reduce(
-              (prev: Location[], curr: LocationSet) => [
-                ...prev,
-                ...curr.locations
-              ],
-              []
+      const newSets = sets.map(
+        async (item, index, array): Promise<Edge[]> => {
+          const activeSet = createShapeSet(
+            item.locations.map(item =>
+              createNode(createPoint(item.lat, item.lng), 1)
             ),
-          () => false
-        );
-        const virtualEdges = await getVirtualEdges(
-          activeLocations,
-          inactiveLocations
-        );
-        console.log(virtualEdges);
-      });
-      return sets;
+            'active'
+          );
+          const inactiveSet = createShapeSet(
+            array
+              .filter(item2 => item2.type !== item.type)
+              .reduce(
+                (prev: Node[], curr: LocationSet) => [
+                  ...prev,
+                  ...curr.locations.map(item =>
+                    createNode(createPoint(item.lat, item.lng), 1)
+                  )
+                ],
+                []
+              ),
+            'base'
+          );
+          const virtualEdges: Edge[] = await getVirtualEdges(
+            activeSet,
+            inactiveSet
+          );
+          return virtualEdges;
+        }
+      );
+      setEnergy(await Promise.all(newSets));
     };
 
     if (sets) {

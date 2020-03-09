@@ -1,15 +1,19 @@
-import { Location } from '../types/Location';
-import { ShapeSetBase, ShapeSetActive } from '../types/ShapeSet';
+import { ShapeSetBase, ShapeSetActive, ShapeSet } from '../types/ShapeSet';
+import { Node } from '../types/Shapes';
+import connectNodes from './connectNodes';
 
 const getVirtualEdges = async (
-  activeLocations: ShapeSetActive,
-  inactiveLocations: ShapeSetBase
+  activeSet: ShapeSet,
+  inactiveSet: ShapeSetBase
 ) => {
-  if (!activeLocations) return;
-  activeLocations.nodes.sort((a: any, b: any) =>
-    a.center.getDistance(activeLocations.getCenter())
+  if (!activeSet.nodes) return [];
+  if (!('getCenter' in activeSet)) return [];
+  activeSet.nodes.sort((a: Node, b: Node) =>
+    a.getDistanceToCenter!() < b.getDistanceToCenter!() ? -1 : 1
   );
-  return;
+
+  const scannedEdges = await connectNodes(activeSet.nodes, inactiveSet.nodes);
+  return scannedEdges;
 };
 
 export default getVirtualEdges;

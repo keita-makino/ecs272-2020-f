@@ -1,14 +1,16 @@
-import { Circle, Line, Area, Point } from './Shapes';
+import { Node, Edge, Area, Point } from './Shapes';
 import { Location } from '../types/Location';
 
-export type ShapeConstructor = <T extends ShapeSetBase>(
-  nodes: Location[],
-  check: (val: T) => boolean
-) => T;
+export type ShapeSet = ShapeSetBase | ShapeSetActive;
+
+export type ShapeConstructor = (
+  nodes: Node[],
+  type: 'base' | 'active'
+) => ShapeSet;
 
 export type ShapeSetBase = {
-  nodes: Circle[];
-  edges?: Line[];
+  nodes: Node[];
+  edges?: Edge[];
   area?: Area;
 };
 
