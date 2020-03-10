@@ -12,9 +12,9 @@ const createShapeSet: ShapeConstructor = (
           getBoundary: () => [createPoint(5, 5)],
           getCenter: () =>
             createPoint(
-              nodes.reduce((prev, curr) => prev + curr.center.latitude, 0) /
+              nodes.reduce((prev, curr) => prev + curr.center.lng, 0) /
                 nodes.length,
-              nodes.reduce((prev, curr) => prev + curr.center.longitude, 0) /
+              nodes.reduce((prev, curr) => prev + curr.center.lat, 0) /
                 nodes.length
             )
         }
@@ -22,7 +22,7 @@ const createShapeSet: ShapeConstructor = (
 
   const shapeSet = {
     nodes: nodes.map(item => {
-      const point = createPoint(item.center.longitude, item.center.latitude);
+      const point = createPoint(item.center.lng, item.center.lat);
       const parentSet = {
         getDistanceToCenter: activeFunctions
           ? () => point.getDistance(activeFunctions.getCenter())

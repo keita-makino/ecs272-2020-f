@@ -5,7 +5,7 @@ import ReactMapGL, { Layer } from 'react-map-gl';
 import initialState from '../../data/initialState';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { ContourLayer, ScatterplotLayer } from 'deck.gl';
+import { ContourLayer, ScatterplotLayer, LineLayer } from 'deck.gl';
 import useEnergy from '../../uses/useEnergy';
 import { LocationSet } from '../../types/LocationSet';
 
@@ -33,18 +33,30 @@ const Map: React.FC<Props> = (props: Props) => {
 
   console.log(data);
   const energy = useEnergy(data?.sets);
-  console.log(energy);
 
   const [view, setView] = React.useState(initialState.viewState);
 
-  const plotData = energy
-    .flat()
-    .map(item => ({ start: item.start, end: item.end }));
+  const lineData = energy.flat().map(item => ({
+    from: { coordinates: [item.start.lng, item.start.lat] },
+    to: { coordinates: [item.end.lng, item.end.lat] }
+  }));
+
+  const scatterData = data?.sets
+    .map(item => item.locations.slice(0, 10))
+    .flat();
 
   const layer = [
+    new LineLayer({
+      id: 'lineLayer',
+      data: lineData,
+      getWidth: 3,
+      getSourcePosition: d => [d.from.coordinates[0], d.from.coordinates[1]],
+      getTargetPosition: d => [d.to.coordinates[0], d.to.coordinates[1]],
+      getColor: d => [0, 140, 255]
+    }),
     new ScatterplotLayer({
       id: 'layer',
-      data: undefined,
+      data: scatterData,
       pickable: true,
       stroked: true,
       filled: true,
@@ -52,9 +64,9 @@ const Map: React.FC<Props> = (props: Props) => {
       radiusMinPixels: 1,
       radiusMaxPixels: 100,
       lineWidthMinPixels: 1,
-      // getPosition: d => d.coordinates,
-      // getRadius: d => Math.sqrt(d.exits),
-      getFillColor: d => [255, 140, 0],
+      getPosition: d => [d.lng, d.lat],
+      getRadius: d => 5,
+      getFillColor: d => [255, 0, 0],
       getLineColor: d => [0, 0, 0]
     })
   ];

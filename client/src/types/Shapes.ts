@@ -14,7 +14,6 @@ export type Edge = Partial<ParentSet> & {
   end: Point;
   center: Point;
   length: number;
-  getAbc: () => { a: number; b: number; c: number };
 };
 
 export type PathConstructor = (a: Edge[]) => Path;
@@ -26,22 +25,39 @@ export type NodeConstructor = (c: Point, r: number) => Node;
 export type Node = Partial<ParentSet> & {
   center: Point;
   radius: number;
-  distanceToEdge: (l: Edge) => number;
+  getDistanceToEdge: (l: Edge) => number;
 };
 
 export type PointConstructor = (x: number, y: number) => Point;
 
-export type Point = Coordinates & {
+export type Point = {
+  lng: number;
+  lat: number;
   getDistance: (p: Point) => number;
   scale: (n: number) => Point;
   add: (p: Point) => Point;
   sub: (p: Point) => Point;
 };
 
-export type AreaConstructor = (w: number, h: number) => Area;
+export type AreaConstructor = (d: AreaDomain) => Area;
 
 export type Area = Partial<ParentSet> & {
   buffer: Float32Array;
+  domain: AreaDomain;
   getBuffer: (x: number, y: number) => number;
   setBuffer: (x: number, y: number, v: number) => void;
+  getPosition: (x: number, y: number) => Point;
+};
+
+export type AreaDomainConstructor = (s: ShapeSet) => Promise<AreaDomain>;
+
+export type AreaDomain = {
+  cellSize: number;
+  numOfCells: [number, number];
+  boundary: {
+    xMin: number;
+    xMax: number;
+    yMin: number;
+    yMax: number;
+  };
 };

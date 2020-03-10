@@ -13,6 +13,7 @@ const getVirtualEdges = async (
   );
 
   const scannedEdges = await connectNodes(activeSet.nodes, inactiveSet.nodes);
+  console.log(scannedEdges);
   return scannedEdges;
 };
 
