@@ -3,33 +3,40 @@ import { Node, Edge, Point } from '../types/Shapes';
 import { createShapeSet } from '../constructors/shapeSetConstructor';
 import { createEdge } from '../constructors/shapeConstructors';
 
-const connectNodes = async (activeSetNodes: Node[], inactiveSetNodes: Node[]) =>
-  activeSetNodes
-    .map(async (item: Node, index, array) => {
-      const visited = array.slice(0, index);
-      if (visited.length > 0) {
-        const closestNeighboringNode = await getClosestNeightboringNode(
-          item,
-          createShapeSet(visited, 'active') as ShapeSetActive,
-          inactiveSetNodes
-        );
+const connectNodes = async (
+  activeSetNodes: Node[],
+  inactiveSetNodes: Node[]
+): Promise<Edge[]> =>
+  await Promise.all(
+    activeSetNodes
+      .map(
+        async (item: Node, index, array): Promise<Edge[] | undefined> => {
+          const visited = array.slice(0, index);
+          if (visited.length > 0) {
+            const closestNeighboringNode = await getClosestNeightboringNode(
+              item,
+              createShapeSet(visited, 'active') as ShapeSetActive,
+              inactiveSetNodes
+            );
 
-        if (closestNeighboringNode) {
-          const testEdge = createEdge(
-            item.center,
-            closestNeighboringNode.center
-          );
-          const scannedEdges = (await rerouteEdges(
-            [testEdge],
-            inactiveSetNodes
-          )) as Edge[];
-          console.log(scannedEdges);
-          return scannedEdges;
+            if (closestNeighboringNode) {
+              const testEdge = createEdge(
+                item.center,
+                closestNeighboringNode.center
+              );
+              const scannedEdges = (await rerouteEdges(
+                [testEdge],
+                inactiveSetNodes
+              )) as Edge[];
+              console.log(scannedEdges);
+              return scannedEdges;
+            }
+          }
         }
-      }
-    })
-    .filter(item => item !== undefined)
-    .flat();
+      )
+      .filter(item => item !== undefined)
+      .flat()
+  );
 
 const rerouteEdges = async (edgesToCheck: Edge[], inactiveSetNodes: Node[]) => {
   const scannedEdges = [];
