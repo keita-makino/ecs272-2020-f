@@ -10,12 +10,12 @@ const Index: React.FC<Props> = (props: Props) => {
     <>
       <Sidebar
         typePanel={{
-          title: 'hoge',
+          title: 'Layers',
           typeArray: [
-            { type: 'Supermarket' },
-            { type: 'Bus Stop' },
-            { type: 'Restaurant' },
-            { type: 'Medical Clinic' }
+            { icon: 'StoreIcon', type: 'Supermarket' },
+            { icon: 'DirectionsBusIcon', type: 'Bus Stop' },
+            { icon: 'RestaurantMenuIcon', type: 'Restaurant' },
+            { icon: 'LocalHospitalIcon', type: 'Medical Clinic' }
           ]
         }}
       ></Sidebar>

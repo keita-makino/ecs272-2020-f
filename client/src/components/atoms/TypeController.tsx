@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
-export type TypeControllerProps = { type: string };
+export type TypeControllerProps = { icon: string; type: string };
 
 const TypeController: React.FC<TypeControllerProps> = (
   props: TypeControllerProps
