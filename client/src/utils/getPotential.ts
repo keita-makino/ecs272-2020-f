@@ -14,9 +14,7 @@ const getPotential = async (activeSet: ShapeSet, inactiveSet: ShapeSetBase) => {
   const domain = await createAreaDomain(activeSet);
   const potentialGrid = createArea(domain);
 
-  fillPotentialGrid(potentialGrid, activeSet, inactiveSet);
-
-  return;
+  return await fillPotentialGrid(potentialGrid, activeSet, inactiveSet);
 };
 
 const fillPotentialGrid = async (
@@ -68,7 +66,7 @@ const fillPotentialGrid = async (
     );
   });
 
-  console.log(potentialGrid);
+  return potentialGrid;
 };
 
 const evaluateRepulsion = async (

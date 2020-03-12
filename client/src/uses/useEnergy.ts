@@ -41,7 +41,9 @@ const useEnergy = (sets?: RecordSet[]) => {
 
           console.log(activeSet);
 
-          await getPotential(activeSet, inactiveSet);
+          activeSet.area = await getPotential(activeSet, inactiveSet);
+
+          const paths = getPaths();
 
           return activeSet.edges;
         }
@@ -56,5 +58,7 @@ const useEnergy = (sets?: RecordSet[]) => {
 
   return energy;
 };
+
+const getPaths = () => {};
 
 export default useEnergy;
