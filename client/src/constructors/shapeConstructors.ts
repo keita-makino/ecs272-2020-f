@@ -7,10 +7,15 @@ import {
   Node,
   Area,
   PointConstructor,
+  AreaDomain,
   PathConstructor,
-  Path,
-  AreaDomain
+  Path
 } from '../types/Shapes';
+
+const createPath: PathConstructor = (a: Point[]): Path => ({
+  points: a,
+  getCoordinates: () => a.map(item => [item.lng, item.lat])
+});
 
 const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
   start: s,
@@ -18,8 +23,6 @@ const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
   center: s.add(e).scale(0.5),
   length: s.getDistance(e)
 });
-
-const createPath: PathConstructor = (a: Edge[]): Path => a;
 
 const createNode: NodeConstructor = (c: Point, r: number): Node => {
   return {

@@ -3,17 +3,19 @@ import { RecordSet } from '../types/LocationSet';
 import { Record } from '../types/Location';
 import getVirtualEdges from '../utils/getVirtualEdges';
 import { createShapeSet } from '../constructors/shapeSetConstructor';
-import { Node, Edge } from '../types/Shapes';
+import { Node, Edge, Point, Path } from '../types/Shapes';
 import getPotential from '../utils/getPotential';
 import { createNode, createPoint } from '../constructors/shapeConstructors';
+import getPaths from '../utils/getPaths';
+import isAllContained from '../utils/isAllContained';
 
-const useEnergy = (sets?: RecordSet[]) => {
-  const [energy, setEnergy] = useState<Edge[][]>([]);
+const useContour = (sets?: RecordSet[]) => {
+  const [contours, setContours] = useState<(Path | undefined)[]>([]);
 
   useEffect(() => {
     const f = async (sets: RecordSet[]) => {
-      const newSets = sets.map(
-        async (item, index, array): Promise<Edge[]> => {
+      const newContours = sets.map(
+        async (item, index, array): Promise<Path | undefined> => {
           const activeSet = createShapeSet(
             item.records
               .slice(0, 10)
@@ -39,16 +41,12 @@ const useEnergy = (sets?: RecordSet[]) => {
             .flat()
             .filter(item => item !== undefined);
 
-          console.log(activeSet);
+          const path = getPotential(activeSet, inactiveSet);
 
-          activeSet.area = await getPotential(activeSet, inactiveSet);
-
-          const paths = getPaths();
-
-          return activeSet.edges;
+          return path;
         }
       );
-      setEnergy(await Promise.all(newSets));
+      setContours(await Promise.all(newContours));
     };
 
     if (sets) {
@@ -56,9 +54,7 @@ const useEnergy = (sets?: RecordSet[]) => {
     }
   }, [sets]);
 
-  return energy;
+  return contours;
 };
 
-const getPaths = () => {};
-
-export default useEnergy;
+export default useContour;

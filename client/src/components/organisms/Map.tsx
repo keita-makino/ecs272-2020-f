@@ -5,8 +5,8 @@ import ReactMapGL, { Layer } from 'react-map-gl';
 import initialState from '../../data/initialState';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { ContourLayer, ScatterplotLayer, LineLayer } from 'deck.gl';
-import useEnergy from '../../uses/useEnergy';
+import { ContourLayer, ScatterplotLayer, LineLayer, PathLayer } from 'deck.gl';
+import useContour from '../../uses/useEnergy';
 import { RecordSet } from '../../types/LocationSet';
 
 type Props = {};
@@ -31,27 +31,29 @@ const MAPBOX_TOKEN =
 const Map: React.FC<Props> = (props: Props) => {
   const { data } = useQuery<{ recordTypes: RecordSet[] }>(query);
 
-  console.log(data);
-  const energy = useEnergy(data?.recordTypes);
+  const contours = useContour(data?.recordTypes);
 
   const [view, setView] = React.useState(initialState.viewState);
 
-  const lineData = energy.flat().map(item => ({
-    from: { coordinates: [item.start.lng, item.start.lat] },
-    to: { coordinates: [item.end.lng, item.end.lat] }
-  }));
+  const pathData = contours
+    .map(item =>
+      item
+        ? { path: item?.getCoordinates() }
+        : { path: [[0, 0]] as [number, number][] }
+    )
+    .filter(item => item !== undefined);
 
   const scatterData = data?.recordTypes
     .map(item => item.records.slice(0, 10))
     .flat();
 
   const layer = [
-    new LineLayer({
+    new PathLayer({
       id: 'lineLayer',
-      data: lineData,
-      getWidth: 3,
-      getSourcePosition: d => [d.from.coordinates[0], d.from.coordinates[1]],
-      getTargetPosition: d => [d.to.coordinates[0], d.to.coordinates[1]],
+      data: pathData,
+      getWidth: d => 3,
+      getPath: d =>
+        d!.path.map(item => [...item, 0] as [number, number, number]),
       getColor: d => [0, 140, 255]
     }),
     new ScatterplotLayer({

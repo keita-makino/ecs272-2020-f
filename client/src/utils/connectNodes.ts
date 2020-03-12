@@ -28,7 +28,6 @@ const connectNodes = async (
                 [testEdge],
                 inactiveSetNodes
               )) as Edge[];
-              console.log(scannedEdges);
               return scannedEdges;
             }
           }

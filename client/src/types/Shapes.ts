@@ -16,10 +16,6 @@ export type Edge = Partial<ParentSet> & {
   length: number;
 };
 
-export type PathConstructor = (a: Edge[]) => Path;
-
-export type Path = Edge[];
-
 export type NodeConstructor = (c: Point, r: number) => Node;
 
 export type Node = Partial<ParentSet> & {
@@ -60,4 +56,11 @@ export type AreaDomain = {
     yMin: number;
     yMax: number;
   };
+};
+
+export type PathConstructor = (a: Point[]) => Path;
+
+export type Path = {
+  points: Point[];
+  getCoordinates: () => [number, number][];
 };

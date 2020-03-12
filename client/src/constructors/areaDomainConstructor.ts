@@ -7,8 +7,6 @@ const createAreaDomain: AreaDomainConstructor = async (
 ): Promise<AreaDomain> => {
   const range = await getRange(s);
   const cellSize = 0.001;
-  console.log(range);
-
   return {
     cellSize: cellSize,
     numOfCells: [

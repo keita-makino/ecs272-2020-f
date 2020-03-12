@@ -1,4 +1,4 @@
-import { Node, Edge, Area, Point } from './Shapes';
+import { Node, Edge, Area, Point, Path } from './Shapes';
 import { Record } from '../types/Location';
 
 export type ShapeSet = ShapeSetBase | ShapeSetActive;
@@ -15,6 +15,6 @@ export type ShapeSetBase = {
 };
 
 export type ShapeSetActive = ShapeSetBase & {
-  getBoundary: () => Point[];
+  getBoundary: () => Path;
   getCenter: () => Point;
 };
