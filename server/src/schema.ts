@@ -10,8 +10,8 @@ const User = objectType({
   }
 });
 
-const Data = objectType({
-  name: "MainData",
+const Record = objectType({
+  name: "Record",
   definition(t) {
     t.model.id();
     t.model.lat();
@@ -22,27 +22,48 @@ const Data = objectType({
   }
 });
 
-const DataType = objectType({
-  name: "DataType",
+const RecordType = objectType({
+  name: "RecordType",
   definition(t) {
     t.model.id();
     t.model.name();
-    t.model.mainData();
+    t.model.records();
+  }
+});
+
+const Room = objectType({
+  name: "Room",
+  definition(t) {
+    t.model.id();
+    t.model.name();
+    t.model.records();
   }
 });
 
 const Query = objectType({
   name: "Query",
-  definition(t) {}
+  definition(t) {
+    t.crud.record();
+    t.crud.records();
+    t.crud.recordTypes();
+    t.crud.users({ ordering: true });
+    t.crud.user();
+  }
 });
 
 const Mutation = objectType({
   name: "Mutation",
-  definition(t) {}
+  definition(t) {
+    t.crud.createOneRecord();
+    t.crud.createOneRecordType();
+    t.crud.createOneRoom();
+    t.crud.createOneUser();
+    t.crud.deleteOneRoom();
+  }
 });
 
 export const schema = makeSchema({
-  types: [User, Data, DataType],
+  types: [User, Record, RecordType, Room, Query, Mutation],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

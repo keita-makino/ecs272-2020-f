@@ -1,6 +1,6 @@
-import { Location } from './Location';
+import { Record } from './Location';
 
-export type LocationSet = {
-  locations: Location[];
-  type: string;
+export type RecordSet = {
+  records: Record[];
+  name: string;
 };

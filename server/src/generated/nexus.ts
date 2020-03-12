@@ -20,18 +20,94 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  MainDataWhereUniqueInput: { // input type
+  RecordCreateInput: { // input type
+    address?: string | null; // String
+    lat?: number | null; // Float
+    lng?: number | null; // Float
+    name?: string | null; // String
+    room: NexusGenInputs['RoomCreateOneWithoutRecordsInput']; // RoomCreateOneWithoutRecordsInput!
+    type: NexusGenInputs['RecordTypeCreateOneWithoutRecordsInput']; // RecordTypeCreateOneWithoutRecordsInput!
+  }
+  RecordCreateManyWithoutRoomInput: { // input type
+    connect?: NexusGenInputs['RecordWhereUniqueInput'][] | null; // [RecordWhereUniqueInput!]
+    create?: NexusGenInputs['RecordCreateWithoutRoomInput'][] | null; // [RecordCreateWithoutRoomInput!]
+  }
+  RecordCreateManyWithoutTypeInput: { // input type
+    connect?: NexusGenInputs['RecordWhereUniqueInput'][] | null; // [RecordWhereUniqueInput!]
+    create?: NexusGenInputs['RecordCreateWithoutTypeInput'][] | null; // [RecordCreateWithoutTypeInput!]
+  }
+  RecordCreateWithoutRoomInput: { // input type
+    address?: string | null; // String
+    lat?: number | null; // Float
+    lng?: number | null; // Float
+    name?: string | null; // String
+    type: NexusGenInputs['RecordTypeCreateOneWithoutRecordsInput']; // RecordTypeCreateOneWithoutRecordsInput!
+  }
+  RecordCreateWithoutTypeInput: { // input type
+    address?: string | null; // String
+    lat?: number | null; // Float
+    lng?: number | null; // Float
+    name?: string | null; // String
+    room: NexusGenInputs['RoomCreateOneWithoutRecordsInput']; // RoomCreateOneWithoutRecordsInput!
+  }
+  RecordTypeCreateInput: { // input type
+    name?: string | null; // String
+    records?: NexusGenInputs['RecordCreateManyWithoutTypeInput'] | null; // RecordCreateManyWithoutTypeInput
+  }
+  RecordTypeCreateOneWithoutRecordsInput: { // input type
+    connect?: NexusGenInputs['RecordTypeWhereUniqueInput'] | null; // RecordTypeWhereUniqueInput
+    create?: NexusGenInputs['RecordTypeCreateWithoutRecordsInput'] | null; // RecordTypeCreateWithoutRecordsInput
+  }
+  RecordTypeCreateWithoutRecordsInput: { // input type
+    name?: string | null; // String
+  }
+  RecordTypeWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
+  RecordWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
+  RoomCreateInput: { // input type
+    name?: string | null; // String
+    records?: NexusGenInputs['RecordCreateManyWithoutRoomInput'] | null; // RecordCreateManyWithoutRoomInput
+  }
+  RoomCreateOneWithoutRecordsInput: { // input type
+    connect?: NexusGenInputs['RoomWhereUniqueInput'] | null; // RoomWhereUniqueInput
+    create?: NexusGenInputs['RoomCreateWithoutRecordsInput'] | null; // RoomCreateWithoutRecordsInput
+  }
+  RoomCreateWithoutRecordsInput: { // input type
+    name?: string | null; // String
+  }
+  RoomWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
+  UserCreateInput: { // input type
+    email?: string | null; // String
+    name?: string | null; // String
+    password?: string | null; // String
+  }
+  UserOrderByInput: { // input type
+    email?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    id?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    name?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    password?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+  }
+  UserWhereUniqueInput: { // input type
+    email?: string | null; // String
     id?: number | null; // Int
   }
 }
 
 export interface NexusGenEnums {
+  OrderByArg: prisma.OrderByArg
 }
 
 export interface NexusGenRootTypes {
-  DataType: prisma.DataType;
-  MainData: prisma.MainData;
+  Mutation: {};
   Query: {};
+  Record: prisma.Record;
+  RecordType: prisma.RecordType;
+  Room: prisma.Room;
   User: prisma.User;
   String: string;
   Int: number;
@@ -41,38 +117,127 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
-  MainDataWhereUniqueInput: NexusGenInputs['MainDataWhereUniqueInput'];
+  RecordCreateInput: NexusGenInputs['RecordCreateInput'];
+  RecordCreateManyWithoutRoomInput: NexusGenInputs['RecordCreateManyWithoutRoomInput'];
+  RecordCreateManyWithoutTypeInput: NexusGenInputs['RecordCreateManyWithoutTypeInput'];
+  RecordCreateWithoutRoomInput: NexusGenInputs['RecordCreateWithoutRoomInput'];
+  RecordCreateWithoutTypeInput: NexusGenInputs['RecordCreateWithoutTypeInput'];
+  RecordTypeCreateInput: NexusGenInputs['RecordTypeCreateInput'];
+  RecordTypeCreateOneWithoutRecordsInput: NexusGenInputs['RecordTypeCreateOneWithoutRecordsInput'];
+  RecordTypeCreateWithoutRecordsInput: NexusGenInputs['RecordTypeCreateWithoutRecordsInput'];
+  RecordTypeWhereUniqueInput: NexusGenInputs['RecordTypeWhereUniqueInput'];
+  RecordWhereUniqueInput: NexusGenInputs['RecordWhereUniqueInput'];
+  RoomCreateInput: NexusGenInputs['RoomCreateInput'];
+  RoomCreateOneWithoutRecordsInput: NexusGenInputs['RoomCreateOneWithoutRecordsInput'];
+  RoomCreateWithoutRecordsInput: NexusGenInputs['RoomCreateWithoutRecordsInput'];
+  RoomWhereUniqueInput: NexusGenInputs['RoomWhereUniqueInput'];
+  UserCreateInput: NexusGenInputs['UserCreateInput'];
+  UserOrderByInput: NexusGenInputs['UserOrderByInput'];
+  UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
+  OrderByArg: NexusGenEnums['OrderByArg'];
 }
 
 export interface NexusGenFieldTypes {
-  DataType: { // field return type
-    id: number; // Int!
-    mainData: NexusGenRootTypes['MainData'][]; // [MainData!]!
-    name: string; // String!
+  Mutation: { // field return type
+    createOneRecord: NexusGenRootTypes['Record']; // Record!
+    createOneRecordType: NexusGenRootTypes['RecordType']; // RecordType!
+    createOneRoom: NexusGenRootTypes['Room']; // Room!
+    createOneUser: NexusGenRootTypes['User']; // User!
+    deleteOneRoom: NexusGenRootTypes['Room'] | null; // Room
   }
-  MainData: { // field return type
+  Query: { // field return type
+    record: NexusGenRootTypes['Record'] | null; // Record
+    records: NexusGenRootTypes['Record'][]; // [Record!]!
+    recordTypes: NexusGenRootTypes['RecordType'][]; // [RecordType!]!
+    user: NexusGenRootTypes['User'] | null; // User
+    users: NexusGenRootTypes['User'][]; // [User!]!
+  }
+  Record: { // field return type
     address: string; // String!
     id: number; // Int!
     lat: number; // Float!
     lng: number; // Float!
     name: string; // String!
-    type: NexusGenRootTypes['DataType']; // DataType!
+    type: NexusGenRootTypes['RecordType']; // RecordType!
   }
-  Query: { // field return type
-    ok: boolean; // Boolean!
+  RecordType: { // field return type
+    id: number; // Int!
+    name: string; // String!
+    records: NexusGenRootTypes['Record'][]; // [Record!]!
+  }
+  Room: { // field return type
+    id: number; // Int!
+    name: string; // String!
+    records: NexusGenRootTypes['Record'][]; // [Record!]!
   }
   User: { // field return type
     email: string; // String!
     id: number; // Int!
-    name: string | null; // String
+    name: string; // String!
   }
 }
 
 export interface NexusGenArgTypes {
-  DataType: {
-    mainData: { // args
-      after?: NexusGenInputs['MainDataWhereUniqueInput'] | null; // MainDataWhereUniqueInput
-      before?: NexusGenInputs['MainDataWhereUniqueInput'] | null; // MainDataWhereUniqueInput
+  Mutation: {
+    createOneRecord: { // args
+      data: NexusGenInputs['RecordCreateInput']; // RecordCreateInput!
+    }
+    createOneRecordType: { // args
+      data: NexusGenInputs['RecordTypeCreateInput']; // RecordTypeCreateInput!
+    }
+    createOneRoom: { // args
+      data: NexusGenInputs['RoomCreateInput']; // RoomCreateInput!
+    }
+    createOneUser: { // args
+      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    }
+    deleteOneRoom: { // args
+      where: NexusGenInputs['RoomWhereUniqueInput']; // RoomWhereUniqueInput!
+    }
+  }
+  Query: {
+    record: { // args
+      where: NexusGenInputs['RecordWhereUniqueInput']; // RecordWhereUniqueInput!
+    }
+    records: { // args
+      after?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
+      before?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    recordTypes: { // args
+      after?: NexusGenInputs['RecordTypeWhereUniqueInput'] | null; // RecordTypeWhereUniqueInput
+      before?: NexusGenInputs['RecordTypeWhereUniqueInput'] | null; // RecordTypeWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    user: { // args
+      where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
+    }
+    users: { // args
+      after?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
+      before?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenInputs['UserOrderByInput'] | null; // UserOrderByInput
+      skip?: number | null; // Int
+    }
+  }
+  RecordType: {
+    records: { // args
+      after?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
+      before?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+  }
+  Room: {
+    records: { // args
+      after?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
+      before?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
       skip?: number | null; // Int
@@ -85,11 +250,11 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "DataType" | "MainData" | "Query" | "User";
+export type NexusGenObjectNames = "Mutation" | "Query" | "Record" | "RecordType" | "Room" | "User";
 
-export type NexusGenInputNames = "MainDataWhereUniqueInput";
+export type NexusGenInputNames = "RecordCreateInput" | "RecordCreateManyWithoutRoomInput" | "RecordCreateManyWithoutTypeInput" | "RecordCreateWithoutRoomInput" | "RecordCreateWithoutTypeInput" | "RecordTypeCreateInput" | "RecordTypeCreateOneWithoutRecordsInput" | "RecordTypeCreateWithoutRecordsInput" | "RecordTypeWhereUniqueInput" | "RecordWhereUniqueInput" | "RoomCreateInput" | "RoomCreateOneWithoutRecordsInput" | "RoomCreateWithoutRecordsInput" | "RoomWhereUniqueInput" | "UserCreateInput" | "UserOrderByInput" | "UserWhereUniqueInput";
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "OrderByArg";
 
 export type NexusGenInterfaceNames = never;
 

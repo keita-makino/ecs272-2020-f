@@ -34,7 +34,6 @@ const connectNodes = async (
           }
         }
       )
-      .filter(item => item !== undefined)
       .flat()
   );
 

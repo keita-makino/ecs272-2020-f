@@ -7,7 +7,10 @@ export type SidebarProps = { typePanel: TypeControllerPanelProps };
 
 const Sidebar: React.FC<SidebarProps> = (props: SidebarProps) => {
   return (
-    <TypeControllerPanel typeArray={props.typePanel}></TypeControllerPanel>
+    <TypeControllerPanel
+      title={'hoge'}
+      typeArray={props.typePanel.typeArray}
+    ></TypeControllerPanel>
   );
 };
 

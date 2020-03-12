@@ -7,15 +7,15 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { ContourLayer, ScatterplotLayer, LineLayer } from 'deck.gl';
 import useEnergy from '../../uses/useEnergy';
-import { LocationSet } from '../../types/LocationSet';
+import { RecordSet } from '../../types/LocationSet';
 
 type Props = {};
 
 const query = gql`
   query {
-    sets {
-      type
-      locations {
+    recordTypes {
+      name
+      records {
         lat
         lng
         name
@@ -29,10 +29,10 @@ const MAPBOX_TOKEN =
   'pk.eyJ1Ijoia2VtYWtpbm8iLCJhIjoiY2s1aHJkeWVpMDZzbDNubzltem80MGdnZSJ9.Mn_8DItICHFJyiPJ2rP_0Q';
 
 const Map: React.FC<Props> = (props: Props) => {
-  const { data } = useQuery<{ sets: LocationSet[] }>(query);
+  const { data } = useQuery<{ recordTypes: RecordSet[] }>(query);
 
   console.log(data);
-  const energy = useEnergy(data?.sets);
+  const energy = useEnergy(data?.recordTypes);
 
   const [view, setView] = React.useState(initialState.viewState);
 
@@ -41,8 +41,8 @@ const Map: React.FC<Props> = (props: Props) => {
     to: { coordinates: [item.end.lng, item.end.lat] }
   }));
 
-  const scatterData = data?.sets
-    .map(item => item.locations.slice(0, 10))
+  const scatterData = data?.recordTypes
+    .map(item => item.records.slice(0, 10))
     .flat();
 
   const layer = [

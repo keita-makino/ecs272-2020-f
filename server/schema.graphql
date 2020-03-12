@@ -2,31 +2,143 @@
 ### Do not make changes to this file directly
 
 
-type DataType {
-  id: Int!
-  mainData(after: MainDataWhereUniqueInput, before: MainDataWhereUniqueInput, first: Int, last: Int, skip: Int): [MainData!]!
-  name: String!
+type Mutation {
+  createOneRecord(data: RecordCreateInput!): Record!
+  createOneRecordType(data: RecordTypeCreateInput!): RecordType!
+  createOneRoom(data: RoomCreateInput!): Room!
+  createOneUser(data: UserCreateInput!): User!
+  deleteOneRoom(where: RoomWhereUniqueInput!): Room
 }
 
-type MainData {
+enum OrderByArg {
+  asc
+  desc
+}
+
+type Query {
+  record(where: RecordWhereUniqueInput!): Record
+  records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
+  recordTypes(after: RecordTypeWhereUniqueInput, before: RecordTypeWhereUniqueInput, first: Int, last: Int, skip: Int): [RecordType!]!
+  user(where: UserWhereUniqueInput!): User
+  users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int): [User!]!
+}
+
+type Record {
   address: String!
   id: Int!
   lat: Float!
   lng: Float!
   name: String!
-  type: DataType!
+  type: RecordType!
 }
 
-input MainDataWhereUniqueInput {
+input RecordCreateInput {
+  address: String
+  lat: Float
+  lng: Float
+  name: String
+  room: RoomCreateOneWithoutRecordsInput!
+  type: RecordTypeCreateOneWithoutRecordsInput!
+}
+
+input RecordCreateManyWithoutRoomInput {
+  connect: [RecordWhereUniqueInput!]
+  create: [RecordCreateWithoutRoomInput!]
+}
+
+input RecordCreateManyWithoutTypeInput {
+  connect: [RecordWhereUniqueInput!]
+  create: [RecordCreateWithoutTypeInput!]
+}
+
+input RecordCreateWithoutRoomInput {
+  address: String
+  lat: Float
+  lng: Float
+  name: String
+  type: RecordTypeCreateOneWithoutRecordsInput!
+}
+
+input RecordCreateWithoutTypeInput {
+  address: String
+  lat: Float
+  lng: Float
+  name: String
+  room: RoomCreateOneWithoutRecordsInput!
+}
+
+type RecordType {
+  id: Int!
+  name: String!
+  records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
+}
+
+input RecordTypeCreateInput {
+  name: String
+  records: RecordCreateManyWithoutTypeInput
+}
+
+input RecordTypeCreateOneWithoutRecordsInput {
+  connect: RecordTypeWhereUniqueInput
+  create: RecordTypeCreateWithoutRecordsInput
+}
+
+input RecordTypeCreateWithoutRecordsInput {
+  name: String
+}
+
+input RecordTypeWhereUniqueInput {
   id: Int
 }
 
-type Query {
-  ok: Boolean!
+input RecordWhereUniqueInput {
+  id: Int
+}
+
+type Room {
+  id: Int!
+  name: String!
+  records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
+}
+
+input RoomCreateInput {
+  name: String
+  records: RecordCreateManyWithoutRoomInput
+}
+
+input RoomCreateOneWithoutRecordsInput {
+  connect: RoomWhereUniqueInput
+  create: RoomCreateWithoutRecordsInput
+}
+
+input RoomCreateWithoutRecordsInput {
+  name: String
+}
+
+input RoomWhereUniqueInput {
+  id: Int
 }
 
 type User {
   email: String!
   id: Int!
+  name: String!
+}
+
+input UserCreateInput {
+  email: String
   name: String
+  password: String
+}
+
+input UserOrderByInput {
+  email: OrderByArg
+  id: OrderByArg
+  name: OrderByArg
+  password: OrderByArg
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: Int
 }

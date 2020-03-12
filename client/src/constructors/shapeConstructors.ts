@@ -9,10 +9,8 @@ import {
   PointConstructor,
   PathConstructor,
   Path,
-  AreaDomainConstructor,
   AreaDomain
 } from '../types/Shapes';
-import { ShapeSet } from '../types/ShapeSet';
 
 const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
   start: s,

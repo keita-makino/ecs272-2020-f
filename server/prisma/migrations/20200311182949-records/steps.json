@@ -1,0 +1,29 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Room",
+      "field": "records",
+      "type": "Record",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Room",
+      "field": "data"
+    },
+    {
+      "tag": "CreateField",
+      "model": "RecordType",
+      "field": "records",
+      "type": "Record",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "RecordType",
+      "field": "data"
+    }
+  ]
+}

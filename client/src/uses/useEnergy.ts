@@ -1,33 +1,33 @@
 import { useState, useEffect } from 'react';
-import { LocationSet } from '../types/LocationSet';
-import { Location } from '../types/Location';
+import { RecordSet } from '../types/LocationSet';
+import { Record } from '../types/Location';
 import getVirtualEdges from '../utils/getVirtualEdges';
 import { createShapeSet } from '../constructors/shapeSetConstructor';
 import { Node, Edge } from '../types/Shapes';
 import getPotential from '../utils/getPotential';
 import { createNode, createPoint } from '../constructors/shapeConstructors';
 
-const useEnergy = (sets?: LocationSet[]) => {
+const useEnergy = (sets?: RecordSet[]) => {
   const [energy, setEnergy] = useState<Edge[][]>([]);
 
   useEffect(() => {
-    const f = async (sets: LocationSet[]) => {
+    const f = async (sets: RecordSet[]) => {
       const newSets = sets.map(
         async (item, index, array): Promise<Edge[]> => {
           const activeSet = createShapeSet(
-            item.locations
+            item.records
               .slice(0, 10)
               .map(item => createNode(createPoint(item.lng, item.lat), 1)),
             'active'
           );
           const inactiveSet = createShapeSet(
             array
-              .filter(item2 => item2.type !== item.type)
+              .filter(item2 => item2.name !== item.name)
               .slice(0, 30)
               .reduce(
-                (prev: Node[], curr: LocationSet) => [
+                (prev: Node[], curr: RecordSet) => [
                   ...prev,
-                  ...curr.locations.map(item =>
+                  ...curr.records.map(item =>
                     createNode(createPoint(item.lng, item.lat), 1)
                   )
                 ],
@@ -35,7 +35,9 @@ const useEnergy = (sets?: LocationSet[]) => {
               ),
             'base'
           );
-          activeSet.edges = await getVirtualEdges(activeSet, inactiveSet);
+          activeSet.edges = (await getVirtualEdges(activeSet, inactiveSet))
+            .flat()
+            .filter(item => item !== undefined);
 
           console.log(activeSet);
 

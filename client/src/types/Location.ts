@@ -1,4 +1,4 @@
-export type Location = {
+export type Record = {
   lat: number;
   lng: number;
   name: string;
