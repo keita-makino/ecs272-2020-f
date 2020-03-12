@@ -1,1 +1,1 @@
-declare module '@urbica/react-map-gl';
+declare module 'color-convert';

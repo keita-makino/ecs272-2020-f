@@ -8,6 +8,8 @@ import { gql } from 'apollo-boost';
 import { ContourLayer, ScatterplotLayer, LineLayer, PathLayer } from 'deck.gl';
 import useContour from '../../uses/useEnergy';
 import { RecordSet } from '../../types/LocationSet';
+import useColor from '../../uses/useColor';
+import { hsl } from 'color-convert';
 
 type Props = {};
 
@@ -30,16 +32,16 @@ const MAPBOX_TOKEN =
 
 const Map: React.FC<Props> = (props: Props) => {
   const { data } = useQuery<{ recordTypes: RecordSet[] }>(query);
-
+  console.log(hsl);
   const contours = useContour(data?.recordTypes);
 
   const [view, setView] = React.useState(initialState.viewState);
 
   const pathData = contours
-    .map(item =>
+    .map((item, index) =>
       item
-        ? { path: item?.getCoordinates() }
-        : { path: [[0, 0]] as [number, number][] }
+        ? { index: index, path: item?.getCoordinates() }
+        : { index: index, path: [[0, 0]] as [number, number][] }
     )
     .filter(item => item !== undefined);
 
@@ -54,7 +56,7 @@ const Map: React.FC<Props> = (props: Props) => {
       getWidth: d => 3,
       getPath: d =>
         d!.path.map(item => [...item, 0] as [number, number, number]),
-      getColor: d => [0, 140, 255]
+      getColor: d => [0, 150, 0]
     }),
     new ScatterplotLayer({
       id: 'layer',

@@ -14,7 +14,7 @@ const TypeControllerPanel: React.FC<TypeControllerPanelProps> = (
     <>
       <Typography>{props.title}</Typography>
       {props.typeArray.map(item => (
-        <TypeController type={item.type}></TypeController>
+        <TypeController {...item}></TypeController>
       ))}
     </>
   );
