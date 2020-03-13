@@ -12,14 +12,13 @@ const Index: React.FC<Props> = (props: Props) => {
         typePanel={{
           title: 'Layers',
           typeArray: [
-            { icon: 'StoreIcon', type: 'Supermarket' },
-            { icon: 'DirectionsBusIcon', type: 'Bus Stop' },
-            { icon: 'RestaurantMenuIcon', type: 'Restaurant' },
-            { icon: 'LocalHospitalIcon', type: 'Medical Clinic' }
+            { icon: 'store', type: 'Supermarket' },
+            { icon: 'directionsBus', type: 'Bus Stop' },
+            { icon: 'restaurantMenu', type: 'Restaurant' },
+            { icon: 'hotel', type: 'Medical Clinic' }
           ]
         }}
       ></Sidebar>
-      <Map />
     </>
   );
 };
