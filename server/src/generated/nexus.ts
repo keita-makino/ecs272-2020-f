@@ -81,10 +81,22 @@ export interface NexusGenInputs {
   RoomWhereUniqueInput: { // input type
     id?: number | null; // Int
   }
+  SettingCreateOneWithoutUserInput: { // input type
+    connect?: NexusGenInputs['SettingWhereUniqueInput'] | null; // SettingWhereUniqueInput
+    create?: NexusGenInputs['SettingCreateWithoutUserInput'] | null; // SettingCreateWithoutUserInput
+  }
+  SettingCreateWithoutUserInput: { // input type
+    cellSize?: number | null; // Float
+    markSize?: number | null; // Float
+  }
+  SettingWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
   UserCreateInput: { // input type
     email?: string | null; // String
     name?: string | null; // String
     password?: string | null; // String
+    setting: NexusGenInputs['SettingCreateOneWithoutUserInput']; // SettingCreateOneWithoutUserInput!
   }
   UserOrderByInput: { // input type
     email?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
@@ -131,6 +143,9 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   RoomCreateOneWithoutRecordsInput: NexusGenInputs['RoomCreateOneWithoutRecordsInput'];
   RoomCreateWithoutRecordsInput: NexusGenInputs['RoomCreateWithoutRecordsInput'];
   RoomWhereUniqueInput: NexusGenInputs['RoomWhereUniqueInput'];
+  SettingCreateOneWithoutUserInput: NexusGenInputs['SettingCreateOneWithoutUserInput'];
+  SettingCreateWithoutUserInput: NexusGenInputs['SettingCreateWithoutUserInput'];
+  SettingWhereUniqueInput: NexusGenInputs['SettingWhereUniqueInput'];
   UserCreateInput: NexusGenInputs['UserCreateInput'];
   UserOrderByInput: NexusGenInputs['UserOrderByInput'];
   UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
@@ -252,7 +267,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Mutation" | "Query" | "Record" | "RecordType" | "Room" | "User";
 
-export type NexusGenInputNames = "RecordCreateInput" | "RecordCreateManyWithoutRoomInput" | "RecordCreateManyWithoutTypeInput" | "RecordCreateWithoutRoomInput" | "RecordCreateWithoutTypeInput" | "RecordTypeCreateInput" | "RecordTypeCreateOneWithoutRecordsInput" | "RecordTypeCreateWithoutRecordsInput" | "RecordTypeWhereUniqueInput" | "RecordWhereUniqueInput" | "RoomCreateInput" | "RoomCreateOneWithoutRecordsInput" | "RoomCreateWithoutRecordsInput" | "RoomWhereUniqueInput" | "UserCreateInput" | "UserOrderByInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "RecordCreateInput" | "RecordCreateManyWithoutRoomInput" | "RecordCreateManyWithoutTypeInput" | "RecordCreateWithoutRoomInput" | "RecordCreateWithoutTypeInput" | "RecordTypeCreateInput" | "RecordTypeCreateOneWithoutRecordsInput" | "RecordTypeCreateWithoutRecordsInput" | "RecordTypeWhereUniqueInput" | "RecordWhereUniqueInput" | "RoomCreateInput" | "RoomCreateOneWithoutRecordsInput" | "RoomCreateWithoutRecordsInput" | "RoomWhereUniqueInput" | "SettingCreateOneWithoutUserInput" | "SettingCreateWithoutUserInput" | "SettingWhereUniqueInput" | "UserCreateInput" | "UserOrderByInput" | "UserWhereUniqueInput";
 
 export type NexusGenEnumNames = "OrderByArg";
 
