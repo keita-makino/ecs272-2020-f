@@ -1,10 +1,17 @@
-import { useState, useEffect } from 'react';
-import { hslToRgb } from '@material-ui/core';
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks';
+
+const query = gql`
+  query recordTypeSingle($id: Int!) {
+    recordType(where: { id: $id }) {
+      color
+    }
+  }
+`;
 
 const useColor = (index: number) => {
-  const [color, setColor] = useState('0, 80%, 80%');
-  setColor(hslToRgb(`${(index * 157) % 255}, 80%, 80%`));
-  return color;
+  const { data } = useQuery(query, { variables: { id: index } });
+  return data.recordType.color;
 };
 
 export default useColor;

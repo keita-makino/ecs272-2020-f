@@ -3,6 +3,7 @@
   "license": "MIT",
   "devDependencies": {
     "apollo-server": "^2.11.0",
+    "color-convert": "^2.0.1",
     "graphql": "^14.6.0",
     "nexus": "^0.12.0-rc.13",
     "prisma2": "2.0.0-preview023",

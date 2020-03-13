@@ -18,6 +18,7 @@ enum OrderByArg {
 type Query {
   record(where: RecordWhereUniqueInput!): Record
   records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
+  recordType(where: RecordTypeWhereUniqueInput!): RecordType
   recordTypes(after: RecordTypeWhereUniqueInput, before: RecordTypeWhereUniqueInput, first: Int, last: Int, skip: Int): [RecordType!]!
   user(where: UserWhereUniqueInput!): User
   users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int): [User!]!
@@ -68,12 +69,14 @@ input RecordCreateWithoutTypeInput {
 }
 
 type RecordType {
+  color: [Int!]!
   id: Int!
   name: String!
   records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
 }
 
 input RecordTypeCreateInput {
+  id: Int!
   name: String
   records: RecordCreateManyWithoutTypeInput
 }
@@ -84,6 +87,7 @@ input RecordTypeCreateOneWithoutRecordsInput {
 }
 
 input RecordTypeCreateWithoutRecordsInput {
+  id: Int!
   name: String
 }
 
@@ -126,6 +130,7 @@ input SettingCreateOneWithoutUserInput {
 
 input SettingCreateWithoutUserInput {
   cellSize: Float
+  id: Int!
   markSize: Float
 }
 
@@ -143,7 +148,7 @@ input UserCreateInput {
   email: String
   name: String
   password: String
-  setting: SettingCreateOneWithoutUserInput!
+  setting: SettingCreateOneWithoutUserInput
 }
 
 input UserOrderByInput {

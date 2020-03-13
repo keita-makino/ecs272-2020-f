@@ -1,5 +1,6 @@
 import { nexusPrismaPlugin } from "nexus-prisma";
 import { idArg, makeSchema, objectType, stringArg } from "nexus";
+import { hsl } from "color-convert";
 
 const User = objectType({
   name: "User",
@@ -28,6 +29,11 @@ const RecordType = objectType({
     t.model.id();
     t.model.name();
     t.model.records();
+    t.list.int("color", {
+      resolve({ id }, args, ctx) {
+        return hsl.rgb((id * 43) % 255, 80, 60);
+      }
+    });
   }
 });
 
@@ -46,6 +52,7 @@ const Query = objectType({
     t.crud.record();
     t.crud.records();
     t.crud.recordTypes();
+    t.crud.recordType();
     t.crud.users({ ordering: true });
     t.crud.user();
   }

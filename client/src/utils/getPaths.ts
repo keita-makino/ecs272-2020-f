@@ -6,15 +6,10 @@ import { createPath } from '../constructors/shapeConstructors';
 const getPaths = async (
   activeSet: ShapeSet,
   threshold: number
-): Promise<Path | undefined> => {
+): Promise<Path> => {
   const result = contours()
     .size(activeSet.area!.domain.numOfCells)
     .contour(Array.from(activeSet.area!.buffer) as number[], threshold);
-  console.log(
-    result.coordinates[0][0].map(item =>
-      activeSet.area!.getPosition(item[0], item[1])
-    )
-  );
   return createPath(
     result.coordinates[0][0].map(item =>
       activeSet.area!.getPosition(item[0], item[1])

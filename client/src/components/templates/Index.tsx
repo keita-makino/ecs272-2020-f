@@ -19,6 +19,7 @@ const Index: React.FC<Props> = (props: Props) => {
           ]
         }}
       ></Sidebar>
+      <Map />
     </>
   );
 };

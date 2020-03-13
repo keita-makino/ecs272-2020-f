@@ -1,5 +1,4 @@
 import { Node, Edge, Area, Point, Path } from './Shapes';
-import { Record } from '../types/Location';
 
 export type ShapeSet = ShapeSetBase | ShapeSetActive;
 

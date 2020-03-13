@@ -51,6 +51,7 @@ export interface NexusGenInputs {
     room: NexusGenInputs['RoomCreateOneWithoutRecordsInput']; // RoomCreateOneWithoutRecordsInput!
   }
   RecordTypeCreateInput: { // input type
+    id: number; // Int!
     name?: string | null; // String
     records?: NexusGenInputs['RecordCreateManyWithoutTypeInput'] | null; // RecordCreateManyWithoutTypeInput
   }
@@ -59,6 +60,7 @@ export interface NexusGenInputs {
     create?: NexusGenInputs['RecordTypeCreateWithoutRecordsInput'] | null; // RecordTypeCreateWithoutRecordsInput
   }
   RecordTypeCreateWithoutRecordsInput: { // input type
+    id: number; // Int!
     name?: string | null; // String
   }
   RecordTypeWhereUniqueInput: { // input type
@@ -87,6 +89,7 @@ export interface NexusGenInputs {
   }
   SettingCreateWithoutUserInput: { // input type
     cellSize?: number | null; // Float
+    id: number; // Int!
     markSize?: number | null; // Float
   }
   SettingWhereUniqueInput: { // input type
@@ -96,7 +99,7 @@ export interface NexusGenInputs {
     email?: string | null; // String
     name?: string | null; // String
     password?: string | null; // String
-    setting: NexusGenInputs['SettingCreateOneWithoutUserInput']; // SettingCreateOneWithoutUserInput!
+    setting?: NexusGenInputs['SettingCreateOneWithoutUserInput'] | null; // SettingCreateOneWithoutUserInput
   }
   UserOrderByInput: { // input type
     email?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
@@ -163,6 +166,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     record: NexusGenRootTypes['Record'] | null; // Record
     records: NexusGenRootTypes['Record'][]; // [Record!]!
+    recordType: NexusGenRootTypes['RecordType'] | null; // RecordType
     recordTypes: NexusGenRootTypes['RecordType'][]; // [RecordType!]!
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
@@ -176,6 +180,7 @@ export interface NexusGenFieldTypes {
     type: NexusGenRootTypes['RecordType']; // RecordType!
   }
   RecordType: { // field return type
+    color: number[]; // [Int!]!
     id: number; // Int!
     name: string; // String!
     records: NexusGenRootTypes['Record'][]; // [Record!]!
@@ -220,6 +225,9 @@ export interface NexusGenArgTypes {
       first?: number | null; // Int
       last?: number | null; // Int
       skip?: number | null; // Int
+    }
+    recordType: { // args
+      where: NexusGenInputs['RecordTypeWhereUniqueInput']; // RecordTypeWhereUniqueInput!
     }
     recordTypes: { // args
       after?: NexusGenInputs['RecordTypeWhereUniqueInput'] | null; // RecordTypeWhereUniqueInput

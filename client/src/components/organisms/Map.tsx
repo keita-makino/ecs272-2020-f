@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DeckGL from '@deck.gl/react';
 import ReactMapGL, { Layer } from 'react-map-gl';
 
 import initialState from '../../data/initialState';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { ContourLayer, ScatterplotLayer, LineLayer, PathLayer } from 'deck.gl';
-import useContour from '../../uses/useEnergy';
-import { RecordSet } from '../../types/LocationSet';
+import {
+  ContourLayer,
+  ScatterplotLayer,
+  LineLayer,
+  PathLayer,
+  PolygonLayer,
+  RGBAColor
+} from 'deck.gl';
+import useContours from '../../uses/useContours';
+import { RecordSet } from '../../types/RecordSet';
 import useColor from '../../uses/useColor';
-import { hsl } from 'color-convert';
+import { useWindowSize } from 'react-use';
 
 type Props = {};
 
@@ -23,62 +30,100 @@ const query = gql`
         name
         address
       }
+      color
     }
   }
 `;
+
+type AreaData = {
+  contour: [number, number][];
+  color: RGBAColor;
+}[];
+type ScatterData = {
+  point: [number, number];
+  color: RGBAColor;
+}[];
+
+type PlotData = {
+  area?: AreaData;
+  scatter?: ScatterData;
+};
 
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoia2VtYWtpbm8iLCJhIjoiY2s1aHJkeWVpMDZzbDNubzltem80MGdnZSJ9.Mn_8DItICHFJyiPJ2rP_0Q';
 
 const Map: React.FC<Props> = (props: Props) => {
   const { data } = useQuery<{ recordTypes: RecordSet[] }>(query);
-  console.log(hsl);
-  const contours = useContour(data?.recordTypes);
+  const contours = useContours(data?.recordTypes);
+  const recordTypes = data?.recordTypes!;
+  const colors = (opacity: number) =>
+    data?.recordTypes.map(item => [...item.color, opacity] as RGBAColor) || [
+      [0, 0, 0, 100]
+    ];
+  const window = useWindowSize();
 
   const [view, setView] = React.useState(initialState.viewState);
 
-  const pathData = contours
-    .map((item, index) =>
-      item
-        ? { index: index, path: item?.getCoordinates() }
-        : { index: index, path: [[0, 0]] as [number, number][] }
-    )
-    .filter(item => item !== undefined);
+  const [plotData, setPlotData] = useState<PlotData>();
 
-  const scatterData = data?.recordTypes
-    .map(item => item.records.slice(0, 10))
-    .flat();
+  useEffect(() => {
+    const f = async () => {
+      const area = contours.map((item, index) =>
+        item
+          ? { contour: item.getCoordinates(), color: colors(33)[index] }
+          : {
+              contour: [[0, 0]] as [number, number][],
+              color: colors(33)[index]
+            }
+      );
+      const scatter = recordTypes
+        .map((item, index) =>
+          item.records.map(record => {
+            const color = colors(100)[index];
+            return { point: [record.lng, record.lat], color: color };
+          })
+        )
+        .flat(2);
+      console.log(scatter);
+      setPlotData({ area: area, scatter: scatter });
+    };
+    if (data) {
+      f();
+    }
+  }, [contours, recordTypes]);
 
-  const layer = [
-    new PathLayer({
-      id: 'lineLayer',
-      data: pathData,
-      getWidth: d => 3,
-      getPath: d =>
-        d!.path.map(item => [...item, 0] as [number, number, number]),
-      getColor: d => [0, 150, 0]
-    }),
-    new ScatterplotLayer({
-      id: 'layer',
-      data: scatterData,
-      pickable: true,
-      stroked: true,
-      filled: true,
-      radiusScale: 6,
-      radiusMinPixels: 1,
-      radiusMaxPixels: 100,
-      lineWidthMinPixels: 1,
-      getPosition: d => [d.lng, d.lat],
-      getRadius: d => 5,
-      getFillColor: d => [255, 0, 0],
-      getLineColor: d => [0, 0, 0]
-    })
-  ];
+  const layer = plotData
+    ? [
+        new PolygonLayer<AreaData[0]>({
+          id: 'polygonLayer',
+          data: plotData.area!,
+          extruded: false,
+          stroked: true,
+          getPolygon: d => d.contour,
+          getFillColor: d => d.color
+        }),
+        new ScatterplotLayer({
+          id: 'scatterplotLayer',
+          data: plotData.scatter!,
+          pickable: true,
+          stroked: true,
+          filled: true,
+          radiusScale: 6,
+          radiusMinPixels: 1,
+          radiusMaxPixels: 100,
+          lineWidthMinPixels: 1,
+          getPosition: d => d.point,
+          getRadius: d => 5,
+          getFillColor: d => d.color,
+          getLineColor: d => [0, 0, 0]
+        })
+      ]
+    : [];
 
   return (
     <DeckGL
-      width={1280}
-      height={720}
+      width={window.width}
+      height={window.height}
       viewState={view}
       layers={layer}
       controller
@@ -86,8 +131,8 @@ const Map: React.FC<Props> = (props: Props) => {
     >
       <ReactMapGL
         mapboxApiAccessToken={MAPBOX_TOKEN}
-        width={960}
-        height={600}
+        width={window.width}
+        height={window.height}
         mapStyle={'mapbox://styles/mapbox/light-v10'}
       >
         <Layer
