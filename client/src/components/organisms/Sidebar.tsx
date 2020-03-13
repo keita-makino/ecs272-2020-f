@@ -1,16 +1,14 @@
 import React, { ReactChildren } from 'react';
-import TypeControllerPanel, {
-  TypeControllerPanelProps
-} from '../molecules/TypeControllerPanel';
+import ControlPanel, { ControlPanelProps } from '../molecules/ControlPanel';
 
-export type SidebarProps = { typePanel: TypeControllerPanelProps };
+export type SidebarProps = { typePanel: ControlPanelProps };
 
 const Sidebar: React.FC<SidebarProps> = (props: SidebarProps) => {
   return (
-    <TypeControllerPanel
-      title={'hoge'}
+    <ControlPanel
+      title={props.typePanel.title}
       typeArray={props.typePanel.typeArray}
-    ></TypeControllerPanel>
+    ></ControlPanel>
   );
 };
 
