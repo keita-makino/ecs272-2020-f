@@ -29,7 +29,7 @@ const createShapeSet: ShapeConstructor = (
           : undefined
       };
       return {
-        ...createNode(point, 0.001),
+        ...createNode(point),
         ...parentSet
       };
     }),

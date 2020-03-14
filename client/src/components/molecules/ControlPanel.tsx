@@ -1,43 +1,30 @@
 import React from 'react';
-import Slider, { ControlProps } from '../atoms/Slider';
+import SliderLabel, { SliderLabelProps } from '../atoms/SliderLabel';
 import { Grid, Typography } from '@material-ui/core';
-import Toggle from '../atoms/Toggle';
+import ToggleLabel, { ToggleLabelProps } from '../atoms/ToggleLabel';
 import { Theme, createStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 
 export type ControlPanelProps = {
   title: string;
-  typeArray: ControlProps[];
+  sliderArray: SliderLabelProps[];
+  toggleArray: ToggleLabelProps[];
 };
-
-const useStyles = makeStyles({
-  root: {
-    width: 300
-  }
-});
-
-const useStyles1 = makeStyles((theme: Theme) =>
-  createStyles({
-    divider: {
-      margin: theme.spacing(2, 0)
-    }
-  })
-);
 
 const ControlPanel: React.FC<ControlPanelProps> = (
   props: ControlPanelProps
 ) => {
-  const classes = useStyles();
-  const classes1 = useStyles1();
   return (
-    <Grid className={classes.root}>
-      <Typography variant="subtitle1">{props.title}</Typography>
-      <Divider className={classes1.divider} />
-      {props.typeArray.slice(0, 2).map(item => (
-        <Slider type={item.type}></Slider>
+    <Grid>
+      <Typography variant="h6">{props.title}</Typography>
+      <Divider />
+      {props.sliderArray.map(item => (
+        <SliderLabel label={item.label}></SliderLabel>
       ))}
-      <Toggle type={props.typeArray[2].type} />
+      {props.toggleArray.map(item => (
+        <ToggleLabel label={item.label} />
+      ))}
     </Grid>
   );
 };

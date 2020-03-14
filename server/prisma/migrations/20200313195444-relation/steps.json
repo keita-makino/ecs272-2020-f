@@ -1,0 +1,46 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateField",
+      "model": "User",
+      "field": "setting",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Room",
+      "field": "recordType",
+      "type": "RecordType",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "RecordType",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "UpdateField",
+      "model": "RecordType",
+      "field": "room",
+      "type": "Room"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Setting",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    }
+  ]
+}

@@ -15,5 +15,5 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": ["./src/**/*", "license"]
+  "include": ["./src/**/*", "license", "config-overrides.js"]
 }

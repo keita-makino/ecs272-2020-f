@@ -5,6 +5,9 @@ import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import Index from './pages/Index';
+import { hot } from 'react-hot-loader';
+import { MuiThemeProvider } from '@material-ui/core';
+import defaultTheme from './data/theme';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -16,12 +19,24 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   link
 });
 
+cache.writeData({
+  data: {
+    session: {
+      userId: 1,
+      roomId: 1,
+      __typename: 'session'
+    }
+  }
+});
+
 const App = () => {
   return (
-    <ApolloProvider client={client}>
-      <Index></Index>
-    </ApolloProvider>
+    <MuiThemeProvider theme={defaultTheme}>
+      <ApolloProvider client={client}>
+        <Index />
+      </ApolloProvider>
+    </MuiThemeProvider>
   );
 };
 
-export default App;
+export default hot(module)(App);

@@ -1,5 +1,5 @@
 import { nexusPrismaPlugin } from "nexus-prisma";
-import { idArg, makeSchema, objectType, stringArg } from "nexus";
+import { idArg, makeSchema, objectType, stringArg, intArg } from "nexus";
 import { hsl } from "color-convert";
 
 const User = objectType({
@@ -8,6 +8,8 @@ const User = objectType({
     t.model.id();
     t.model.name();
     t.model.email();
+    t.model.room();
+    t.model.setting();
   }
 });
 
@@ -28,10 +30,14 @@ const RecordType = objectType({
   definition(t) {
     t.model.id();
     t.model.name();
-    t.model.records();
+    t.model.record();
+    t.model.active();
     t.list.int("color", {
+      args: {
+        l: intArg({ required: false })
+      },
       resolve({ id }, args, ctx) {
-        return hsl.rgb((id * 43) % 255, 80, 60);
+        return hsl.rgb((id * 141) % 255, 80, args.l ? args.l : 60);
       }
     });
   }
@@ -42,7 +48,19 @@ const Room = objectType({
   definition(t) {
     t.model.id();
     t.model.name();
-    t.model.records();
+    t.model.recordType({ ordering: { id: true } });
+  }
+});
+
+const Setting = objectType({
+  name: "Setting",
+  definition(t) {
+    t.model.id();
+    t.model.cellSize();
+    t.model.markSize();
+    t.model.darkMode();
+    t.model.height();
+    t.model.user();
   }
 });
 
@@ -55,6 +73,8 @@ const Query = objectType({
     t.crud.recordType();
     t.crud.users({ ordering: true });
     t.crud.user();
+    t.crud.room();
+    t.crud.setting();
   }
 });
 
@@ -65,12 +85,14 @@ const Mutation = objectType({
     t.crud.createOneRecordType();
     t.crud.createOneRoom();
     t.crud.createOneUser();
-    t.crud.deleteOneRoom();
+    t.crud.updateOneUser();
+    t.crud.updateOneSetting();
+    t.crud.updateOneRecordType();
   }
 });
 
 export const schema = makeSchema({
-  types: [User, Record, RecordType, Room, Query, Mutation],
+  types: [User, Record, RecordType, Room, Setting, Query, Mutation],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

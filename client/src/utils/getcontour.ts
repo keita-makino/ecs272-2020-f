@@ -1,14 +1,11 @@
 import { ShapeSetBase, ShapeSetActive, ShapeSet } from '../types/ShapeSet';
-import { Node, Area, Edge, Path } from '../types/Shapes';
+import { Path } from '../types/Shapes';
 import connectNodes from './connectNodes';
 import createAreaDomain from '../constructors/areaDomainConstructor';
-import {
-  createArea,
-  createPoint,
-  createNode
-} from '../constructors/shapeConstructors';
+import { createArea } from '../constructors/shapeConstructors';
 import getPaths from './getPaths';
 import isAllContained from './isAllContained';
+import { fillPotentialGrid } from './fillPotentialGrid';
 
 export type Domain = {};
 
@@ -41,88 +38,6 @@ const getContour = async (activeSet: ShapeSet, inactiveSet: ShapeSetBase) => {
   } while (!(await isAllContained(activeSet, path!)) && iteration < 20);
 
   return path;
-};
-
-const fillPotentialGrid = async (
-  potentialGrid: Area,
-  activeSet: ShapeSet,
-  inactiveSet: ShapeSetBase,
-  parameter: [number, number],
-  factor: [number, number, number]
-) => {
-  if (!activeSet.edges) {
-    return;
-  }
-
-  const rDiff = parameter[0] - parameter[1];
-  const inverse = Math.pow(rDiff, 2);
-
-  activeSet.nodes.map(async item => {
-    potentialGrid = await evaluateRepulsion(
-      potentialGrid,
-      factor[0] / inverse,
-      parameter[1],
-      item,
-      true
-    );
-  });
-
-  activeSet.edges.map(async item => {
-    potentialGrid = await evaluateRepulsion(
-      potentialGrid,
-      factor[1] / inverse,
-      parameter[1],
-      item,
-      true
-    );
-  });
-  inactiveSet.nodes.map(async item => {
-    potentialGrid = await evaluateRepulsion(
-      potentialGrid,
-      factor[2] / inverse,
-      parameter[1],
-      item,
-      false
-    );
-  });
-
-  return potentialGrid;
-};
-
-const evaluateRepulsion = async (
-  potentialGrid: Area,
-  factor: number,
-  r: number,
-  element: Node | Edge,
-  computeAll: boolean
-): Promise<Area> => {
-  const domain = potentialGrid.domain;
-  potentialGrid.buffer = potentialGrid.buffer.map((cell, index) => {
-    if (cell < 0) return cell;
-    const [x, y] = [
-      index % domain.numOfCells[0],
-      Math.floor(index / domain.numOfCells[0])
-    ];
-    const position = potentialGrid.getPosition(x, y);
-
-    let distance;
-    if ('getDistanceToEdge' in element) {
-      distance = position.getDistance(element.center);
-    } else {
-      distance = createNode(
-        createPoint(position.lng, position.lat),
-        0.001
-      ).getDistanceToEdge(element as Edge);
-    }
-
-    if (distance < r) {
-      const dr = distance - r;
-      return cell + factor * Math.pow(dr, 2);
-    } else {
-      return cell;
-    }
-  });
-  return potentialGrid;
 };
 
 export default getContour;

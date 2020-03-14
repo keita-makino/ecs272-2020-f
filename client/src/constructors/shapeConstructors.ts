@@ -24,7 +24,7 @@ const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
   length: s.getDistance(e)
 });
 
-const createNode: NodeConstructor = (c: Point, r: number): Node => {
+const createNode: NodeConstructor = (c: Point, r = 0.002): Node => {
   return {
     center: c,
     radius: r,

@@ -1,7 +1,7 @@
 import { Record } from './Record';
 
 export type RecordSet = {
-  records: Record[];
+  record: Record[];
   name: string;
   color: [number, number, number];
 };

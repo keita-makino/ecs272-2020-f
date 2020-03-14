@@ -16,7 +16,7 @@ export type Edge = Partial<ParentSet> & {
   length: number;
 };
 
-export type NodeConstructor = (c: Point, r: number) => Node;
+export type NodeConstructor = (c: Point, r?: number) => Node;
 
 export type Node = Partial<ParentSet> & {
   center: Point;
