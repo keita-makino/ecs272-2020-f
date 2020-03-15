@@ -1,6 +1,7 @@
 import { ShapeSetBase, ShapeSet } from '../types/ShapeSet';
 import { Area } from '../types/Shapes';
 import { evaluateRepulsion } from './evaluateRepulsion';
+
 export const fillPotentialGrid = async (
   potentialGrid: Area,
   activeSet: ShapeSet,
@@ -11,33 +12,38 @@ export const fillPotentialGrid = async (
   if (!activeSet.edges) {
     return;
   }
-  const rDiff = parameter[0] - parameter[1];
+  const rDiff = parameter[1] - parameter[0];
   const inverse = Math.pow(rDiff, 2);
-  activeSet.nodes.map(async item => {
-    potentialGrid = await evaluateRepulsion(
-      potentialGrid,
-      factor[0] / inverse,
-      parameter[1],
-      item,
-      true
-    );
-  });
+
   activeSet.edges.map(async item => {
+    const target = item.getCorrespondingBuffer(potentialGrid, rDiff);
     potentialGrid = await evaluateRepulsion(
       potentialGrid,
+      target,
       factor[1] / inverse,
       parameter[1],
-      item,
-      true
+      item
+    );
+  });
+  potentialGrid.buffer.map(item => item - Number.EPSILON);
+  activeSet.nodes.map(async item => {
+    const target = item.getCorrespondingBuffer(potentialGrid, rDiff);
+    potentialGrid = await evaluateRepulsion(
+      potentialGrid,
+      target,
+      factor[0] / inverse,
+      parameter[1],
+      item
     );
   });
   inactiveSet.nodes.map(async item => {
+    const target = item.getCorrespondingBuffer(potentialGrid, rDiff);
     potentialGrid = await evaluateRepulsion(
       potentialGrid,
+      target,
       factor[2] / inverse,
       parameter[1],
-      item,
-      false
+      item
     );
   });
   return potentialGrid;

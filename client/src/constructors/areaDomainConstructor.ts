@@ -6,7 +6,7 @@ const createAreaDomain: AreaDomainConstructor = async (
   s: ShapeSet
 ): Promise<AreaDomain> => {
   const range = await getRange(s);
-  const cellSize = 0.00025;
+  const cellSize = 0.002;
   return {
     cellSize: cellSize,
     numOfCells: [

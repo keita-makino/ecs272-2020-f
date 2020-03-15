@@ -19,6 +19,9 @@ export const UPDATE_USER = gql`
         darkMode
         cellSize
         markSize
+        scatter
+        edge
+        bubble
       }
     }
   }

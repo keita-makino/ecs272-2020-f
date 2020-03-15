@@ -2,7 +2,7 @@ import { Node, Edge, Point } from '../types/Shapes';
 import { createEdge } from '../constructors/shapeConstructors';
 import { getCenterNodeAlongEdge } from './getCenterNodeAlongEdge';
 import { rerouteEdgePoint } from './rerouteEdgePoint';
-import { isPointExist } from './isPointExist';
+import { doesPointExist } from './doesPointExist';
 import { isPointIncluded } from './isPointIncluded';
 export const rerouteEdges = async (
   edgesToCheck: Edge[],
@@ -40,8 +40,8 @@ export const rerouteEdges = async (
             1
           );
           isExisted =
-            (await isPointExist(reroutedPoint, edgesToCheck)) ||
-            (await isPointExist(reroutedPoint, scannedEdges));
+            (await doesPointExist(reroutedPoint, edgesToCheck)) ||
+            (await doesPointExist(reroutedPoint, scannedEdges));
           isIncluded = await isPointIncluded(reroutedPoint, inactiveSetNodes);
         } while (!isExisted && isIncluded && tempBufferForMorphing > 1);
         if (!isExisted && !isIncluded && reroutedPoint) {
@@ -61,8 +61,8 @@ export const rerouteEdges = async (
               -1
             );
             isExisted =
-              (await isPointExist(reroutedPoint, edgesToCheck)) ||
-              (await isPointExist(reroutedPoint, scannedEdges));
+              (await doesPointExist(reroutedPoint, edgesToCheck)) ||
+              (await doesPointExist(reroutedPoint, scannedEdges));
             isIncluded = await isPointIncluded(reroutedPoint, inactiveSetNodes);
           } while (!isExisted && isIncluded && tempBufferForMorphing > 1);
           if (!isExisted && reroutedPoint) {

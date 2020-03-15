@@ -14,6 +14,7 @@ export type Edge = Partial<ParentSet> & {
   end: Point;
   center: Point;
   length: number;
+  getCorrespondingBuffer: (a: Area, r: number) => number[];
 };
 
 export type NodeConstructor = (c: Point, r?: number) => Node;
@@ -22,6 +23,7 @@ export type Node = Partial<ParentSet> & {
   center: Point;
   radius: number;
   getDistanceToEdge: (l: Edge) => number;
+  getCorrespondingBuffer: (a: Area, r: number) => number[];
 };
 
 export type PointConstructor = (x: number, y: number) => Point;

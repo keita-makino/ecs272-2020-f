@@ -3,7 +3,12 @@ const initialStateIndex = {
     controlPanel: {
       title: 'Controls',
       sliderArray: [{ label: 'Cell Size' }, { label: 'Mark Size' }],
-      toggleArray: [{ label: 'Dark Mode' }]
+      toggleArray: [
+        { label: 'Dark Mode' },
+        { label: 'Scatter' },
+        { label: 'Edge' },
+        { label: 'Bubble' }
+      ]
     }
   },
   map: {

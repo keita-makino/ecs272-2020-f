@@ -2,17 +2,17 @@ import { Node, Area, Edge } from '../types/Shapes';
 import { createPoint, createNode } from '../constructors/shapeConstructors';
 export const evaluateRepulsion = async (
   potentialGrid: Area,
+  target: number[],
   factor: number,
   r: number,
-  element: Node | Edge,
-  computeAll: boolean
+  element: Node | Edge
 ): Promise<Area> => {
   const domain = potentialGrid.domain;
-  potentialGrid.buffer = potentialGrid.buffer.map((cell, index) => {
-    if (cell < 0) return cell;
+  target.map(async item => {
+    const curr = potentialGrid.buffer[item];
     const [x, y] = [
-      index % domain.numOfCells[0],
-      Math.floor(index / domain.numOfCells[0])
+      item % domain.numOfCells[0],
+      Math.floor(item / domain.numOfCells[0])
     ];
     const position = potentialGrid.getPosition(x, y);
     let distance;
@@ -26,9 +26,9 @@ export const evaluateRepulsion = async (
     }
     if (distance < r) {
       const dr = distance - r;
-      return cell + factor * Math.pow(dr, 2);
+      potentialGrid.buffer[item] = curr + factor * Math.pow(dr, 2);
     } else {
-      return cell;
+      potentialGrid.buffer[item] = curr;
     }
   });
   return potentialGrid;

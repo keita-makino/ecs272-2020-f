@@ -10,6 +10,9 @@ export const GET_USER = gql`
         cellSize
         markSize
         darkMode
+        scatter
+        edge
+        bubble
         height
       }
     }

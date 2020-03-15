@@ -5,6 +5,7 @@ import Sidebar, { SidebarProps } from '../organisms/Sidebar';
 import { makeStyles, Grid, Theme, Box } from '@material-ui/core';
 import { useWindowSize } from 'react-use';
 import zIndex from '@material-ui/core/styles/zIndex';
+import MiddlePanel from '../organisms/MiddlePanel';
 
 type Props = { sideBarProps: SidebarProps; mapProps: MapProps };
 
@@ -32,6 +33,7 @@ const Index: React.FC<Props> = (props: Props) => {
       style={{ height: window.height }}
     >
       <Sidebar {...props.sideBarProps} />
+      <MiddlePanel />
       <Map {...props.mapProps} />
     </Grid>
   );

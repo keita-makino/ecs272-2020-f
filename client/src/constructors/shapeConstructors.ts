@@ -21,7 +21,50 @@ const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
   start: s,
   end: e,
   center: s.add(e).scale(0.5),
-  length: s.getDistance(e)
+  length: s.getDistance(e),
+  getCorrespondingBuffer: (a: Area, r: number) => {
+    const array: number[] = [];
+
+    const length = s.getDistance(e);
+    const numOfSegments = Math.ceil(length / (2 * r));
+
+    Array(numOfSegments + 1)
+      .fill(0)
+      .map((item, index) => {
+        const c = s.add(e.sub(s).scale(index / numOfSegments));
+
+        const position = [
+          (c.lng - a.domain.boundary.xMin) / a.domain.cellSize,
+          (c.lat - a.domain.boundary.yMin) / a.domain.cellSize
+        ];
+
+        const diff = r / a.domain.cellSize;
+
+        const [xMin, xMax, yMin, yMax] = [
+          Math.floor(position[0] - diff),
+          Math.ceil(position[0] + diff),
+          Math.floor(position[1] - diff),
+          Math.ceil(position[1] + diff)
+        ];
+
+        const width = xMax - xMin;
+        const height = yMax - yMin;
+
+        Array(width + 1)
+          .fill(0)
+          .map((item, index) => {
+            Array(height + 1)
+              .fill(0)
+              .map((item2, index2) => {
+                array.push(
+                  xMin + index + (yMin + index2) * a.domain.numOfCells[0]
+                );
+              });
+          });
+      });
+
+    return array.filter((item, index, array) => array.indexOf(item) === index);
+  }
 });
 
 const createNode: NodeConstructor = (c: Point, r = 0.002): Node => {
@@ -47,6 +90,39 @@ const createNode: NodeConstructor = (c: Point, r = 0.002): Node => {
         : undefined;
 
       return point ? c.getDistance(point) : c.getDistance(e.center);
+    },
+    getCorrespondingBuffer: (a: Area, r: number) => {
+      const array: number[] = [];
+      const position = [
+        (c.lng - a.domain.boundary.xMin) / a.domain.cellSize,
+        (c.lat - a.domain.boundary.yMin) / a.domain.cellSize
+      ];
+
+      const diff = r / a.domain.cellSize;
+
+      const [xMin, xMax, yMin, yMax] = [
+        Math.floor(position[0] - diff),
+        Math.ceil(position[0] + diff),
+        Math.floor(position[1] - diff),
+        Math.ceil(position[1] + diff)
+      ];
+
+      const width = xMax - xMin;
+      const height = yMax - yMin;
+
+      Array(width + 1)
+        .fill(0)
+        .map((item, index) => {
+          Array(height + 1)
+            .fill(0)
+            .map((item2, index2) => {
+              array.push(
+                xMin + index + (yMin + index2) * a.domain.numOfCells[0]
+              );
+            });
+        });
+
+      return array;
     }
   };
 };

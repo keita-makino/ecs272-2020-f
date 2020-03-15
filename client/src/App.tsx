@@ -24,6 +24,7 @@ cache.writeData({
     session: {
       userId: 1,
       roomId: 1,
+      editMode: false,
       __typename: 'session'
     }
   }

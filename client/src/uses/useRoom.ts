@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
-const GET_ROOM = gql`
+export const GET_ROOM = gql`
   query GetRoom($id: Int) {
     room(where: { id: $id }) {
       id
@@ -11,6 +11,11 @@ const GET_ROOM = gql`
         name
         active
         color
+        record {
+          id
+          lat
+          lng
+        }
       }
     }
   }

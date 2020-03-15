@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import useScatters, { Scatters } from './useScatters';
+import { useCurrentRoom } from './useRoom';
 
 type PlotData = ContoursEdges & {
   scatters?: Scatters;
@@ -16,36 +17,26 @@ export type RecordType = {
 };
 
 export type Records = {
+  id: number;
   lng: number;
   lat: number;
 }[];
 
-const GET_RECORD_TYPES = gql`
-  query {
-    recordTypes {
-      name
-      record {
-        lng
-        lat
-      }
-      color
-      active
-    }
-  }
-`;
-
-const usePlotData = (): PlotData => {
-  const { data } = useQuery(GET_RECORD_TYPES);
+const usePlotData = (): [PlotData, boolean] => {
+  const data = useCurrentRoom();
   const [filtered, setFiltered] = useState<RecordType[]>([]);
   const [plotData, setPlotData] = useState<PlotData>({});
+  const [loading, setLoading] = useState(false);
 
   const contoursEdges = useContoursEdges(filtered);
   const scatters = useScatters(filtered);
 
   useEffect(() => {
     if (data) {
+      console.log(data);
+      setLoading(true);
       setFiltered(
-        data.recordTypes.filter((item: { active: any }) => item.active)
+        data.recordType.filter((item: { active: any }) => item.active)
       );
     }
   }, [data]);
@@ -56,9 +47,10 @@ const usePlotData = (): PlotData => {
       edges: contoursEdges.edges,
       scatters: scatters
     });
+    setLoading(false);
   }, [contoursEdges, scatters]);
 
-  return plotData;
+  return [plotData, loading];
 };
 
 export default usePlotData;

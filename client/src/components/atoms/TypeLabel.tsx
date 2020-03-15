@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState, useEffect } from 'react';
 import { Grid, Checkbox, Icon, Typography, useTheme } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
+import { GET_ROOM, useCurrentRoom } from '../../uses/useRoom';
 
 export type TypeLabelProps = {
   id: number;
@@ -15,6 +16,8 @@ export const UPDATE_RECORD_TYPE = gql`
   mutation UpdateBoolean($newData: RecordTypeUpdateInput!, $id: Int!) {
     updateOneRecordType(data: $newData, where: { id: $id }) {
       id
+      name
+      color
       active
     }
   }
@@ -22,7 +25,29 @@ export const UPDATE_RECORD_TYPE = gql`
 
 const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
   const theme = useTheme();
-  const [mutation] = useMutation(UPDATE_RECORD_TYPE);
+  const currentRoom = useCurrentRoom();
+  const [updateRecord] = useMutation(UPDATE_RECORD_TYPE, {
+    update: (cache, { data: { updateOneRecordType } }) => {
+      const { room } = cache.readQuery<any>({
+        query: GET_ROOM,
+        variables: { id: currentRoom.id }
+      });
+      cache.writeQuery({
+        query: GET_ROOM,
+        data: {
+          room: {
+            ...room,
+            recordType: [
+              ...room.recordType.filter(
+                (item: any) => item.id !== updateOneRecordType.id
+              ),
+              updateOneRecordType
+            ].sort((a, b) => (a.id < b.id ? -1 : 1))
+          }
+        }
+      });
+    }
+  });
   const [status, setStatus] = useState<[boolean, boolean]>([false, false]);
 
   useEffect(() => {
@@ -33,7 +58,7 @@ const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
 
   const onChange = (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
     setStatus([checked, false]);
-    mutation({
+    updateRecord({
       variables: {
         newData: { active: checked },
         id: props.id
