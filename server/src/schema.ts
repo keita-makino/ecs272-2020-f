@@ -59,6 +59,9 @@ const Setting = objectType({
     t.model.cellSize();
     t.model.markSize();
     t.model.darkMode();
+    t.model.scatter();
+    t.model.bubble();
+    t.model.edge();
     t.model.height();
     t.model.user();
   }

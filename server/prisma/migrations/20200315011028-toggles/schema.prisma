@@ -4,7 +4,7 @@ generator photon {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://ojqgzezcrkkccv:413545d8bc9cfbeb322834d87f2369199c51d226e374dc06da6883681e1fa266@ec2-35-172-85-250.compute-1.amazonaws.com:5432/d23tt9hq4p0gh8"
+  url = "***"
 }
 
 model Record {

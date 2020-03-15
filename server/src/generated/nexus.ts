@@ -324,17 +324,23 @@ export interface NexusGenInputs {
     create?: NexusGenInputs['SettingCreateWithoutUserInput'] | null; // SettingCreateWithoutUserInput
   }
   SettingCreateWithoutUserInput: { // input type
+    bubble?: boolean | null; // Boolean
     cellSize?: number | null; // Float
     darkMode?: boolean | null; // Boolean
+    edge?: boolean | null; // Boolean
     height?: number | null; // Float
     markSize?: number | null; // Float
+    scatter?: boolean | null; // Boolean
   }
   SettingUpdateInput: { // input type
+    bubble?: boolean | null; // Boolean
     cellSize?: number | null; // Float
     darkMode?: boolean | null; // Boolean
+    edge?: boolean | null; // Boolean
     height?: number | null; // Float
     id?: number | null; // Int
     markSize?: number | null; // Float
+    scatter?: boolean | null; // Boolean
     user?: NexusGenInputs['UserUpdateOneRequiredWithoutSettingInput'] | null; // UserUpdateOneRequiredWithoutSettingInput
   }
   SettingUpdateOneWithoutUserInput: { // input type
@@ -346,11 +352,14 @@ export interface NexusGenInputs {
     upsert?: NexusGenInputs['SettingUpsertWithoutUserInput'] | null; // SettingUpsertWithoutUserInput
   }
   SettingUpdateWithoutUserDataInput: { // input type
+    bubble?: boolean | null; // Boolean
     cellSize?: number | null; // Float
     darkMode?: boolean | null; // Boolean
+    edge?: boolean | null; // Boolean
     height?: number | null; // Float
     id?: number | null; // Int
     markSize?: number | null; // Float
+    scatter?: boolean | null; // Boolean
   }
   SettingUpsertWithoutUserInput: { // input type
     create: NexusGenInputs['SettingCreateWithoutUserInput']; // SettingCreateWithoutUserInput!
@@ -358,13 +367,16 @@ export interface NexusGenInputs {
   }
   SettingWhereInput: { // input type
     AND?: NexusGenInputs['SettingWhereInput'][] | null; // [SettingWhereInput!]
+    bubble?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
     cellSize?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     darkMode?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    edge?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
     height?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
     markSize?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     NOT?: NexusGenInputs['SettingWhereInput'][] | null; // [SettingWhereInput!]
     OR?: NexusGenInputs['SettingWhereInput'][] | null; // [SettingWhereInput!]
+    scatter?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
     user?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
   }
   SettingWhereUniqueInput: { // input type
@@ -649,11 +661,14 @@ export interface NexusGenFieldTypes {
     recordType: NexusGenRootTypes['RecordType'][]; // [RecordType!]!
   }
   Setting: { // field return type
+    bubble: boolean; // Boolean!
     cellSize: number; // Float!
     darkMode: boolean; // Boolean!
+    edge: boolean; // Boolean!
     height: number; // Float!
     id: number; // Int!
     markSize: number; // Float!
+    scatter: boolean; // Boolean!
     user: NexusGenRootTypes['User']; // User!
   }
   User: { // field return type

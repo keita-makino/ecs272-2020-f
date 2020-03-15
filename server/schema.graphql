@@ -402,11 +402,14 @@ input RoomWhereUniqueInput {
 }
 
 type Setting {
+  bubble: Boolean!
   cellSize: Float!
   darkMode: Boolean!
+  edge: Boolean!
   height: Float!
   id: Int!
   markSize: Float!
+  scatter: Boolean!
   user: User!
 }
 
@@ -416,18 +419,24 @@ input SettingCreateOneWithoutUserInput {
 }
 
 input SettingCreateWithoutUserInput {
+  bubble: Boolean
   cellSize: Float
   darkMode: Boolean
+  edge: Boolean
   height: Float
   markSize: Float
+  scatter: Boolean
 }
 
 input SettingUpdateInput {
+  bubble: Boolean
   cellSize: Float
   darkMode: Boolean
+  edge: Boolean
   height: Float
   id: Int
   markSize: Float
+  scatter: Boolean
   user: UserUpdateOneRequiredWithoutSettingInput
 }
 
@@ -441,11 +450,14 @@ input SettingUpdateOneWithoutUserInput {
 }
 
 input SettingUpdateWithoutUserDataInput {
+  bubble: Boolean
   cellSize: Float
   darkMode: Boolean
+  edge: Boolean
   height: Float
   id: Int
   markSize: Float
+  scatter: Boolean
 }
 
 input SettingUpsertWithoutUserInput {
@@ -455,13 +467,16 @@ input SettingUpsertWithoutUserInput {
 
 input SettingWhereInput {
   AND: [SettingWhereInput!]
+  bubble: BooleanFilter
   cellSize: FloatFilter
   darkMode: BooleanFilter
+  edge: BooleanFilter
   height: FloatFilter
   id: IntFilter
   markSize: FloatFilter
   NOT: [SettingWhereInput!]
   OR: [SettingWhereInput!]
+  scatter: BooleanFilter
   user: UserWhereInput
 }
 
