@@ -1,6 +1,7 @@
 import { RGBAColor } from 'deck.gl';
 import { RecordType } from './usePlotData';
 import { useState, useEffect } from 'react';
+import useFilteredData from './useFilteredData';
 
 type Feature = {
   type: string;
@@ -20,11 +21,11 @@ export type Scatters = {
   features?: Feature[];
 };
 
-const useScatters = (recordTypes?: RecordType[]): Scatters | undefined => {
+const useScatters = (): Scatters | undefined => {
+  const recordTypes = useFilteredData();
   const [scatters, setScatters] = useState<Scatters | undefined>(undefined);
 
   useEffect(() => {
-    console.log(1);
     const f = async () => {
       if (!recordTypes) {
         return;
@@ -36,7 +37,9 @@ const useScatters = (recordTypes?: RecordType[]): Scatters | undefined => {
             properties: {
               id: record.id,
               fillColor: item.color,
-              markSize: 'medium'
+              type: item.name,
+              name: record.name,
+              address: record.address
             },
             geometry: {
               type: 'Point',
@@ -45,14 +48,12 @@ const useScatters = (recordTypes?: RecordType[]): Scatters | undefined => {
           }))
         )
         .flat(2);
-      console.log(newRecordTypes);
       setScatters({
         type: 'FeatureCollection',
         features: newRecordTypes
       });
     };
     if (recordTypes) {
-      console.log(recordTypes);
       f();
     }
   }, [recordTypes]);

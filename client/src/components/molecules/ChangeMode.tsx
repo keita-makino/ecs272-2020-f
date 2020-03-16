@@ -12,7 +12,6 @@ export const GET_MODE = gql`
   query GetMode {
     session @client {
       editMode
-      __typename
     }
   }
 `;

@@ -35,7 +35,6 @@ const ToggleLabel: React.FC<ToggleLabelProps> = (props: ToggleLabelProps) => {
   useEffect(() => {
     if (user) {
       setStatus([user.setting[camelcase(props.label)], true]);
-      delete user.__typename;
     }
   }, [user]);
 

@@ -3,10 +3,11 @@ import { AreaDomainConstructor, AreaDomain } from '../types/Shapes';
 import { ShapeSet } from '../types/ShapeSet';
 
 const createAreaDomain: AreaDomainConstructor = async (
-  s: ShapeSet
+  s: ShapeSet,
+  c: number
 ): Promise<AreaDomain> => {
   const range = await getRange(s);
-  const cellSize = 0.002;
+  const cellSize = c;
   return {
     cellSize: cellSize,
     numOfCells: [

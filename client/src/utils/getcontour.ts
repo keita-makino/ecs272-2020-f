@@ -15,13 +15,14 @@ export type Domain = {};
 
 const getContour = async (
   activeSet: ShapeSet,
-  inactiveSet: ShapeSetBase
+  inactiveSet: ShapeSetBase,
+  cellSize: number
 ): Promise<Path[]> => {
-  const domain = await createAreaDomain(activeSet);
+  const domain = await createAreaDomain(activeSet, cellSize);
   const potentialGrid = createArea(domain);
 
-  const r0 = 0.005;
-  const r1 = 0.01;
+  const r0 = cellSize * 2;
+  const r1 = cellSize * 4;
   let iteration = 0;
   let threshold = 1;
   const factorNode = 1;
@@ -39,7 +40,6 @@ const getContour = async (
     );
     [path] = await getPaths(activeSet, threshold);
     if (!path) continue;
-    console.log(path);
 
     threshold *= 0.9;
     iteration += 1;

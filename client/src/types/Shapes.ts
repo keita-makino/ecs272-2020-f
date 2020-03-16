@@ -47,7 +47,10 @@ export type Area = Partial<ParentSet> & {
   getPosition: (x: number, y: number) => Point;
 };
 
-export type AreaDomainConstructor = (s: ShapeSet) => Promise<AreaDomain>;
+export type AreaDomainConstructor = (
+  s: ShapeSet,
+  c: number
+) => Promise<AreaDomain>;
 
 export type AreaDomain = {
   cellSize: number;

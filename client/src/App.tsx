@@ -9,7 +9,9 @@ import { hot } from 'react-hot-loader';
 import { MuiThemeProvider } from '@material-ui/core';
 import defaultTheme from './data/theme';
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  freezeResults: true
+});
 const link = new HttpLink({
   uri: 'http://localhost:4000/'
 });
@@ -25,6 +27,9 @@ cache.writeData({
       userId: 1,
       roomId: 1,
       editMode: false,
+      modifying: false,
+      computing: false,
+      loaded: false,
       __typename: 'session'
     }
   }

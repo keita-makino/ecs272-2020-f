@@ -8,7 +8,7 @@ import { makeStyles, Theme, Grid } from '@material-ui/core';
 import usePlotData from '../../uses/usePlotData';
 import { useCurrentUser } from '../../uses/useUser';
 import { GET_MODE } from '../molecules/ChangeMode';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 import {
   EditableGeoJsonLayer,
   ModifyMode,
@@ -18,6 +18,10 @@ import {
   DrawPolygonMode
 } from 'nebula.gl';
 import { Scatters } from '../../uses/useScatters';
+import useBusy, { changeBusy } from '../../uses/useBusy';
+import ToolTip, { ToolTipProps } from '../molecules/ToolTip';
+import updateVis from '../../utils/updateVis';
+import { useCurrentRoom } from '../../uses/useRoom';
 
 export type MapProps = {
   viewState: {
@@ -40,19 +44,31 @@ const MAPBOX_TOKEN =
 
 const Map = (props: MapProps) => {
   const classes = useStyles();
-  const [plotData, loading] = usePlotData();
+  const plotData = usePlotData();
   const [scatters, setScatters] = useState<Scatters | undefined>(undefined);
   const [selected, setSelected] = useState(-1);
+  const [tooltip, setTooltip] = useState<ToolTipProps>();
   const user = useCurrentUser();
+  const room = useCurrentRoom();
+
+  const client = useApolloClient();
+  const editMode = useBusy('editMode');
+  const isModifying = useBusy('modifying');
+  const isComputing = useBusy('computing');
 
   const window = useWindowSize();
 
   const [view, setView] = React.useState(props.viewState);
 
   useEffect(() => {
-    console.log('updating');
     setScatters(plotData?.scatters);
   }, [plotData]);
+
+  useEffect(() => {
+    if (editMode === false) {
+      setSelected(-1);
+    }
+  }, [editMode]);
 
   const layer = [
     user?.setting.bubble
@@ -88,28 +104,30 @@ const Map = (props: MapProps) => {
               ? d.properties.fillColor
               : [125, 255, 255, 255],
           pickable: true,
-          onEdit: ({ updatedData }: any) => {
+          onEdit: ({ updatedData, editType }: any) => {
+            if (editType === 'translating' && !isModifying) {
+              changeBusy('modifying', true, client);
+            }
+            if (!isComputing) {
+              const record = updatedData.features[selected];
+              updateVis(
+                {
+                  roomId: room.id,
+                  id: record.properties.id,
+                  type: record.properties.type,
+                  lat: record.geometry.coordinates[1],
+                  lng: record.geometry.coordinates[0]
+                },
+                client
+              );
+            }
+            if (editType === 'translated') {
+              changeBusy('modifying', false, client);
+            }
             setScatters(updatedData);
           }
         })
       : undefined
-    // user?.setting.scatter
-    //   ? new ScatterplotLayer({
-    //       id: 'scatterplotLayer',
-    //       data: plotData.scatters!,
-    //       pickable: true,
-    //       stroked: true,
-    //       filled: true,
-    //       radiusScale: 6,
-    //       radiusMinPixels: 1,
-    //       radiusMaxPixels: 100,
-    //       lineWidthMinPixels: 1,
-    //       getPosition: d => d.point,
-    //       getRadius: () => 5,
-    //       getFillColor: d => d.color,
-    //       getLineColor: () => [0, 0, 0]
-    //     })
-    //   : undefined
   ].filter(item => item !== undefined) as any[];
 
   const background = (
@@ -156,8 +174,6 @@ const Map = (props: MapProps) => {
     </ReactMapGL>
   );
 
-  const { data } = useQuery(GET_MODE);
-
   return (
     <Grid className={classes.mainVis}>
       <DeckGL
@@ -166,7 +182,7 @@ const Map = (props: MapProps) => {
         viewState={view}
         layers={layer}
         onClick={
-          data?.session.editMode
+          editMode
             ? info => {
                 if (info.index) {
                   setSelected(info.index);
@@ -174,11 +190,25 @@ const Map = (props: MapProps) => {
                   setSelected(-1);
                 }
               }
-            : undefined
+            : (info: any) => {
+                if (info.object?.properties?.type) {
+                  setTooltip({
+                    type: info.object.properties.type,
+                    name: info.object.properties.name,
+                    address: info.object.properties.address,
+                    x: info.x + 16,
+                    y: info.y + 16
+                  });
+                } else {
+                  setTooltip(undefined);
+                }
+              }
         }
-        controller={!data?.session.editMode && true}
+        onDragStart={info => setTooltip(undefined)}
+        controller={!editMode && true}
         onViewStateChange={({ viewState }) => setView(viewState)}
       >
+        <ToolTip {...(tooltip as ToolTipProps)} />
         {background}
       </DeckGL>
     </Grid>

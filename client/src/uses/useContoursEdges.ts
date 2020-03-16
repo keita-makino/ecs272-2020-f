@@ -5,6 +5,8 @@ import getContour from '../utils/getContour';
 import { createNode, createPoint } from '../constructors/shapeConstructors';
 import { RGBAColor } from 'deck.gl';
 import { RecordType, Records } from './usePlotData';
+import useFilteredData from './useFilteredData';
+import { useCurrentUser } from './useUser';
 
 type Contours = {
   contour: [number, number][];
@@ -21,7 +23,9 @@ export type ContoursEdges = {
   edges?: Edges;
 };
 
-const useContoursEdges = (recordTypes?: RecordType[]): ContoursEdges => {
+const useContoursEdges = (): ContoursEdges => {
+  const recordTypes = useFilteredData();
+  const user = useCurrentUser();
   const [contoursEdges, setContoursEdges] = useState<ContoursEdges>({
     contours: undefined,
     edges: undefined
@@ -29,7 +33,7 @@ const useContoursEdges = (recordTypes?: RecordType[]): ContoursEdges => {
 
   useEffect(() => {
     const f = async () => {
-      if (!recordTypes) {
+      if (!recordTypes || !user) {
         return;
       }
       const newContoursEdges = await Promise.all(
@@ -41,7 +45,10 @@ const useContoursEdges = (recordTypes?: RecordType[]): ContoursEdges => {
           ): Promise<[Contours, Edges]> => {
             const activeSet = createShapeSet(
               item.record.map((item: Records[0]) =>
-                createNode(createPoint(item.lng, item.lat))
+                createNode(
+                  createPoint(item.lng, item.lat),
+                  user.setting.markSize
+                )
               ),
               'active'
             );
@@ -51,7 +58,10 @@ const useContoursEdges = (recordTypes?: RecordType[]): ContoursEdges => {
                 .map(item => item.record)
                 .flat()
                 .map((item: Records[0]) =>
-                  createNode(createPoint(item.lng, item.lat))
+                  createNode(
+                    createPoint(item.lng, item.lat),
+                    user.setting.markSize
+                  )
                 ),
               'base'
             );
@@ -60,7 +70,11 @@ const useContoursEdges = (recordTypes?: RecordType[]): ContoursEdges => {
               .flat()
               .filter(item => item !== undefined);
 
-            const contour = await getContour(activeSet, inactiveSet);
+            const contour = await getContour(
+              activeSet,
+              inactiveSet,
+              user.setting.cellSize
+            );
 
             return [
               contour.map(item2 => ({
@@ -85,7 +99,7 @@ const useContoursEdges = (recordTypes?: RecordType[]): ContoursEdges => {
     if (recordTypes) {
       f();
     }
-  }, [recordTypes]);
+  }, [recordTypes, user]);
 
   return contoursEdges;
 };

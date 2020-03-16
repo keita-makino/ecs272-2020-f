@@ -17,7 +17,6 @@ const TypePanel: React.FC<TypePanelProps> = (props: TypePanelProps) => {
   useEffect(() => {
     if (room) {
       const newRecordTypes = room.recordType;
-      delete newRecordTypes.__typename;
       setRecordTypes(newRecordTypes);
     }
   }, [room]);

@@ -15,6 +15,8 @@ export const GET_ROOM = gql`
           id
           lat
           lng
+          name
+          address
         }
       }
     }

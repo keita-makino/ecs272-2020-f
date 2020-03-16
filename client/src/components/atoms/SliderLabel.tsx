@@ -18,7 +18,6 @@ const SliderLabel: React.FC<SliderLabelProps> = (props: SliderLabelProps) => {
   useEffect(() => {
     if (user) {
       setStatus([user.setting[camelcase(props.label)], true]);
-      delete user.__typename;
     }
   }, [user]);
 
@@ -39,6 +38,11 @@ const SliderLabel: React.FC<SliderLabelProps> = (props: SliderLabelProps) => {
     });
   };
 
+  const range =
+    props.label === 'Mark Size'
+      ? { max: 0.005, min: 0.0005, step: 0.0005 }
+      : { max: 0.002, min: 0.00025, step: 0.00025 };
+
   return (
     <Grid
       container
@@ -54,8 +58,10 @@ const SliderLabel: React.FC<SliderLabelProps> = (props: SliderLabelProps) => {
         <SliderMUI
           value={status[0]}
           disabled={!status[1]}
+          valueLabelDisplay={'auto'}
           onChange={onChange}
           onChangeCommitted={onChangeCommitted}
+          {...range}
         />
       </Grid>
     </Grid>

@@ -20,8 +20,7 @@ export const evaluateRepulsion = async (
       distance = position.getDistance(element.center);
     } else {
       distance = createNode(
-        createPoint(position.lng, position.lat),
-        0.001
+        createPoint(position.lng, position.lat)
       ).getDistanceToEdge(element as Edge);
     }
     if (distance < r) {
