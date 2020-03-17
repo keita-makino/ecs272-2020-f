@@ -1,10 +1,11 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Icon } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import Switch from '@material-ui/core/Switch';
 import { gql } from 'apollo-boost';
 import { useQuery, useApolloClient } from '@apollo/react-hooks';
+import { Visibility, Edit } from '@material-ui/icons';
 
 export type ToggleLabelProps = {};
 
@@ -35,11 +36,23 @@ const ChangeMode: React.FC<ToggleLabelProps> = () => {
 
   return (
     <>
-      <Typography variant="body1" align={'right'}>
+      <Visibility />
+      <Typography
+        variant="body1"
+        align={'right'}
+        style={{ padding: '0 0.5rem' }}
+      >
         View
       </Typography>
       <Switch checked={mode || false} onChange={onChange} />
-      <Typography variant="body1">Edit</Typography>
+      <Typography
+        variant="body1"
+        align={'right'}
+        style={{ padding: '0 0.5rem' }}
+      >
+        Edit
+      </Typography>
+      <Edit />
     </>
   );
 };

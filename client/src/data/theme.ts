@@ -1,9 +1,10 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 
-const defaultTheme = responsiveFontSizes(
+export const defaultTheme = responsiveFontSizes(
   createMuiTheme({
     palette: {
       primary: {
+        dark: '#523d00',
         main: '#FFBF00',
         light: '#FFDF80'
       },
@@ -14,10 +15,30 @@ const defaultTheme = responsiveFontSizes(
       },
       text: {
         primary: '#022851',
-        secondary: '#FFF9E5'
+        secondary: '#FFBF00'
       }
     }
   })
 );
 
-export default defaultTheme;
+export const darkTheme = responsiveFontSizes(
+  createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        dark: '#523d00',
+        main: '#FFBF00',
+        light: '#FFDF80'
+      },
+      secondary: {
+        dark: '#022851',
+        main: '#6884A3',
+        light: '#9AADC2'
+      },
+      text: {
+        primary: '#FFF9E5',
+        secondary: '#CDD6E0'
+      }
+    }
+  })
+);

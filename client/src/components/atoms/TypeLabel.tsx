@@ -3,6 +3,9 @@ import { Grid, Checkbox, Icon, Typography, useTheme } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { GET_ROOM, useCurrentRoom } from '../../uses/useRoom';
+import { rgb, hsl } from 'color-convert';
+import useBusy from '../../uses/useBusy';
+import { useCurrentUser } from '../../uses/useUser';
 
 export type TypeLabelProps = {
   id: number;
@@ -24,7 +27,7 @@ export const UPDATE_RECORD_TYPE = gql`
 `;
 
 const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
-  const theme = useTheme();
+  const user = useCurrentUser();
   const currentRoom = useCurrentRoom();
   const [updateRecord] = useMutation(UPDATE_RECORD_TYPE, {
     update: (cache, { data: { updateOneRecordType } }) => {
@@ -66,20 +69,29 @@ const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
     });
   };
 
+  const color = props.color
+    ? '#' +
+      hsl.hex(
+        rgb
+          .hsl(props.color)
+          .map((item: number, index: number) =>
+            index === 2 ? item - 10 * (user?.setting.darkMode ? -1 : 1) : item
+          )
+      )
+    : '#aaaaaa';
+
   return (
     <Grid
       style={{
         height: '3rem',
-        color: props.color
-          ? `rgb(${props.color[0]}, ${props.color[1]}, ${props.color[2]})`
-          : undefined
+        color: color
       }}
       container
       item
       xs={12}
     >
       <Grid container item xs={2} alignItems={'center'}>
-        <Icon>{props.icon}</Icon>
+        <Icon>{props.icon || 'place'}</Icon>
       </Grid>
       <Grid
         container
@@ -91,11 +103,7 @@ const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
         <Typography variant={'body1'}>{props.label}</Typography>
         <Checkbox
           style={{
-            color: props.color
-              ? status[1]
-                ? `rgb(${props.color[0]}, ${props.color[1]}, ${props.color[2]})`
-                : theme.palette.grey[500]
-              : undefined
+            color: color
           }}
           checked={status[0]}
           disabled={!status[1]}

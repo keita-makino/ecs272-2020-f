@@ -40,7 +40,7 @@ const SliderLabel: React.FC<SliderLabelProps> = (props: SliderLabelProps) => {
 
   const range =
     props.label === 'Mark Size'
-      ? { max: 0.005, min: 0.0005, step: 0.0005 }
+      ? { max: 0.008, min: 0.0005, step: 0.0005 }
       : { max: 0.002, min: 0.00025, step: 0.00025 };
 
   return (

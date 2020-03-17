@@ -48,10 +48,11 @@ const getRange = async (set: ShapeSet) => {
           ...set.edges!.map(item => item.end.lat)
         )
       };
-  range.xMax += 0.025;
-  range.xMin -= 0.025;
-  range.yMax += 0.025;
-  range.yMin -= 0.025;
+  const buffer = set.nodes.length > 0 ? set.nodes[0].radius : 0.025;
+  range.xMax += buffer * 3;
+  range.xMin -= buffer * 3;
+  range.yMax += buffer * 3;
+  range.yMin -= buffer * 3;
   return range;
 };
 

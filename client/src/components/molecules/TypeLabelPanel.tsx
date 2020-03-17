@@ -5,6 +5,7 @@ import useColors from '../../uses/useColors';
 import { useCurrentRoom } from '../../uses/useRoom';
 import getIcon from '../../utils/getIcon';
 import camelcase from 'camelcase';
+import AddType from '../atoms/AddType';
 
 export type TypePanelProps = {};
 
@@ -45,6 +46,7 @@ const TypePanel: React.FC<TypePanelProps> = (props: TypePanelProps) => {
             />
           );
         })}
+        <AddType />
       </Grid>
     </>
   );

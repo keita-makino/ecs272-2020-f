@@ -1,9 +1,10 @@
 import React, { ReactChildren } from 'react';
 import ControlPanel, { ControlPanelProps } from '../molecules/ControlPanel';
 import TypePanel, { TypePanelProps } from '../molecules/TypeLabelPanel';
-import { makeStyles, Theme, Grid } from '@material-ui/core';
+import { makeStyles, Theme, Grid, Divider } from '@material-ui/core';
 import TitlePanel from '../molecules/TitlePanel';
 import { useSpring, motion, useMotionValue, useTransform } from 'framer-motion';
+import { useWindowSize } from 'react-use';
 
 export type SidebarProps = {
   controlPanel: ControlPanelProps;
@@ -27,6 +28,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     width: '20rem',
     backgroundColor: theme.palette.primary.main,
+    position: 'absolute'
+  },
+  glass: {
+    height: '100%',
+    width: '20rem',
     position: 'absolute',
     backdropFilter: 'blur(5px)'
   },
@@ -34,16 +40,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     width: '20rem',
     boxSizing: 'border-box',
-    padding: '10rem 1.25rem',
+    padding: '7rem 1.25rem',
     position: 'absolute'
   }
 }));
 
 const Sidebar: React.FC<SidebarProps> = (props: SidebarProps) => {
   const classes = useStyles();
+  const { height } = useWindowSize();
 
-  const y = useSpring(-720, { stiffness: 50, mass: 0.4 });
-  const o = useTransform(y, [-720, 0], [0, 0.2]);
+  const y = useSpring(-height, { stiffness: 50, mass: 0.4 });
+  const o = useTransform(y, [-height, 0], [0, 0.2]);
 
   return (
     <>
@@ -52,10 +59,12 @@ const Sidebar: React.FC<SidebarProps> = (props: SidebarProps) => {
       </Grid>
       <motion.div style={{ y }} className={`${classes.expansion}`}>
         <Grid container item>
+          <Grid item className={`${classes.glass}`}></Grid>
           <motion.div style={{ opacity: o }}>
             <Grid item className={`${classes.background}`}></Grid>
           </motion.div>
           <Grid item className={`${classes.contents}`}>
+            <Divider style={{ margin: '0.6rem 0 2rem 0' }} />
             <TypePanel />
             <ControlPanel
               title={props.controlPanel.title}

@@ -2,26 +2,21 @@ import React, { useState, useEffect } from 'react';
 import DeckGL from '@deck.gl/react';
 import ReactMapGL, { Layer } from 'react-map-gl';
 
-import { ScatterplotLayer, PolygonLayer, RGBAColor, LineLayer } from 'deck.gl';
+import { PolygonLayer, LineLayer } from 'deck.gl';
 import { useWindowSize } from 'react-use';
-import { makeStyles, Theme, Grid } from '@material-ui/core';
 import usePlotData from '../../uses/usePlotData';
 import { useCurrentUser } from '../../uses/useUser';
-import { GET_MODE } from '../molecules/ChangeMode';
-import { useQuery, useApolloClient } from '@apollo/react-hooks';
-import {
-  EditableGeoJsonLayer,
-  ModifyMode,
-  ViewMode,
-  DrawPointMode,
-  TranslateMode,
-  DrawPolygonMode
-} from 'nebula.gl';
+import { useApolloClient } from '@apollo/react-hooks';
+import { EditableGeoJsonLayer, TranslateMode } from 'nebula.gl';
 import { Scatters } from '../../uses/useScatters';
 import useBusy, { changeBusy } from '../../uses/useBusy';
 import ToolTip, { ToolTipProps } from '../molecules/ToolTip';
 import updateVis from '../../utils/updateVis';
 import { useCurrentRoom } from '../../uses/useRoom';
+import AddRecordToolTip, {
+  AddRecordToolTipProps
+} from '../molecules/AddRecordToolTip';
+import initializeGeocoder from '../../utils/geocoder';
 
 export type MapProps = {
   viewState: {
@@ -33,23 +28,22 @@ export type MapProps = {
   };
 };
 
-const useStyles = makeStyles(() => ({
-  mainVis: {
-    position: 'absolute'
-  }
-}));
-
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoia2VtYWtpbm8iLCJhIjoiY2s1aHJkeWVpMDZzbDNubzltem80MGdnZSJ9.Mn_8DItICHFJyiPJ2rP_0Q';
 
 const Map = (props: MapProps) => {
-  const classes = useStyles();
   const plotData = usePlotData();
   const [scatters, setScatters] = useState<Scatters | undefined>(undefined);
   const [selected, setSelected] = useState(-1);
+  const [addRecordTooltip, setAddRecordTooltip] = useState<
+    AddRecordToolTipProps
+  >();
   const [tooltip, setTooltip] = useState<ToolTipProps>();
   const user = useCurrentUser();
   const room = useCurrentRoom();
+  const geocoder = initializeGeocoder(
+    'AIzaSyDPmTLp6MKmmZTnR_ItwkNDsoJkpJEWWmc'
+  );
 
   const client = useApolloClient();
   const editMode = useBusy('editMode');
@@ -77,17 +71,17 @@ const Map = (props: MapProps) => {
           data: plotData.contours!,
           extruded: false,
           stroked: true,
-          getPolygon: d => d.contour,
-          getFillColor: d => d.color
+          getPolygon: (d: { contour: any }) => d.contour,
+          getFillColor: (d: { color: any }) => d.color
         })
       : undefined,
     user?.setting.edge
       ? new LineLayer({
           id: 'lineLayer',
           data: plotData.edges!,
-          getSourcePosition: d => d.start,
-          getTargetPosition: d => d.end,
-          getColor: d => d.color
+          getSourcePosition: (d: { start: any }) => d.start,
+          getTargetPosition: (d: { end: any }) => d.end,
+          getColor: (d: { color: any }) => d.color
         })
       : undefined,
     user?.setting.scatter
@@ -97,9 +91,10 @@ const Map = (props: MapProps) => {
           mode: TranslateMode,
           selectedFeatureIndexes: [selected],
           filled: true,
-          stroked: (d: any, b: boolean) => b,
-          getRadius: 40,
-          getFillColor: (d: any, b: boolean) =>
+          stroked: true,
+          getLineWidth: 5 / Math.log(view.zoom),
+          getRadius: user?.setting.markSize * 25000 || 40,
+          getFillColor: (d: any) =>
             d.properties.fillColor
               ? d.properties.fillColor
               : [125, 255, 255, 255],
@@ -175,19 +170,38 @@ const Map = (props: MapProps) => {
   );
 
   return (
-    <Grid className={classes.mainVis}>
+    <>
+      <ToolTip {...(tooltip as ToolTipProps)} />
+      <AddRecordToolTip {...(addRecordTooltip as AddRecordToolTipProps)} />
       <DeckGL
         width={window.width}
         height={window.height}
         viewState={view}
         layers={layer}
+        getCursor={() => (editMode ? 'crosshair' : 'pointer')}
         onClick={
           editMode
-            ? info => {
-                if (info.index) {
-                  setSelected(info.index);
-                } else {
-                  setSelected(-1);
+            ? (info: any) => {
+                setSelected(info.index);
+                if (info.index === -1 && !addRecordTooltip) {
+                  geocoder.reverseGeocode(
+                    {
+                      latlng: {
+                        lat: info.coordinate[1],
+                        lng: info.coordinate[0]
+                      }
+                    },
+                    (error: any, result: any) => {
+                      setAddRecordTooltip({
+                        address: result.json.results[0].formatted_address,
+                        x: info.x + 16,
+                        y: info.y + 16,
+                        lat: info.coordinate[1],
+                        lng: info.coordinate[0],
+                        setAddRecordTooltip: setAddRecordTooltip
+                      });
+                    }
+                  );
                 }
               }
             : (info: any) => {
@@ -204,14 +218,13 @@ const Map = (props: MapProps) => {
                 }
               }
         }
-        onDragStart={info => setTooltip(undefined)}
+        onDragStart={() => setTooltip(undefined)}
         controller={!editMode && true}
         onViewStateChange={({ viewState }) => setView(viewState)}
       >
-        <ToolTip {...(tooltip as ToolTipProps)} />
         {background}
       </DeckGL>
-    </Grid>
+    </>
   );
 };
 

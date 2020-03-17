@@ -16,7 +16,7 @@ const ControlPanel: React.FC<ControlPanelProps> = (
   props: ControlPanelProps
 ) => {
   return (
-    <Grid>
+    <Grid style={{ paddingTop: '2rem' }}>
       <Typography variant="h6">{props.title}</Typography>
       <Divider />
       {props.sliderArray.map(item => (

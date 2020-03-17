@@ -7,7 +7,6 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import Index from './pages/Index';
 import { hot } from 'react-hot-loader';
 import { MuiThemeProvider } from '@material-ui/core';
-import defaultTheme from './data/theme';
 
 const cache = new InMemoryCache({
   freezeResults: true
@@ -37,11 +36,9 @@ cache.writeData({
 
 const App = () => {
   return (
-    <MuiThemeProvider theme={defaultTheme}>
-      <ApolloProvider client={client}>
-        <Index />
-      </ApolloProvider>
-    </MuiThemeProvider>
+    <ApolloProvider client={client}>
+      <Index />
+    </ApolloProvider>
   );
 };
 

@@ -26,7 +26,7 @@ const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
     const array: number[] = [];
 
     const length = s.getDistance(e);
-    const numOfSegments = Math.ceil(length / (2 * r));
+    const numOfSegments = Math.ceil((length + Number.EPSILON) / (2 * r));
 
     Array(numOfSegments + 1)
       .fill(0)
@@ -67,10 +67,10 @@ const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
   }
 });
 
-const createNode: NodeConstructor = (c: Point, r = 0.002): Node => {
+const createNode: NodeConstructor = (c: Point, r?: number): Node => {
   return {
     center: c,
-    radius: r,
+    radius: r ? r : 0.002,
     getDistanceToEdge: (e: Edge) => {
       const xC = c.lng - e.start.lng;
       const yC = c.lat - e.start.lat;

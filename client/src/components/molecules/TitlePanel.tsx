@@ -8,14 +8,14 @@ export type TitleProps = { y: MotionValue };
 
 const TitlePanel: React.FC<TitleProps> = (props: TitleProps) => {
   const [state, setState] = useState(false);
+  const { height } = useWindowSize();
   const onClick = () => {
-    props.y.set(state ? -720 : 0);
+    props.y.set(state ? -height : 0);
     setState(!state);
   };
-  const height = useWindowSize().height;
 
-  const r = useTransform(props.y, [-720, 0], [0, 180]);
-  const y = useTransform(props.y, [-720, 0], [0, height - 192]);
+  const r = useTransform(props.y, [-height, 0], [0, 180]);
+  const y = useTransform(props.y, [-height, 0], [0, height - 192]);
 
   return (
     <Grid xs={12} item container>

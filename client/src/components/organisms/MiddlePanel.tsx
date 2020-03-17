@@ -2,16 +2,17 @@ import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import ChangeMode from '../molecules/ChangeMode';
 import zIndex from '@material-ui/core/styles/zIndex';
+import ShowComputing from '../molecules/ShowComputing';
 
 export type MiddlePanelProps = {};
 
 const useStyles = makeStyles({
   middlePanel: {
-    width: '24rem',
+    maxWidth: '24rem',
     height: '2rem',
     position: 'relative',
-    zIndex: 6,
-    margin: '4rem auto'
+    padding: '4rem 0',
+    zIndex: 6
   }
 });
 
@@ -22,7 +23,8 @@ const MiddlePanel: React.FC<MiddlePanelProps> = (props: MiddlePanelProps) => {
       container
       item
       className={classes.middlePanel}
-      alignItems={'baseline'}
+      alignItems={'center'}
+      alignContent={'stretch'}
     >
       <ChangeMode />
     </Grid>

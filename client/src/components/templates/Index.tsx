@@ -11,12 +11,14 @@ type Props = { sideBarProps: SidebarProps; mapProps: MapProps };
 
 const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
-    color: '#022851',
+    color: theme.palette.text.primary,
     position: 'relative',
     zIndex: 10
   },
   mainVis: {
-    position: 'relative',
+    position: 'fixed',
+    top: 0,
+    left: 0,
     zIndex: 0
   }
 }));
@@ -32,9 +34,21 @@ const Index: React.FC<Props> = (props: Props) => {
       className={classes.wrapper}
       style={{ height: window.height }}
     >
-      <Sidebar {...props.sideBarProps} />
-      <MiddlePanel />
-      <Map {...props.mapProps} />
+      <Grid item container xs={4}>
+        <Sidebar {...props.sideBarProps} />
+      </Grid>
+      <Grid item container xs={8} justify={'center'}>
+        <MiddlePanel />
+      </Grid>
+      <Grid
+        item
+        container
+        xs={12}
+        justify={'center'}
+        className={classes.mainVis}
+      >
+        <Map {...props.mapProps} />
+      </Grid>
     </Grid>
   );
 };
