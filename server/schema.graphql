@@ -36,6 +36,7 @@ type Mutation {
   createOneUser(data: UserCreateInput!): User!
   deleteOneRecord(where: RecordWhereUniqueInput!): Record
   deleteOneRecordType(where: RecordTypeWhereUniqueInput!): RecordType
+  updateOneRecord(data: RecordUpdateInput!, where: RecordWhereUniqueInput!): Record
   updateOneRecordType(data: RecordTypeUpdateInput!, where: RecordTypeWhereUniqueInput!): RecordType
   updateOneSetting(data: SettingUpdateInput!, where: SettingWhereUniqueInput!): Setting
   updateOneUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
@@ -187,6 +188,20 @@ input RecordTypeUpdateManyWithWhereNestedInput {
   where: RecordTypeScalarWhereInput!
 }
 
+input RecordTypeUpdateOneRequiredWithoutRecordInput {
+  connect: RecordTypeWhereUniqueInput
+  create: RecordTypeCreateWithoutRecordInput
+  update: RecordTypeUpdateWithoutRecordDataInput
+  upsert: RecordTypeUpsertWithoutRecordInput
+}
+
+input RecordTypeUpdateWithoutRecordDataInput {
+  active: Boolean
+  id: Int
+  name: String
+  room: RoomUpdateOneRequiredWithoutRecordTypeInput
+}
+
 input RecordTypeUpdateWithoutRoomDataInput {
   active: Boolean
   id: Int
@@ -197,6 +212,11 @@ input RecordTypeUpdateWithoutRoomDataInput {
 input RecordTypeUpdateWithWhereUniqueWithoutRoomInput {
   data: RecordTypeUpdateWithoutRoomDataInput!
   where: RecordTypeWhereUniqueInput!
+}
+
+input RecordTypeUpsertWithoutRecordInput {
+  create: RecordTypeCreateWithoutRecordInput!
+  update: RecordTypeUpdateWithoutRecordDataInput!
 }
 
 input RecordTypeUpsertWithWhereUniqueWithoutRoomInput {
@@ -218,6 +238,15 @@ input RecordTypeWhereInput {
 
 input RecordTypeWhereUniqueInput {
   id: Int
+}
+
+input RecordUpdateInput {
+  address: String
+  id: Int
+  lat: Float
+  lng: Float
+  name: String
+  type: RecordTypeUpdateOneRequiredWithoutRecordInput
 }
 
 input RecordUpdateManyDataInput {

@@ -38,6 +38,7 @@ const useScatters = (): Scatters | undefined => {
               id: record.id,
               fillColor: item.color,
               type: item.name,
+              typeId: item.id,
               name: record.name,
               address: record.address
             },

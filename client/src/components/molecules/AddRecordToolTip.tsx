@@ -167,7 +167,7 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
         <TextField
           select
           label="Select Type"
-          value={''}
+          value={type}
           onChange={onChangeSelect}
           style={{
             width: '15rem'

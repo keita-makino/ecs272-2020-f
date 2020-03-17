@@ -11,7 +11,13 @@ export type TypePanelProps = {};
 
 const TypePanel: React.FC<TypePanelProps> = (props: TypePanelProps) => {
   const [recordTypes, setRecordTypes] = useState<
-    { id: number; name: string; color: number[]; active: boolean }[]
+    {
+      id: number;
+      name: string;
+      color: number[];
+      active: boolean;
+      record: any[];
+    }[]
   >([]);
 
   const room = useCurrentRoom();
@@ -43,6 +49,7 @@ const TypePanel: React.FC<TypePanelProps> = (props: TypePanelProps) => {
               label={recordType.name}
               color={recordType.color}
               active={recordType.active}
+              canDelete={recordType.record.length === 0}
             />
           );
         })}

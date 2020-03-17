@@ -27,6 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://keita-makino.github.io/ecs272-2020-f",
   "eslintConfig": {
     "extends": "react-app"
   },

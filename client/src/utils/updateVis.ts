@@ -1,4 +1,4 @@
-import { ApolloClient } from 'apollo-boost';
+import { ApolloClient, gql } from 'apollo-boost';
 import { GET_ROOM, useCurrentRoom } from '../uses/useRoom';
 import { DragRotateHandler } from 'mapbox-gl';
 

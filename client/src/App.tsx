@@ -6,7 +6,6 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import Index from './pages/Index';
 import { hot } from 'react-hot-loader';
-import { MuiThemeProvider } from '@material-ui/core';
 
 const cache = new InMemoryCache({
   freezeResults: true

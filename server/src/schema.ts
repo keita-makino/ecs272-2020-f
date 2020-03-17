@@ -98,6 +98,7 @@ const Mutation = mutationType({
     t.crud.createOneUser();
     t.crud.updateOneUser();
     t.crud.updateOneSetting();
+    t.crud.updateOneRecord();
     t.crud.updateOneRecordType();
   }
 });

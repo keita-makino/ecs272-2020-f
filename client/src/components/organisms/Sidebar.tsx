@@ -1,10 +1,17 @@
 import React, { ReactChildren } from 'react';
 import ControlPanel, { ControlPanelProps } from '../molecules/ControlPanel';
 import TypePanel, { TypePanelProps } from '../molecules/TypeLabelPanel';
-import { makeStyles, Theme, Grid, Divider } from '@material-ui/core';
+import {
+  makeStyles,
+  Theme,
+  Grid,
+  Divider,
+  IconButton
+} from '@material-ui/core';
 import TitlePanel from '../molecules/TitlePanel';
 import { useSpring, motion, useMotionValue, useTransform } from 'framer-motion';
 import { useWindowSize } from 'react-use';
+import { HelpOutline } from '@material-ui/icons';
 
 export type SidebarProps = {
   controlPanel: ControlPanelProps;
@@ -71,6 +78,25 @@ const Sidebar: React.FC<SidebarProps> = (props: SidebarProps) => {
               sliderArray={props.controlPanel.sliderArray}
               toggleArray={props.controlPanel.toggleArray}
             />
+            <Grid
+              item
+              xs={12}
+              style={{
+                color: 'inherit',
+                position: 'absolute',
+                bottom: '2rem',
+                right: '1rem'
+              }}
+            >
+              <a
+                href={'https://github.com/keita-makino/ecs272-2020-f'}
+                target={'blank'}
+              >
+                <IconButton>
+                  <HelpOutline style={{ color: '#999999' }} />
+                </IconButton>
+              </a>
+            </Grid>
           </Grid>
         </Grid>
       </motion.div>

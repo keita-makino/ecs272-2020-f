@@ -6,7 +6,7 @@ import { PolygonLayer, LineLayer } from 'deck.gl';
 import { useWindowSize } from 'react-use';
 import usePlotData from '../../uses/usePlotData';
 import { useCurrentUser } from '../../uses/useUser';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import { EditableGeoJsonLayer, TranslateMode } from 'nebula.gl';
 import { Scatters } from '../../uses/useScatters';
 import useBusy, { changeBusy } from '../../uses/useBusy';
@@ -17,6 +17,7 @@ import AddRecordToolTip, {
   AddRecordToolTipProps
 } from '../molecules/AddRecordToolTip';
 import initializeGeocoder from '../../utils/geocoder';
+import { gql } from 'apollo-boost';
 
 export type MapProps = {
   viewState: {
@@ -28,6 +29,21 @@ export type MapProps = {
   };
 };
 
+export const UPDATE_RECORD_TYPE = gql`
+  mutation UpdateRecord($newData: RecordUpdateInput!, $id: Int!) {
+    updateOneRecord(data: $newData, where: { id: $id }) {
+      id
+      name
+      address
+      lat
+      lng
+      type {
+        id
+      }
+    }
+  }
+`;
+
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoia2VtYWtpbm8iLCJhIjoiY2s1aHJkeWVpMDZzbDNubzltem80MGdnZSJ9.Mn_8DItICHFJyiPJ2rP_0Q';
 
@@ -38,6 +54,7 @@ const Map = (props: MapProps) => {
   const [addRecordTooltip, setAddRecordTooltip] = useState<
     AddRecordToolTipProps
   >();
+  const [mutation] = useMutation(UPDATE_RECORD_TYPE);
   const [tooltip, setTooltip] = useState<ToolTipProps>();
   const user = useCurrentUser();
   const room = useCurrentRoom();
@@ -118,6 +135,29 @@ const Map = (props: MapProps) => {
             }
             if (editType === 'translated') {
               changeBusy('modifying', false, client);
+              const record = updatedData.features[selected];
+              geocoder.reverseGeocode(
+                {
+                  latlng: {
+                    lat: record.geometry.coordinates[1],
+                    lng: record.geometry.coordinates[0]
+                  }
+                },
+                (error: any, result: any) => {
+                  mutation({
+                    variables: {
+                      newData: {
+                        lat: record.geometry.coordinates[1],
+                        lng: record.geometry.coordinates[0],
+                        name: record.properties.name,
+                        address: record.properties.address,
+                        type: { connect: { id: record.properties.typeId } }
+                      },
+                      id: record.properties.id
+                    }
+                  });
+                }
+              );
             }
             setScatters(updatedData);
           }

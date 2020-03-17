@@ -21,6 +21,7 @@ export type TypeLabelProps = {
   label: string;
   color?: number[];
   active: boolean;
+  canDelete: boolean;
 };
 
 export const UPDATE_RECORD_TYPE = gql`
@@ -155,7 +156,7 @@ const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
             disabled={!status[1]}
             onChange={onChange}
           />
-          {props.icon === undefined ? (
+          {props.icon === undefined && props.canDelete === true ? (
             <ButtonBase onClick={onClick} style={{ padding: '9px 9px 9px 0' }}>
               <HighlightOff color={'error'} />
             </ButtonBase>

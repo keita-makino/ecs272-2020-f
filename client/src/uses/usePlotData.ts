@@ -12,6 +12,7 @@ type PlotData = ContoursEdges & {
 };
 
 export type RecordType = {
+  id: number;
   record: Records;
   name: string;
   color: [number, number, number];
