@@ -42,7 +42,7 @@ const Map = (props: MapProps) => {
   const user = useCurrentUser();
   const room = useCurrentRoom();
   const geocoder = initializeGeocoder(
-    'AIzaSyDPmTLp6MKmmZTnR_ItwkNDsoJkpJEWWmc'
+    'AIzaSyBnY-e-cooj3Al00CsgEY53K8nUD32T2f0'
   );
 
   const client = useApolloClient();
