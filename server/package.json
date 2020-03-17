@@ -2,23 +2,22 @@
   "name": "script",
   "license": "MIT",
   "main": "sec/server.ts",
-  "devDependencies": {
+  "devDependencies": {},
+  "scripts": {
+    "start": "ts-node-dev src/server.ts",
+    "dev": "ts-node-dev src/server.ts"
+  },
+  "dependencies": {
+    "ts-node": "^8.6.2",
+    "nexus-prisma": "^0.11.1",
+    "typescript": "3.8.3",
     "@prisma/client": "^2.0.0-preview024",
     "apollo-server": "^2.11.0",
     "color-convert": "^2.0.1",
     "graphql": "^14.6.0",
     "nexus": "^0.12.0-rc.13",
     "prisma2": "^2.0.0-preview024",
-    "ts-node": "^8.6.2",
-    "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "3.8.3"
-  },
-  "scripts": {
-    "start": "ts-node-dev src/server.ts",
-    "dev": "ts-node-dev src/server.ts"
-  },
-  "dependencies": {
-    "nexus-prisma": "^0.11.1"
+    "ts-node-dev": "^1.0.0-pre.44"
   },
   "engines": {
     "node": ">=10.0.0"
