@@ -14,7 +14,7 @@
     "typescript": "3.8.3"
   },
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "ts-node-dev src/server.ts",
     "dev": "ts-node-dev src/server.ts"
   },
   "dependencies": {
