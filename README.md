@@ -1,6 +1,6 @@
 # ecs272-2020-f
 
-WIP.
+The implementation of bubble set as the final project of ECS272-2020. 
 
 # Client
 
