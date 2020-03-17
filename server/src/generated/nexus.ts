@@ -626,6 +626,8 @@ export interface NexusGenFieldTypes {
     createOneRecordType: NexusGenRootTypes['RecordType']; // RecordType!
     createOneRoom: NexusGenRootTypes['Room']; // Room!
     createOneUser: NexusGenRootTypes['User']; // User!
+    deleteOneRecord: NexusGenRootTypes['Record'] | null; // Record
+    deleteOneRecordType: NexusGenRootTypes['RecordType'] | null; // RecordType
     updateOneRecordType: NexusGenRootTypes['RecordType'] | null; // RecordType
     updateOneSetting: NexusGenRootTypes['Setting'] | null; // Setting
     updateOneUser: NexusGenRootTypes['User'] | null; // User
@@ -693,6 +695,12 @@ export interface NexusGenArgTypes {
     }
     createOneUser: { // args
       data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    }
+    deleteOneRecord: { // args
+      where: NexusGenInputs['RecordWhereUniqueInput']; // RecordWhereUniqueInput!
+    }
+    deleteOneRecordType: { // args
+      where: NexusGenInputs['RecordTypeWhereUniqueInput']; // RecordTypeWhereUniqueInput!
     }
     updateOneRecordType: { // args
       data: NexusGenInputs['RecordTypeUpdateInput']; // RecordTypeUpdateInput!

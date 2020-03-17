@@ -1,5 +1,13 @@
 import { nexusPrismaPlugin } from "nexus-prisma";
-import { idArg, makeSchema, objectType, stringArg, intArg } from "nexus";
+import {
+  idArg,
+  makeSchema,
+  objectType,
+  stringArg,
+  intArg,
+  mutationType,
+  queryType
+} from "nexus";
 import { hsl } from "color-convert";
 
 const User = objectType({
@@ -67,8 +75,7 @@ const Setting = objectType({
   }
 });
 
-const Query = objectType({
-  name: "Query",
+const Query = queryType({
   definition(t) {
     t.crud.record();
     t.crud.records();
@@ -81,11 +88,12 @@ const Query = objectType({
   }
 });
 
-const Mutation = objectType({
-  name: "Mutation",
+const Mutation = mutationType({
   definition(t) {
     t.crud.createOneRecord();
+    t.crud.deleteOneRecord();
     t.crud.createOneRecordType();
+    t.crud.deleteOneRecordType();
     t.crud.createOneRoom();
     t.crud.createOneUser();
     t.crud.updateOneUser();

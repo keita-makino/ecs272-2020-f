@@ -11,7 +11,7 @@ import {
   Button
 } from '@material-ui/core';
 import camelcase from 'camelcase';
-import { useCurrentRoom } from '../../uses/useRoom';
+import { useCurrentRoom, GET_ROOM } from '../../uses/useRoom';
 import { ToolTipProps } from './ToolTip';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
@@ -42,13 +42,56 @@ export const CREATE_RECORD = gql`
 const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
   props: AddRecordToolTipProps
 ) => {
-  const room = useCurrentRoom();
-  const [mutation] = useMutation(CREATE_RECORD);
+  const currentRoom = useCurrentRoom();
+  const [mutation] = useMutation(CREATE_RECORD, {
+    update: (cache, { data: { createOneRecord } }) => {
+      const { room } = cache.readQuery<any>({
+        query: GET_ROOM,
+        variables: { id: currentRoom.id }
+      });
+
+      const typeIndex = room.recordType.findIndex(
+        (item: any) => item.name === type
+      );
+      console.log(type);
+      console.log(room.recordType);
+      const newRecord = {
+        ...createOneRecord,
+        type: { connect: { id: room.recordType[typeIndex].id } }
+      };
+
+      const newRoom = {
+        ...room,
+        recordType: [
+          ...room.recordType.filter(
+            (item: any, index: any) => index !== typeIndex
+          ),
+          {
+            ...room.recordType[typeIndex],
+            record: [
+              ...room.recordType[typeIndex].record,
+              newRecord
+            ].sort((a, b) => (a.id < b.id ? -1 : 1))
+          }
+        ].sort((a, b) => (a.id < b.id ? -1 : 1))
+      };
+
+      cache.writeQuery({
+        query: GET_ROOM,
+        variables: {
+          id: currentRoom.id
+        },
+        data: {
+          room: newRoom
+        }
+      });
+    }
+  });
   const [type, setType] = React.useState('');
   const [name, setName] = React.useState('');
-  if (!props.address) return null;
+  if (!props.address || !currentRoom) return null;
 
-  const options = room?.recordType.map((item: any) => ({
+  const options = currentRoom?.recordType.map((item: any) => ({
     value: item.name
   }));
 
@@ -62,7 +105,7 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
   };
 
   const addRecord = () => {
-    const typeInstance = room?.recordType.find(
+    const typeInstance = currentRoom?.recordType.find(
       (item: any) => item.name === type
     );
     if (!typeInstance) return;
@@ -79,6 +122,7 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
       }
     });
     props.setAddRecordTooltip(undefined);
+    setName('');
   };
 
   return (
@@ -106,7 +150,7 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
               width: '15rem'
             }}
             label="Add Record"
-            defaultValue={name}
+            value={name}
             onChange={onChangeInput}
           />
         </Grid>
@@ -123,6 +167,7 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
         <TextField
           select
           label="Select Type"
+          value={''}
           onChange={onChangeSelect}
           style={{
             width: '15rem'

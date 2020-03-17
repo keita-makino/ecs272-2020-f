@@ -34,6 +34,8 @@ type Mutation {
   createOneRecordType(data: RecordTypeCreateInput!): RecordType!
   createOneRoom(data: RoomCreateInput!): Room!
   createOneUser(data: UserCreateInput!): User!
+  deleteOneRecord(where: RecordWhereUniqueInput!): Record
+  deleteOneRecordType(where: RecordTypeWhereUniqueInput!): RecordType
   updateOneRecordType(data: RecordTypeUpdateInput!, where: RecordTypeWhereUniqueInput!): RecordType
   updateOneSetting(data: SettingUpdateInput!, where: SettingWhereUniqueInput!): Setting
   updateOneUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User

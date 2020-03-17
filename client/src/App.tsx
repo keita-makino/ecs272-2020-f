@@ -17,6 +17,7 @@ const link = new HttpLink({
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
+  resolvers: {},
   link
 });
 

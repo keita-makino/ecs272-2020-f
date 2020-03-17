@@ -205,13 +205,16 @@ const Map = (props: MapProps) => {
                 }
               }
             : (info: any) => {
+                setAddRecordTooltip(undefined);
                 if (info.object?.properties?.type) {
                   setTooltip({
+                    id: info.object.properties.id,
                     type: info.object.properties.type,
                     name: info.object.properties.name,
                     address: info.object.properties.address,
                     x: info.x + 16,
-                    y: info.y + 16
+                    y: info.y + 16,
+                    setTooltip: setTooltip
                   });
                 } else {
                   setTooltip(undefined);
