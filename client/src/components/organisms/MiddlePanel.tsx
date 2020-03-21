@@ -25,6 +25,7 @@ const MiddlePanel: React.FC<MiddlePanelProps> = (props: MiddlePanelProps) => {
       className={classes.middlePanel}
       alignItems={'center'}
       alignContent={'stretch'}
+      justify={'center'}
     >
       <ChangeMode />
     </Grid>

@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import getIcon from '../../utils/getIcon';
 import camelcase from 'camelcase';
-import { HighlightOff } from '@material-ui/icons';
+import { DeleteForever } from '@material-ui/icons';
 import { gql } from 'apollo-boost';
 import { useCurrentRoom, GET_ROOM } from '../../uses/useRoom';
 import { useMutation } from '@apollo/react-hooks';
@@ -116,7 +116,7 @@ const ToolTip: React.FC<ToolTipProps> = (props: ToolTipProps) => {
         </Grid>
         <Grid container item xs={1} alignItems={'center'}>
           <ButtonBase onClick={onClick}>
-            <HighlightOff color={'error'} />
+            <DeleteForever color={'error'} />
           </ButtonBase>
         </Grid>
       </Grid>

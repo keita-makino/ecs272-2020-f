@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import TypeLabel, { TypeLabelProps } from '../atoms/TypeLabel';
+import TypeLabel from '../atoms/TypeLabel';
 import { Typography, Grid, Divider } from '@material-ui/core';
-import useColors from '../../uses/useColors';
 import { useCurrentRoom } from '../../uses/useRoom';
 import getIcon from '../../utils/getIcon';
 import camelcase from 'camelcase';

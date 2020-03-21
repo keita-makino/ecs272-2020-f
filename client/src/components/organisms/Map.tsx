@@ -56,11 +56,11 @@ const Map = (props: MapProps) => {
   >();
   const [mutation] = useMutation(UPDATE_RECORD_TYPE);
   const [tooltip, setTooltip] = useState<ToolTipProps>();
-  const user = useCurrentUser();
+  const data = useCurrentUser();
   const room = useCurrentRoom();
-  const geocoder = initializeGeocoder(
-    'AIzaSyBnY-e-cooj3Al00CsgEY53K8nUD32T2f0'
-  );
+  const geocoder = initializeGeocoder(process.env.REACT_APP_MAP_API_KEY!);
+
+  console.log(process.env.REACT_APP_MAP_API_KEY);
 
   const client = useApolloClient();
   const editMode = useBusy('editMode');
@@ -82,26 +82,7 @@ const Map = (props: MapProps) => {
   }, [editMode]);
 
   const layer = [
-    user?.setting.bubble
-      ? new PolygonLayer({
-          id: 'polygonLayer',
-          data: plotData.contours!,
-          extruded: false,
-          stroked: true,
-          getPolygon: (d: { contour: any }) => d.contour,
-          getFillColor: (d: { color: any }) => d.color
-        })
-      : undefined,
-    user?.setting.edge
-      ? new LineLayer({
-          id: 'lineLayer',
-          data: plotData.edges!,
-          getSourcePosition: (d: { start: any }) => d.start,
-          getTargetPosition: (d: { end: any }) => d.end,
-          getColor: (d: { color: any }) => d.color
-        })
-      : undefined,
-    user?.setting.scatter
+    data?.user?.setting.scatter
       ? new EditableGeoJsonLayer({
           id: 'geojsonLayer',
           data: scatters,
@@ -110,7 +91,7 @@ const Map = (props: MapProps) => {
           filled: true,
           stroked: true,
           getLineWidth: 5 / Math.log(view.zoom),
-          getRadius: user?.setting.markSize * 25000 || 40,
+          getRadius: data?.user?.setting.markSize * 25000 || 40,
           getFillColor: (d: any) =>
             d.properties.fillColor
               ? d.properties.fillColor
@@ -162,6 +143,25 @@ const Map = (props: MapProps) => {
             setScatters(updatedData);
           }
         })
+      : undefined,
+    data?.user?.setting.edge
+      ? new LineLayer({
+          id: 'lineLayer',
+          data: plotData.edges!,
+          getSourcePosition: (d: { start: any }) => d.start,
+          getTargetPosition: (d: { end: any }) => d.end,
+          getColor: (d: { color: any }) => d.color
+        })
+      : undefined,
+    data?.user?.setting.bubble
+      ? new PolygonLayer({
+          id: 'polygonLayer',
+          data: plotData.contours!,
+          extruded: false,
+          stroked: true,
+          getPolygon: (d: { contour: any }) => d.contour,
+          getFillColor: (d: { color: any }) => d.color
+        })
       : undefined
   ].filter(item => item !== undefined) as any[];
 
@@ -171,8 +171,8 @@ const Map = (props: MapProps) => {
       width={window.width}
       height={window.height}
       mapStyle={
-        user
-          ? user.setting.darkMode
+        data?.user
+          ? data?.user.setting.darkMode
             ? 'mapbox://styles/mapbox/dark-v10'
             : 'mapbox://styles/mapbox/light-v10'
           : 'mapbox://styles/mapbox/light-v10'

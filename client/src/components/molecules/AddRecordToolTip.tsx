@@ -2,17 +2,16 @@ import React, { SetStateAction, Dispatch } from 'react';
 import {
   Card,
   Grid,
-  Typography,
-  Icon,
   Divider,
   TextField,
-  Select,
   MenuItem,
-  Button
+  Button,
+  useTheme,
+  Paper,
+  makeStyles,
+  Theme
 } from '@material-ui/core';
-import camelcase from 'camelcase';
 import { useCurrentRoom, GET_ROOM } from '../../uses/useRoom';
-import { ToolTipProps } from './ToolTip';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -39,9 +38,25 @@ export const CREATE_RECORD = gql`
   }
 `;
 
+const useStyles = makeStyles((theme: Theme) => ({
+  card: {
+    backgroundColor: theme.palette.background.default,
+    width: '15rem',
+    position: 'absolute',
+    padding: '0.6rem 0.8rem 0.8rem 0.8rem',
+    zIndex: 700,
+    top: (props: any) => props.y,
+    left: (props: any) => props.x
+  },
+  label: {
+    color: theme.palette.text.primary
+  }
+}));
+
 const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
   props: AddRecordToolTipProps
 ) => {
+  const classes = useStyles(props);
   const currentRoom = useCurrentRoom();
   const [mutation] = useMutation(CREATE_RECORD, {
     update: (cache, { data: { createOneRecord } }) => {
@@ -53,8 +68,6 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
       const typeIndex = room.recordType.findIndex(
         (item: any) => item.name === type
       );
-      console.log(type);
-      console.log(room.recordType);
       const newRecord = {
         ...createOneRecord,
         type: { connect: { id: room.recordType[typeIndex].id } }
@@ -126,29 +139,23 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
   };
 
   return (
-    <Card
-      style={{
-        width: '15rem',
-        position: 'absolute',
-        zIndex: 700,
-        top: props.y,
-        left: props.x
-      }}
-    >
+    <Card className={classes.card}>
       <Grid container item xs={12}>
         <Grid
           container
           item
-          xs={10}
+          xs={12}
           alignItems={'center'}
           style={{
-            padding: '0.3rem'
+            padding: '0.6rem'
           }}
         >
           <TextField
+            color={'secondary'}
             style={{
               width: '15rem'
             }}
+            InputLabelProps={{ className: classes.label }}
             label="Add Record"
             value={name}
             onChange={onChangeInput}
@@ -161,12 +168,14 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
         item
         xs={12}
         style={{
-          padding: '0.3rem'
+          padding: '0.6rem'
         }}
       >
         <TextField
+          color={'secondary'}
           select
           label="Select Type"
+          InputLabelProps={{ className: classes.label }}
           value={type}
           onChange={onChangeSelect}
           style={{
@@ -186,16 +195,18 @@ const AddRecordToolTip: React.FC<AddRecordToolTipProps> = (
         xs={12}
         justify={'flex-end'}
         style={{
-          padding: '0.3rem'
+          padding: '0.6rem'
         }}
       >
         <Button
-          color={'primary'}
+          style={{ marginRight: '0.5rem' }}
+          variant={'outlined'}
+          color={'secondary'}
           onClick={() => props.setAddRecordTooltip(undefined)}
         >
           Cancel
         </Button>
-        <Button color={'primary'} onClick={addRecord}>
+        <Button variant={'contained'} color={'primary'} onClick={addRecord}>
           Add
         </Button>
       </Grid>

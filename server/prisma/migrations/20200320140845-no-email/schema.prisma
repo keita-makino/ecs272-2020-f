@@ -4,7 +4,7 @@ generator photon {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Record {
@@ -27,6 +27,7 @@ model RecordType {
 model Room {
   id         String       @default("") @id
   recordType RecordType[]
+  user       User[]
 }
 
 model Setting {
@@ -43,5 +44,6 @@ model Setting {
 
 model User {
   id      String   @default("") @id
+  room    Room[]
   setting Setting?
 }

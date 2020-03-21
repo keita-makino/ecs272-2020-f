@@ -2,9 +2,7 @@ import React from 'react';
 import SliderLabel, { SliderLabelProps } from '../atoms/SliderLabel';
 import { Grid, Typography } from '@material-ui/core';
 import ToggleLabel, { ToggleLabelProps } from '../atoms/ToggleLabel';
-import { Theme, createStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
 
 export type ControlPanelProps = {
   title: string;

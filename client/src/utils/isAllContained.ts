@@ -1,6 +1,5 @@
 import { ShapeSet } from '../types/ShapeSet';
 import { polygonContains } from 'd3-polygon';
-import { Point, Path } from '../types/Shapes';
 
 const isAllContained = async (activeSet: ShapeSet, path: number[][][]) => {
   return activeSet.nodes.reduce((prev, curr) => {

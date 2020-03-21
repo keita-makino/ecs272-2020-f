@@ -1,5 +1,4 @@
 import React from 'react';
-import { Grid, Icon } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import Switch from '@material-ui/core/Switch';

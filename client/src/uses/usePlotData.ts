@@ -1,11 +1,8 @@
 import useContoursEdges, { ContoursEdges } from './useContoursEdges';
 import { useState, useEffect } from 'react';
-import { gql } from 'apollo-boost';
-import { useQuery, useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/react-hooks';
 import useScatters, { Scatters } from './useScatters';
-import { useCurrentRoom } from './useRoom';
 import { changeBusy } from './useBusy';
-import useFilteredData from './useFilteredData';
 
 type PlotData = ContoursEdges & {
   scatters?: Scatters;

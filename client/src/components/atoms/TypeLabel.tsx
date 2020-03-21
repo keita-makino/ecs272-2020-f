@@ -4,16 +4,14 @@ import {
   Checkbox,
   Icon,
   Typography,
-  useTheme,
   ButtonBase
 } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { GET_ROOM, useCurrentRoom } from '../../uses/useRoom';
 import { rgb, hsl } from 'color-convert';
-import useBusy from '../../uses/useBusy';
 import { useCurrentUser } from '../../uses/useUser';
-import { HighlightOff } from '@material-ui/icons';
+import { DeleteForever } from '@material-ui/icons';
 
 export type TypeLabelProps = {
   id: number;
@@ -44,7 +42,7 @@ export const DELETE_RECORD_TYPE = gql`
 `;
 
 const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
-  const user = useCurrentUser();
+  const data = useCurrentUser();
   const currentRoom = useCurrentRoom();
   const [updateRecordType] = useMutation(UPDATE_RECORD_TYPE, {
     update: (cache, { data: { updateOneRecordType } }) => {
@@ -113,7 +111,9 @@ const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
         rgb
           .hsl(props.color)
           .map((item: number, index: number) =>
-            index === 2 ? item - 10 * (user?.setting.darkMode ? -1 : 1) : item
+            index === 2
+              ? item - 10 * (data?.user?.setting.darkMode ? -1 : 1)
+              : item
           )
       )
     : '#aaaaaa';
@@ -158,7 +158,7 @@ const TypeLabel: React.FC<TypeLabelProps> = (props: TypeLabelProps) => {
           />
           {props.icon === undefined && props.canDelete === true ? (
             <ButtonBase onClick={onClick} style={{ padding: '9px 9px 9px 0' }}>
-              <HighlightOff color={'error'} />
+              <DeleteForever color={'error'} />
             </ButtonBase>
           ) : null}
         </Grid>

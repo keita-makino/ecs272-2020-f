@@ -1,6 +1,5 @@
-import { ApolloClient, gql } from 'apollo-boost';
-import { GET_ROOM, useCurrentRoom } from '../uses/useRoom';
-import { DragRotateHandler } from 'mapbox-gl';
+import { ApolloClient } from 'apollo-boost';
+import { GET_ROOM } from '../uses/useRoom';
 
 type UpdateVisData = {
   roomId: number;

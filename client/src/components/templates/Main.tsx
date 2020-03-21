@@ -2,9 +2,8 @@ import React from 'react';
 
 import Map, { MapProps } from '../organisms/Map';
 import Sidebar, { SidebarProps } from '../organisms/Sidebar';
-import { makeStyles, Grid, Theme, Box } from '@material-ui/core';
+import { makeStyles, Grid, Theme } from '@material-ui/core';
 import { useWindowSize } from 'react-use';
-import zIndex from '@material-ui/core/styles/zIndex';
 import MiddlePanel from '../organisms/MiddlePanel';
 
 type Props = { sideBarProps: SidebarProps; mapProps: MapProps };
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const Index: React.FC<Props> = (props: Props) => {
+const Main: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const window = useWindowSize();
   return (
@@ -53,4 +52,4 @@ const Index: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default Index;
+export default Main;

@@ -1,11 +1,11 @@
 import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { mockUser } from '../data/mock';
 
 export const GET_USER = gql`
-  query GetUser($id: Int) {
+  query GetUser($id: String!) {
     user(where: { id: $id }) {
       id
-      name
       setting {
         cellSize
         markSize
@@ -19,11 +19,27 @@ export const GET_USER = gql`
   }
 `;
 
-const GET_CURRENT_USER_ID = gql`
+export const GET_CURRENT_USER_ID = gql`
   query {
     session @client {
       userId
-      __typename
+    }
+  }
+`;
+
+export const CREATE_NEW_USER = gql`
+  mutation CreateNewUser($newData: UserCreateInput!) {
+    createOneUser(data: $newData) {
+      id
+      setting {
+        cellSize
+        markSize
+        darkMode
+        scatter
+        edge
+        bubble
+        height
+      }
     }
   }
 `;
@@ -34,8 +50,10 @@ export const useCurrentUser = () => {
   return useUser(data?.session.userId);
 };
 
-export const useUser = (id?: number) => {
-  const { data } = useQuery(GET_USER, { variables: { id: id } });
+export const useUser = (id?: string) => {
+  const { data } = useQuery(GET_USER, {
+    variables: { id: id }
+  });
 
-  return data ? data.user : undefined;
+  return data;
 };

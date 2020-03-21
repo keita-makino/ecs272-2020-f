@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Grid, IconButton } from '@material-ui/core';
-import { KeyboardArrowDown, HelpOutline } from '@material-ui/icons';
+import { KeyboardArrowDown } from '@material-ui/icons';
 import { MotionValue, useTransform, motion } from 'framer-motion';
 import { useWindowSize } from 'react-use';
 
@@ -16,7 +16,6 @@ const TitlePanel: React.FC<TitleProps> = (props: TitleProps) => {
 
   const r = useTransform(props.y, [-height, 0], [0, 180]);
   const y = useTransform(props.y, [-height, 0], [0, height - 192]);
-  const o = useTransform(props.y, [-height, 0], [0, 1]);
 
   return (
     <Grid xs={12} item container>

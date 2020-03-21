@@ -11,7 +11,7 @@ const cache = new InMemoryCache({
   freezeResults: true
 });
 const link = new HttpLink({
-  uri: 'http://localhost:4000/'
+  uri: 'http://localhost:4000'
 });
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
@@ -23,12 +23,12 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 cache.writeData({
   data: {
     session: {
-      userId: 1,
-      roomId: 1,
+      userId: '',
+      roomId: '',
       editMode: false,
       modifying: false,
       computing: false,
-      loaded: false,
+      isLoading: true,
       __typename: 'session'
     }
   }

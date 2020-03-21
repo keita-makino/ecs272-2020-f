@@ -1,6 +1,6 @@
-import React, { ReactChildren } from 'react';
+import React from 'react';
 import ControlPanel, { ControlPanelProps } from '../molecules/ControlPanel';
-import TypePanel, { TypePanelProps } from '../molecules/TypeLabelPanel';
+import TypePanel from '../molecules/TypeLabelPanel';
 import {
   makeStyles,
   Theme,
@@ -9,7 +9,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import TitlePanel from '../molecules/TitlePanel';
-import { useSpring, motion, useMotionValue, useTransform } from 'framer-motion';
+import { useSpring, motion, useTransform } from 'framer-motion';
 import { useWindowSize } from 'react-use';
 import { HelpOutline } from '@material-ui/icons';
 

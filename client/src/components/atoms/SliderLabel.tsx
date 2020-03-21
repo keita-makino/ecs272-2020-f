@@ -11,15 +11,15 @@ import camelcase from 'camelcase';
 export type SliderLabelProps = { label: string };
 
 const SliderLabel: React.FC<SliderLabelProps> = (props: SliderLabelProps) => {
-  const user = useCurrentUser();
+  const data = useCurrentUser();
   const [status, setStatus] = useState<[number, boolean]>([0, false]);
   const [mutation] = useMutation(UPDATE_USER);
 
   useEffect(() => {
-    if (user) {
-      setStatus([user.setting[camelcase(props.label)], true]);
+    if (data?.user) {
+      setStatus([data?.user.setting[camelcase(props.label)], true]);
     }
-  }, [user]);
+  }, [data?.user]);
 
   const onChange = (event: ChangeEvent<{}>, value: number | number[]) => {
     setStatus([value as number, true]);
@@ -33,7 +33,7 @@ const SliderLabel: React.FC<SliderLabelProps> = (props: SliderLabelProps) => {
     mutation({
       variables: {
         newData: { setting: { update: { [camelcase(props.label)]: value } } },
-        id: user.id
+        id: data?.user.id
       }
     });
   };
@@ -41,7 +41,9 @@ const SliderLabel: React.FC<SliderLabelProps> = (props: SliderLabelProps) => {
   const range =
     props.label === 'Mark Size'
       ? { max: 0.008, min: 0.0005, step: 0.0005 }
-      : { max: 0.002, min: 0.00025, step: 0.00025 };
+      : props.label === 'Cell Size'
+      ? { max: 0.002, min: 0.00025, step: 0.00025 }
+      : { max: 100, min: 0, step: 5 };
 
   return (
     <Grid

@@ -2,11 +2,6 @@
 ### Do not make changes to this file directly
 
 
-input BooleanFilter {
-  equals: Boolean
-  not: Boolean
-}
-
 input FloatFilter {
   equals: Float
   gt: Float
@@ -87,12 +82,6 @@ input RecordCreateWithoutTypeInput {
   name: String
 }
 
-input RecordFilter {
-  every: RecordWhereInput
-  none: RecordWhereInput
-  some: RecordWhereInput
-}
-
 input RecordScalarWhereInput {
   address: StringFilter
   AND: [RecordScalarWhereInput!]
@@ -141,51 +130,12 @@ input RecordTypeCreateWithoutRoomInput {
   record: RecordCreateManyWithoutTypeInput
 }
 
-input RecordTypeFilter {
-  every: RecordTypeWhereInput
-  none: RecordTypeWhereInput
-  some: RecordTypeWhereInput
-}
-
-input RecordTypeScalarWhereInput {
-  active: BooleanFilter
-  AND: [RecordTypeScalarWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  NOT: [RecordTypeScalarWhereInput!]
-  OR: [RecordTypeScalarWhereInput!]
-  record: RecordFilter
-}
-
 input RecordTypeUpdateInput {
   active: Boolean
   id: Int
   name: String
   record: RecordUpdateManyWithoutTypeInput
   room: RoomUpdateOneRequiredWithoutRecordTypeInput
-}
-
-input RecordTypeUpdateManyDataInput {
-  active: Boolean
-  id: Int
-  name: String
-}
-
-input RecordTypeUpdateManyWithoutRoomInput {
-  connect: [RecordTypeWhereUniqueInput!]
-  create: [RecordTypeCreateWithoutRoomInput!]
-  delete: [RecordTypeWhereUniqueInput!]
-  deleteMany: [RecordTypeScalarWhereInput!]
-  disconnect: [RecordTypeWhereUniqueInput!]
-  set: [RecordTypeWhereUniqueInput!]
-  update: [RecordTypeUpdateWithWhereUniqueWithoutRoomInput!]
-  updateMany: [RecordTypeUpdateManyWithWhereNestedInput!]
-  upsert: [RecordTypeUpsertWithWhereUniqueWithoutRoomInput!]
-}
-
-input RecordTypeUpdateManyWithWhereNestedInput {
-  data: RecordTypeUpdateManyDataInput!
-  where: RecordTypeScalarWhereInput!
 }
 
 input RecordTypeUpdateOneRequiredWithoutRecordInput {
@@ -202,38 +152,9 @@ input RecordTypeUpdateWithoutRecordDataInput {
   room: RoomUpdateOneRequiredWithoutRecordTypeInput
 }
 
-input RecordTypeUpdateWithoutRoomDataInput {
-  active: Boolean
-  id: Int
-  name: String
-  record: RecordUpdateManyWithoutTypeInput
-}
-
-input RecordTypeUpdateWithWhereUniqueWithoutRoomInput {
-  data: RecordTypeUpdateWithoutRoomDataInput!
-  where: RecordTypeWhereUniqueInput!
-}
-
 input RecordTypeUpsertWithoutRecordInput {
   create: RecordTypeCreateWithoutRecordInput!
   update: RecordTypeUpdateWithoutRecordDataInput!
-}
-
-input RecordTypeUpsertWithWhereUniqueWithoutRoomInput {
-  create: RecordTypeCreateWithoutRoomInput!
-  update: RecordTypeUpdateWithoutRoomDataInput!
-  where: RecordTypeWhereUniqueInput!
-}
-
-input RecordTypeWhereInput {
-  active: BooleanFilter
-  AND: [RecordTypeWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  NOT: [RecordTypeWhereInput!]
-  OR: [RecordTypeWhereInput!]
-  record: RecordFilter
-  room: RoomWhereInput
 }
 
 input RecordTypeWhereUniqueInput {
@@ -293,37 +214,18 @@ input RecordUpsertWithWhereUniqueWithoutTypeInput {
   where: RecordWhereUniqueInput!
 }
 
-input RecordWhereInput {
-  address: StringFilter
-  AND: [RecordWhereInput!]
-  id: IntFilter
-  lat: FloatFilter
-  lng: FloatFilter
-  name: StringFilter
-  NOT: [RecordWhereInput!]
-  OR: [RecordWhereInput!]
-  type: RecordTypeWhereInput
-}
-
 input RecordWhereUniqueInput {
   id: Int
 }
 
 type Room {
-  id: Int!
-  name: String!
+  id: String!
   recordType(after: RecordTypeWhereUniqueInput, before: RecordTypeWhereUniqueInput, first: Int, last: Int, orderBy: RoomRecordTypeOrderByInput, skip: Int): [RecordType!]!
 }
 
 input RoomCreateInput {
-  name: String
+  id: String
   recordType: RecordTypeCreateManyWithoutRoomInput
-  user: UserCreateManyWithoutRoomInput
-}
-
-input RoomCreateManyWithoutUserInput {
-  connect: [RoomWhereUniqueInput!]
-  create: [RoomCreateWithoutUserInput!]
 }
 
 input RoomCreateOneWithoutRecordTypeInput {
@@ -332,55 +234,11 @@ input RoomCreateOneWithoutRecordTypeInput {
 }
 
 input RoomCreateWithoutRecordTypeInput {
-  name: String
-  user: UserCreateManyWithoutRoomInput
-}
-
-input RoomCreateWithoutUserInput {
-  name: String
-  recordType: RecordTypeCreateManyWithoutRoomInput
-}
-
-input RoomFilter {
-  every: RoomWhereInput
-  none: RoomWhereInput
-  some: RoomWhereInput
+  id: String
 }
 
 input RoomRecordTypeOrderByInput {
   id: OrderByArg
-}
-
-input RoomScalarWhereInput {
-  AND: [RoomScalarWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  NOT: [RoomScalarWhereInput!]
-  OR: [RoomScalarWhereInput!]
-  recordType: RecordTypeFilter
-  user: UserFilter
-}
-
-input RoomUpdateManyDataInput {
-  id: Int
-  name: String
-}
-
-input RoomUpdateManyWithoutUserInput {
-  connect: [RoomWhereUniqueInput!]
-  create: [RoomCreateWithoutUserInput!]
-  delete: [RoomWhereUniqueInput!]
-  deleteMany: [RoomScalarWhereInput!]
-  disconnect: [RoomWhereUniqueInput!]
-  set: [RoomWhereUniqueInput!]
-  update: [RoomUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [RoomUpdateManyWithWhereNestedInput!]
-  upsert: [RoomUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input RoomUpdateManyWithWhereNestedInput {
-  data: RoomUpdateManyDataInput!
-  where: RoomScalarWhereInput!
 }
 
 input RoomUpdateOneRequiredWithoutRecordTypeInput {
@@ -391,20 +249,7 @@ input RoomUpdateOneRequiredWithoutRecordTypeInput {
 }
 
 input RoomUpdateWithoutRecordTypeDataInput {
-  id: Int
-  name: String
-  user: UserUpdateManyWithoutRoomInput
-}
-
-input RoomUpdateWithoutUserDataInput {
-  id: Int
-  name: String
-  recordType: RecordTypeUpdateManyWithoutRoomInput
-}
-
-input RoomUpdateWithWhereUniqueWithoutUserInput {
-  data: RoomUpdateWithoutUserDataInput!
-  where: RoomWhereUniqueInput!
+  id: String
 }
 
 input RoomUpsertWithoutRecordTypeInput {
@@ -412,24 +257,8 @@ input RoomUpsertWithoutRecordTypeInput {
   update: RoomUpdateWithoutRecordTypeDataInput!
 }
 
-input RoomUpsertWithWhereUniqueWithoutUserInput {
-  create: RoomCreateWithoutUserInput!
-  update: RoomUpdateWithoutUserDataInput!
-  where: RoomWhereUniqueInput!
-}
-
-input RoomWhereInput {
-  AND: [RoomWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  NOT: [RoomWhereInput!]
-  OR: [RoomWhereInput!]
-  recordType: RecordTypeFilter
-  user: UserFilter
-}
-
 input RoomWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 type Setting {
@@ -496,21 +325,6 @@ input SettingUpsertWithoutUserInput {
   update: SettingUpdateWithoutUserDataInput!
 }
 
-input SettingWhereInput {
-  AND: [SettingWhereInput!]
-  bubble: BooleanFilter
-  cellSize: FloatFilter
-  darkMode: BooleanFilter
-  edge: BooleanFilter
-  height: FloatFilter
-  id: IntFilter
-  markSize: FloatFilter
-  NOT: [SettingWhereInput!]
-  OR: [SettingWhereInput!]
-  scatter: BooleanFilter
-  user: UserWhereInput
-}
-
 input SettingWhereUniqueInput {
   id: Int
 }
@@ -530,95 +344,26 @@ input StringFilter {
 }
 
 type User {
-  email: String!
-  id: Int!
-  name: String!
-  room(after: RoomWhereUniqueInput, before: RoomWhereUniqueInput, first: Int, last: Int, skip: Int): [Room!]!
+  id: String!
   setting: Setting
 }
 
 input UserCreateInput {
-  email: String
-  name: String
-  password: String
-  room: RoomCreateManyWithoutUserInput
-  setting: SettingCreateOneWithoutUserInput
-}
-
-input UserCreateManyWithoutRoomInput {
-  connect: [UserWhereUniqueInput!]
-  create: [UserCreateWithoutRoomInput!]
-}
-
-input UserCreateWithoutRoomInput {
-  email: String
-  name: String
-  password: String
+  id: String
   setting: SettingCreateOneWithoutUserInput
 }
 
 input UserCreateWithoutSettingInput {
-  email: String
-  name: String
-  password: String
-  room: RoomCreateManyWithoutUserInput
-}
-
-input UserFilter {
-  every: UserWhereInput
-  none: UserWhereInput
-  some: UserWhereInput
+  id: String
 }
 
 input UserOrderByInput {
-  email: OrderByArg
   id: OrderByArg
-  name: OrderByArg
-  password: OrderByArg
-}
-
-input UserScalarWhereInput {
-  AND: [UserScalarWhereInput!]
-  email: StringFilter
-  id: IntFilter
-  name: StringFilter
-  NOT: [UserScalarWhereInput!]
-  OR: [UserScalarWhereInput!]
-  password: StringFilter
-  room: RoomFilter
 }
 
 input UserUpdateInput {
-  email: String
-  id: Int
-  name: String
-  password: String
-  room: RoomUpdateManyWithoutUserInput
+  id: String
   setting: SettingUpdateOneWithoutUserInput
-}
-
-input UserUpdateManyDataInput {
-  email: String
-  id: Int
-  name: String
-  password: String
-}
-
-input UserUpdateManyWithoutRoomInput {
-  connect: [UserWhereUniqueInput!]
-  create: [UserCreateWithoutRoomInput!]
-  delete: [UserWhereUniqueInput!]
-  deleteMany: [UserScalarWhereInput!]
-  disconnect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutRoomInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutRoomInput!]
-}
-
-input UserUpdateManyWithWhereNestedInput {
-  data: UserUpdateManyDataInput!
-  where: UserScalarWhereInput!
 }
 
 input UserUpdateOneRequiredWithoutSettingInput {
@@ -628,25 +373,8 @@ input UserUpdateOneRequiredWithoutSettingInput {
   upsert: UserUpsertWithoutSettingInput
 }
 
-input UserUpdateWithoutRoomDataInput {
-  email: String
-  id: Int
-  name: String
-  password: String
-  setting: SettingUpdateOneWithoutUserInput
-}
-
 input UserUpdateWithoutSettingDataInput {
-  email: String
-  id: Int
-  name: String
-  password: String
-  room: RoomUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithWhereUniqueWithoutRoomInput {
-  data: UserUpdateWithoutRoomDataInput!
-  where: UserWhereUniqueInput!
+  id: String
 }
 
 input UserUpsertWithoutSettingInput {
@@ -654,25 +382,6 @@ input UserUpsertWithoutSettingInput {
   update: UserUpdateWithoutSettingDataInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutRoomInput {
-  create: UserCreateWithoutRoomInput!
-  update: UserUpdateWithoutRoomDataInput!
-  where: UserWhereUniqueInput!
-}
-
-input UserWhereInput {
-  AND: [UserWhereInput!]
-  email: StringFilter
-  id: IntFilter
-  name: StringFilter
-  NOT: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  password: StringFilter
-  room: RoomFilter
-  setting: SettingWhereInput
-}
-
 input UserWhereUniqueInput {
-  email: String
-  id: Int
+  id: String
 }

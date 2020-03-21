@@ -14,9 +14,6 @@ const User = objectType({
   name: "User",
   definition(t) {
     t.model.id();
-    t.model.name();
-    t.model.email();
-    t.model.room();
     t.model.setting();
   }
 });
@@ -45,7 +42,7 @@ const RecordType = objectType({
         l: intArg({ required: false })
       },
       resolve({ id }, args, ctx) {
-        return hsl.rgb((id * 141) % 255, 80, args.l ? args.l : 60);
+        return hsl.rgb((id * 191) % 255, 80, args.l ? args.l : 60);
       }
     });
   }
@@ -55,7 +52,6 @@ const Room = objectType({
   name: "Room",
   definition(t) {
     t.model.id();
-    t.model.name();
     t.model.recordType({ ordering: { id: true } });
   }
 });

@@ -7,10 +7,11 @@ import { RGBAColor } from 'deck.gl';
 import { RecordType, Records } from './usePlotData';
 import useFilteredData from './useFilteredData';
 import { useCurrentUser } from './useUser';
-import useBusy from './useBusy';
+import useBusy, { changeBusy } from './useBusy';
+import { useApolloClient } from '@apollo/react-hooks';
 
 type Contours = {
-  contour: [number, number][];
+  contour: [number, number, number][];
   color: RGBAColor;
 }[];
 type Edges = {
@@ -26,7 +27,8 @@ export type ContoursEdges = {
 
 const useContoursEdges = (): ContoursEdges => {
   const recordTypes = useFilteredData();
-  const user = useCurrentUser();
+  const client = useApolloClient();
+  const data = useCurrentUser();
   const isModifying = useBusy('modifying');
   const [contoursEdges, setContoursEdges] = useState<ContoursEdges>({
     contours: undefined,
@@ -35,21 +37,21 @@ const useContoursEdges = (): ContoursEdges => {
 
   useEffect(() => {
     const f = async () => {
-      if (!recordTypes || !user) {
+      if (!recordTypes || !data?.user) {
         return;
       }
       const newContoursEdges = await Promise.all(
         recordTypes.map(
           async (
             item: RecordType,
-            _index: number,
+            index: number,
             array: RecordType[]
           ): Promise<[Contours, Edges]> => {
             const activeSet = createShapeSet(
               item.record.map((item: Records[0]) =>
                 createNode(
                   createPoint(item.lng, item.lat),
-                  user.setting.markSize
+                  data?.user.setting.markSize
                 )
               ),
               'active'
@@ -67,7 +69,7 @@ const useContoursEdges = (): ContoursEdges => {
                 .map((item: Records[0]) =>
                   createNode(
                     createPoint(item.lng, item.lat),
-                    user.setting.markSize
+                    data?.user.setting.markSize
                   )
                 ),
               'base'
@@ -80,17 +82,34 @@ const useContoursEdges = (): ContoursEdges => {
             const contour = await getContour(
               activeSet,
               inactiveSet,
-              user.setting.cellSize * (isModifying ? 2 : 1)
+              data?.user.setting.cellSize * (isModifying ? 2 : 1)
             );
 
             return [
               contour.map(item2 => ({
-                contour: item2.getCoordinates(),
+                contour: item2
+                  .getCoordinates()
+                  .map(
+                    item =>
+                      [...item, index * (data?.user?.setting.height || 15)] as [
+                        number,
+                        number,
+                        number
+                      ]
+                  ),
                 color: [...item.color, 30] as RGBAColor
               })),
               activeSet.edges.map(edge => ({
-                start: [edge.start.lng, edge.start.lat, 0],
-                end: [edge.end.lng, edge.end.lat, 0],
+                start: [
+                  edge.start.lng,
+                  edge.start.lat,
+                  index * (data?.user?.setting.height || 15)
+                ],
+                end: [
+                  edge.end.lng,
+                  edge.end.lat,
+                  index * (data?.user?.setting.height || 15)
+                ],
                 color: item.color
               }))
             ];
@@ -101,12 +120,13 @@ const useContoursEdges = (): ContoursEdges => {
         contours: newContoursEdges.flatMap(item => item[0]),
         edges: newContoursEdges.map(item => item[1]).flat(1)
       });
+      changeBusy('isLoading', false, client);
     };
 
     if (recordTypes) {
       f();
     }
-  }, [recordTypes, user, isModifying]);
+  }, [recordTypes, data?.user, isModifying]);
 
   return contoursEdges;
 };

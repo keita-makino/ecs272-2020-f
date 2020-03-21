@@ -2,7 +2,11 @@ const initialStateIndex = {
   sideBar: {
     controlPanel: {
       title: 'Controls',
-      sliderArray: [{ label: 'Cell Size' }, { label: 'Mark Size' }],
+      sliderArray: [
+        { label: 'Cell Size' },
+        { label: 'Mark Size' },
+        { label: 'Height' }
+      ],
       toggleArray: [
         { label: 'Dark Mode' },
         { label: 'Scatter' },

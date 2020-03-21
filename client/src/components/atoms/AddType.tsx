@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import { Add, KeyboardArrowDown, Done } from '@material-ui/icons';
-import {
-  Grid,
-  Typography,
-  Checkbox,
-  useTheme,
-  TextField,
-  IconButton
-} from '@material-ui/core';
+import { Add, Done } from '@material-ui/icons';
+import { Grid, useTheme, TextField, IconButton } from '@material-ui/core';
 import { useCurrentRoom, GET_ROOM } from '../../uses/useRoom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -32,22 +25,16 @@ export const CREATE_RECORD_TYPE = gql`
   }
 `;
 
-const AddType: React.FC<AddTypeProps> = (props: AddTypeProps) => {
+const AddType: React.FC<AddTypeProps> = () => {
   const theme = useTheme();
   const currentRoom = useCurrentRoom();
   const [name, setName] = useState<string>('');
   const [mutation] = useMutation(CREATE_RECORD_TYPE, {
     update: (cache, { data: { createOneRecordType } }) => {
-      console.log(createOneRecordType);
       const { room } = cache.readQuery<any>({
         query: GET_ROOM,
         variables: { id: currentRoom.id }
       });
-      console.log(
-        [...room.recordType, createOneRecordType].sort((a, b) =>
-          a.id < b.id ? -1 : 1
-        )
-      );
       cache.writeQuery({
         query: GET_ROOM,
         data: {
@@ -62,7 +49,7 @@ const AddType: React.FC<AddTypeProps> = (props: AddTypeProps) => {
     }
   });
 
-  const onClick = (event: any) => {
+  const onClick = () => {
     if (!currentRoom) return;
 
     const newRecordType = {

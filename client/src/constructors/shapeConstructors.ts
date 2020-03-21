@@ -59,8 +59,11 @@ const createEdge: EdgeConstructor = (s: Point, e: Point): Edge => ({
                 array.push(
                   xMin + index + (yMin + index2) * a.domain.numOfCells[0]
                 );
+                return;
               });
+            return;
           });
+        return;
       });
 
     return array.filter((item, index, array) => array.indexOf(item) === index);
@@ -119,7 +122,9 @@ const createNode: NodeConstructor = (c: Point, r?: number): Node => {
               array.push(
                 xMin + index + (yMin + index2) * a.domain.numOfCells[0]
               );
+              return;
             });
+          return;
         });
 
       return array;

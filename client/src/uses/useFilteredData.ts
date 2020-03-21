@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { RecordType } from './usePlotData';
 import { useCurrentRoom } from './useRoom';
-import { changeBusy } from './useBusy';
 
 const useFilteredData = () => {
   const [filtered, setFiltered] = useState<RecordType[]>([]);

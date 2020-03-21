@@ -1,6 +1,6 @@
-import { gql, ApolloClient, NormalizedCache } from 'apollo-boost';
+import { gql, ApolloClient } from 'apollo-boost';
 import { useState, useEffect } from 'react';
-import { useQuery, useApolloClient } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 
 const GET_BUSY = gql`
   query {
@@ -8,7 +8,7 @@ const GET_BUSY = gql`
       editMode
       computing
       modifying
-      loaded
+      isLoading
     }
   }
 `;

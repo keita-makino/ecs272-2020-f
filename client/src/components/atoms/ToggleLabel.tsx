@@ -5,18 +5,18 @@ import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import { useCurrentUser, GET_USER } from '../../uses/useUser';
+import { useCurrentUser } from '../../uses/useUser';
 import camelcase from 'camelcase';
 
 export type ToggleLabelProps = { label: string };
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($newData: UserUpdateInput!, $id: Int!) {
+  mutation UpdateUser($newData: UserUpdateInput!, $id: String!) {
     updateOneUser(data: $newData, where: { id: $id }) {
       id
-      name
       setting {
         darkMode
+        height
         cellSize
         markSize
         scatter
@@ -28,15 +28,15 @@ export const UPDATE_USER = gql`
 `;
 
 const ToggleLabel: React.FC<ToggleLabelProps> = (props: ToggleLabelProps) => {
-  const user = useCurrentUser();
+  const data = useCurrentUser();
   const [status, setStatus] = useState<[boolean, boolean]>([false, false]);
   const [mutation] = useMutation(UPDATE_USER);
 
   useEffect(() => {
-    if (user) {
-      setStatus([user.setting[camelcase(props.label)], true]);
+    if (data?.user) {
+      setStatus([data?.user?.setting[camelcase(props.label)], true]);
     }
-  }, [user]);
+  }, [data]);
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -46,7 +46,7 @@ const ToggleLabel: React.FC<ToggleLabelProps> = (props: ToggleLabelProps) => {
     mutation({
       variables: {
         newData: { setting: { update: { [camelcase(props.label)]: checked } } },
-        id: user.id
+        id: data?.user.id
       }
     });
   };

@@ -1,6 +1,5 @@
-import { ShapeSetBase, ShapeSetActive, ShapeSet } from '../types/ShapeSet';
+import { ShapeSetBase, ShapeSet } from '../types/ShapeSet';
 import { Path } from '../types/Shapes';
-import connectNodes from './connectNodes';
 import createAreaDomain from '../constructors/areaDomainConstructor';
 import {
   createArea,
