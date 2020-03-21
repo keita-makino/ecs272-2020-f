@@ -42,7 +42,7 @@ const RecordType = objectType({
         l: intArg({ required: false })
       },
       resolve({ id }, args, ctx) {
-        return hsl.rgb((id * 191) % 255, 80, args.l ? args.l : 60);
+        return hsl.rgb((id * 161) % 255, 80, args.l ? args.l : 60);
       }
     });
   }
