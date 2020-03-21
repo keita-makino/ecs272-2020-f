@@ -11,7 +11,7 @@ const cache = new InMemoryCache({
   freezeResults: true
 });
 const link = new HttpLink({
-  uri: 'http://localhost:4000'
+  uri: 'https://ecs272-2020-f.herokuapp.com/'
 });
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({

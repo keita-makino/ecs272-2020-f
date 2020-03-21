@@ -60,8 +60,6 @@ const Map = (props: MapProps) => {
   const room = useCurrentRoom();
   const geocoder = initializeGeocoder(process.env.REACT_APP_MAP_API_KEY!);
 
-  console.log(process.env.REACT_APP_MAP_API_KEY);
-
   const client = useApolloClient();
   const editMode = useBusy('editMode');
   const isModifying = useBusy('modifying');
