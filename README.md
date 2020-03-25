@@ -1,6 +1,6 @@
 # ecs272-2020-f
 
-The implementation of bubble set as the final project of ECS272-2020.  
+The implementation of [bubble set](http://vialab.science.uoit.ca/portfolio/bubblesets) as the final project of ECS272-2020.  
 Demo: https://keita-makino.github.io/ecs272-2020-f/
 
 # Client
