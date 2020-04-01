@@ -1,6 +1,6 @@
 # A Bubble City of Davis - Explorer
 
-An implementation of [bubble set](http://vialab.science.uoit.ca/portfolio/bubblesets) as the final project of ECS272-2020.  
+An implementation of [bubble sets](http://vialab.science.uoit.ca/portfolio/bubblesets) as the final project of ECS272-2020.  
 Demo: https://keita-makino.github.io/ecs272-2020-f/
 
 # Client
