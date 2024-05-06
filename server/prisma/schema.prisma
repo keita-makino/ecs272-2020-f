@@ -3,29 +3,32 @@ generator photon {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Record {
-  address String     @default("")
-  id      Int        @default(autoincrement()) @id
-  lat     Float      @default(0)
-  lng     Float      @default(0)
-  name    String     @default("")
-  type    RecordType
+  address      String     @default("")
+  id           Int        @id @default(autoincrement())
+  lat          Float      @default(0)
+  lng          Float      @default(0)
+  name         String     @default("")
+  type         RecordType @relation(fields: [recordTypeId], references: [id])
+  recordTypeId Int
 }
 
 model RecordType {
-  id     Int      @default(autoincrement()) @id
-  room   Room
+  id     Int      @id @default(autoincrement())
+  room   Room     @relation(fields: [roomId], references: [id])
   name   String   @default("")
   record Record[]
   active Boolean  @default(true)
+  roomId String
 }
 
 model Room {
-  id         String       @default("") @id
+  id         String       @id @default("")
   recordType RecordType[]
 }
 
@@ -36,12 +39,13 @@ model Setting {
   scatter  Boolean @default(false)
   bubble   Boolean @default(false)
   height   Float   @default(5)
-  id       Int     @default(autoincrement()) @id
+  id       Int     @id @default(autoincrement())
   markSize Float   @default(5)
-  user     User
+  user     User    @relation(fields: [userId], references: [id])
+  userId   String  @unique
 }
 
 model User {
-  id      String   @default("") @id
+  id      String   @id @default("")
   setting Setting?
 }
